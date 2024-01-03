@@ -9,7 +9,7 @@ Compatibility
 The synthesizer is implemented with PD-L2Ork, since this works the
 most stable on my system. But it is also tested with PD Vanilla to
 make sure it can easily be embedded with libpd into a host app later.
-Except for the UI in `main.pd` this seems to work reansonably well.
+Except for the UI in `main.pd` this seems to work reasonably well.
 
 Root Directory
 --------------
