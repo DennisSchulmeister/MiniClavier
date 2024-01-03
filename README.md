@@ -14,6 +14,7 @@ from the original.
  * Analog filter for the harmonics, carrier, modulator and final output
  * Envelope generators for the harmonics, carrier, modulater final output
  * Two LFOs to modulate frequency, amplitude and filters
+ * Four partials, just like the original SynClavier
  * Volume, expression, stereo panning (using equal power pan law)
  * Sustain pedal, sustenuto pedal, modulation wheel, pitch bend wheel
  * Built-in reverb, chorus/flanger
@@ -40,7 +41,7 @@ finaly been solved since a few years (much too late, actually). But the Android
 ecosystem is very fragmented, so that we cannot really know the current state
 unless we try out concrete examples on concrete devices.
 
-Since both Csound and Pure Date offer bindings for Android applications,
+Since both Csound and Pure Data offer bindings for Android applications,
 this project also compares how both of them can be used in a real-world
 project with demanding real-time requirements.
 
