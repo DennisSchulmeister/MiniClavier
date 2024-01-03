@@ -31,7 +31,7 @@ which must be passed directly to libpd.
 
 All other `*.pd` files here are internal abstractions of the synthesizer.
 The smaller ones use only inlets and outlets to communicate with the outside
-world. But the larger components rely on the aformentioned send/receive objects
+world. But the larger components rely on the aforementioned send/receive objects
 to know what to do. All in all they form the "private" implementation of the
 synthesizer.
 
@@ -39,19 +39,23 @@ Stand-alone Abstractions
 ------------------------
 
 The sub-directories contain abstractions, that have been developed for this
-synthesizer, but can actually be used in any PD project. All resonable effort
+synthesizer, but can actually be used in any PD project. All reasonable effort
 has been done to make them as well-behaved and isolated as possible.
 
- * `utils`: Small utilities (each file is separate from the others)
+ * `utils`: Small utilities (each file is separate from the others). See
+   [README there](./utils/README.md) for a description of each abstraction.
 
  * `chorus`: A simple stereo chorus/flanger effect
- 
+
  * `envgen`: Envelope generator with unlimited breakpoints for attack and release
 
- * `voice_allocator`: What PD's `[poly]` should have been but never was. A propper
-   voice allocator that is easy to use, easy to debug (look at the data subpatch
+ * `voice_allocator`: What PD's `[poly]` should have been but never was. A proper
+   voice allocator that is easy to use, easy to debug (look at the data sub-patch
    to see what's going on), and most importantly handles sustain and sustenuto pedals,
-   and retriggers already playing notes instead of doubling them.
+   and re-triggers already playing notes instead of doubling them.
+
+Documentation for each abstraction is contained in the top-left corner of each
+`*.pd` file.
 
 More to come
 ------------

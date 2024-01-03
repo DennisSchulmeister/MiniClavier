@@ -1,10 +1,10 @@
-#N struct va_main float polyphony array voices va_voice;
-#N struct va_voice float x float y float voice float note float velocity
+#N struct vac__voice float x float y float voice float note float velocity
 float active float time float sustain float sustenuto float bg_color
 float sustain_color float sustenuto_color;
+#N struct vac__main float polyphony array voices vac__voice;
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
-#N canvas 0 49 1920 1009 chorus 1;
+#N canvas 0 49 1920 1009 chorus 0;
 #X obj 100 100 inlet~;
 #X obj 230 100 inlet~;
 #X obj 100 920 outlet~;
@@ -435,11 +435,11 @@ and sends the resulting values to everybody who wants to receive them.
 #X connect 24 0 15 0;
 #X restore 100 300 pd volume_and_pan;
 #X obj 100 270 /~ 8;
-#N canvas 0 49 1920 1009 audio_output 0;
+#N canvas 0 49 1920 1009 audio_output 1;
 #X obj 100 100 inlet~;
 #X obj 100 129 hip~ 1;
 #X obj 100 158 clip~ -1 1;
-#X obj 190 200 dac~;
+#X obj 190 220 dac~;
 #X obj 300 102 inlet~;
 #X obj 300 131 hip~ 1;
 #X obj 300 160 clip~ -1 1;
@@ -447,12 +447,26 @@ and sends the resulting values to everybody who wants to receive them.
 #X text 400 160 Clip output to [-1 \, 1];
 #X text 10 10 Final output stage to remove DC bias and clip values
 ;
+#X obj 100 360 s out-vu-rms1;
+#X text 110 80 ---- Audio output ----;
+#X text 110 280 ---- VU Meters ----;
+#X obj 130 330 s out-vu-peak1;
+#X obj 330 330 s out-vu-peak2;
+#X obj 300 360 s out-vu-rms2;
+#X obj 100 300 ./utils/rms-peak;
+#X obj 300 300 ./utils/rms-peak;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 2 0 3 0;
+#X connect 2 0 16 0;
 #X connect 4 0 5 0;
 #X connect 5 0 6 0;
 #X connect 6 0 3 1;
+#X connect 6 0 17 0;
+#X connect 16 0 10 0;
+#X connect 16 1 13 0;
+#X connect 17 0 15 0;
+#X connect 17 1 14 0;
 #X restore 100 390 pd audio_output;
 #X obj 100 240 clone voice 32;
 #X obj 700 130 loadbang;

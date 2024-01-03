@@ -1,0 +1,11 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X obj 100 300 inlet;
+#X text 10 10 Recalculation of all transient breakpoint values after
+a change of the underlying data. Updates the following fields:, f
+69;
+#X text 10 60 - x based on "view ms" and GOP width, f 69;
+#X text 10 80 - y based on GOP height, f 69;
+#X text 10 100 - starttime as sum of previous durations, f 69;
+#X text 10 130 Send a bang to the inlet to trigger the recalculation.
+, f 69;
