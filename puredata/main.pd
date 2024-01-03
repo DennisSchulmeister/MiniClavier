@@ -1,0 +1,203 @@
+#N struct va_main float polyphony array voices va_voice;
+#N struct va_voice float x float y float voice float note float velocity
+float active float time float sustain float sustenuto float bg_color
+float sustain_color float sustenuto_color;
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#N canvas 0 49 1920 1009 global_parameters 0;
+#X obj 430 270 vsl 15 128 0 1 0 0 p-glb-volume empty empty 0 -11 0
+12 #2f6036 #a0ffa0 #000000 12700 1 0 1;
+#X msg 410 180 set \$1;
+#X obj 1300 150 loadbang;
+#X obj 840 270 vsl 15 128 0 1 0 0 in-expression empty empty 0 -11 0
+12 #4078b4 #a5cdf8 #000000 12700 1 0 1;
+#X msg 1030 180 set \$1;
+#X obj 430 470 hsl 128 14 -1 1 0 0 p-glb-panorama empty empty -2 -8
+0 10 #f0a966 #a54040 #000000 6350 1 0 1;
+#X msg 270 380 set \$1;
+#X floatatom 520 410 5 0 48 3 Pitchbend_Range - p-glb-pbrange 0 0 1
+, f 5;
+#X msg 560 180 set \$1;
+#X floatatom 430 410 5 0 1 3 Volume - p-glb-volume 0 0 1, f 5;
+#X floatatom 840 410 5 0 1 3 Expression - in-expression 0 0 1, f 5
+;
+#X floatatom 570 470 5 -1 1 3 Panorama - p-glb-panorama 0 0 1, f 5
+;
+#X obj 660 270 vsl 15 128 -1 1 0 0 in-pitchbend empty empty 0 -9 0
+10 #4078b4 #a5cdf8 #000000 6350 1 0 1;
+#X msg 740 180 set \$1;
+#X floatatom 659 410 5 -1 1 3 Pitchbend - in-pitchbend 0 0 1, f 5
+;
+#X obj 770 510 tgl 15 0 in-sustain empty Sustain 17 7 0 10 #fcfcfc
+#be0000 #000000 0 0.614173 1;
+#X obj 840 510 tgl 15 0 in-sustenuto empty Sustenuto 17 7 0 10 #fcfcfc
+#be0000 #000000 0 1 1;
+#X msg 680 590 set \$1;
+#X msg 820 590 set \$1;
+#X obj 750 270 vsl 15 128 0 1 0 0 in-modulation empty empty 0 -9 0
+10 #4078b4 #a5cdf8 #000000 0 1 0 1;
+#X floatatom 750 410 5 0 1 3 Modulation - in-modulation 0 0 1, f 5
+;
+#X msg 880 180 set \$1;
+#X obj 420 240 cnv 15 220 15 empty empty Global\ Parameters 4 6 0 12
+#e0e0e0 #404040 0;
+#X obj 1300 360 loadbang;
+#X obj 520 270 vsl 15 128 0 48 0 0 p-glb-pbrange empty empty 0 -9 0
+10 #2f6036 #a0ffa0 #000000 529 1 0 1;
+#X obj 650 240 cnv 15 270 15 empty empty Input\ Monitor 4 6 0 12 #e0e0e0
+#404040 0;
+#X obj 410 150 r p-glb-volume;
+#X obj 560 150 r p-glb-pbrange;
+#X obj 740 150 r in-pitchbend;
+#X obj 880 150 r in-modulation;
+#X obj 1030 150 r in-expression;
+#X obj 270 350 r p-glb-panorama;
+#X obj 680 560 r in-sustain;
+#X obj 820 560 r in-sustenuto;
+#X msg 1300 390 \; in-expression 1 \; in-pitchbend 0 \; in-modulation
+0 \; in-sustain 0 \; in-sustenuto 0 \;;
+#X msg 1300 180 \; p-glb-volume 1 \; p-glb-panorama 0 \; p-glb-pbrange
+2 \;;
+#X connect 1 0 9 0;
+#X connect 1 0 0 0;
+#X connect 2 0 35 0;
+#X connect 4 0 10 0;
+#X connect 4 0 3 0;
+#X connect 6 0 11 0;
+#X connect 6 0 5 0;
+#X connect 8 0 24 0;
+#X connect 8 0 7 0;
+#X connect 13 0 12 0;
+#X connect 13 0 14 0;
+#X connect 17 0 15 0;
+#X connect 18 0 16 0;
+#X connect 19 0 20 0;
+#X connect 21 0 19 0;
+#X connect 21 0 20 0;
+#X connect 23 0 34 0;
+#X connect 26 0 1 0;
+#X connect 27 0 8 0;
+#X connect 28 0 13 0;
+#X connect 29 0 21 0;
+#X connect 30 0 4 0;
+#X connect 31 0 6 0;
+#X connect 32 0 17 0;
+#X connect 33 0 18 0;
+#X coords 0 -1 1 1 520 310 2 410 229;
+#X restore 10 100 pd global_parameters;
+#N canvas 0 49 1920 1009 fx_parameters 0;
+#X obj 880 280 vsl 15 128 0 100 0 0 p-rev-length empty empty 0 -11
+0 12 #f4f4d7 #dd9e55 #000000 4191 1 0 1;
+#X msg 970 200 set \$1;
+#X floatatom 880 420 5 0 100 3 Length - p-rev-length 0 0 1, f 5;
+#X obj 1590 379 loadbang;
+#X obj 860 250 cnv 15 270 15 empty empty Reverb 4 6 0 12 #e0e0e0 #404040
+0;
+#X text 920 420 %;
+#X obj 960 280 vsl 15 128 0 9999 0 0 p-rev-crossover empty empty 0
+-11 0 12 #f4f4d7 #dd9e55 #000000 3810 1 0 1;
+#X msg 1110 200 set \$1;
+#X floatatom 960 420 5 0 9999 3 Crossover - p-rev-crossover 0 0 1,
+f 5;
+#X text 1000 420 Hz;
+#X obj 1040 280 vsl 15 128 0 100 0 0 p-rev-hfdamping empty empty 0
+-11 0 12 #f4f4d7 #dd9e55 #000000 2540 1 0 1;
+#X msg 1270 200 set \$1;
+#X floatatom 1040 420 5 0 20000 3 HF_Damping - p-rev-hfdamping 0 0
+1, f 5;
+#X text 1080 420 %;
+#X obj 880 480 hsl 128 14 -1 1 0 0 p-rev-drywet empty empty -2 -8 0
+10 #fbf6b1 #bda76b #000000 6350 1 0 1;
+#X msg 1160 510 set \$1;
+#X floatatom 1020 480 5 -1 1 3 Dry/Wet - p-rev-drywet 0 0 1, f 5;
+#X obj 690 280 vsl 15 128 0 20 0 0 p-cho-width empty empty 0 -11 0
+12 #d7def4 #5555dc #000000 1143 1 0 1;
+#X msg 730 200 set \$1;
+#X floatatom 690 420 5 0 20 3 Width - p-cho-width 0 0 1, f 5;
+#X obj 490 250 cnv 15 360 15 empty empty Chorus 4 6 0 12 #e0e0e0 #404040
+0;
+#X obj 510 280 vsl 15 128 0 20 0 0 p-cho-frequency empty empty 0 -11
+0 12 #d7def4 #5555dc #000000 952 1 0 1;
+#X msg 470 200 set \$1;
+#X floatatom 510 420 5 0 20 3 Frequency - p-cho-frequency 0 0 1, f
+5;
+#X text 550 420 Hz;
+#X obj 510 480 hsl 128 14 -1 1 0 0 p-cho-drywet empty empty -2 -8 0
+10 #98acdd #516594 #000000 11112 1 0 1;
+#X msg 350 490 set \$1;
+#X floatatom 650 480 5 -1 1 3 Dry/Wet - p-cho-drywet 0 0 1, f 5;
+#X obj 780 280 vsl 15 128 0 100 0 0 p-cho-feedback empty empty 0 -11
+0 12 #d7def4 #5555dc #000000 0 1 0 1;
+#X msg 840 200 set \$1;
+#X floatatom 780 420 5 0 100 3 Feedback - p-cho-feedback 0 0 1, f
+5;
+#X text 820 420 %;
+#X obj 880 500 tgl 15 0 p-rev-enabled empty Reverb\ enabled 17 7 0
+10 #fcfcfc #000000 #000000 1 1 1;
+#X msg 920 600 set \$1;
+#X obj 510 500 tgl 15 0 p-cho-enabled empty Chorus\ enabled 17 7 0
+10 #fcfcfc #000000 #000000 1 1 1;
+#X msg 540 599 set \$1;
+#X obj 1590 180 loadbang;
+#X obj 470 170 r p-cho-frequency;
+#X obj 730 170 r p-cho-width;
+#X obj 840 170 r p-cho-feedback;
+#X obj 970 170 r p-rev-length;
+#X obj 1110 170 r p-rev-crossover;
+#X obj 1270 170 r p-rev-hfdamping;
+#X obj 350 460 r p-cho-drywet;
+#X obj 540 570 r p-cho-enabled;
+#X obj 1160 480 r p-rev-drywet;
+#X obj 920 570 r p-rev-enabled;
+#X msg 1590 409 \; p-rev-length 33 \; p-rev-crossover 3000 \; p-rev-hfdamping
+20 \; p-rev-drywet 0 \; p-rev-enabled 1 \;;
+#X text 730 420 ms;
+#X obj 600 280 vsl 15 128 0 30 0 0 p-cho-delay empty empty 0 -11 0
+12 #d7def4 #5555dc #000000 12700 1 0 1;
+#X msg 620 200 set \$1;
+#X floatatom 600 420 5 0 30 3 Delay - p-cho-delay 0 0 1, f 5;
+#X text 640 420 ms;
+#X obj 620 170 r p-cho-delay;
+#X msg 1590 209 \; p-cho-frequency 1.5 \; p-cho-delay 30 \; p-cho-width
+1.8 \; p-cho-feedback 0 \; p-cho-drywet 0.75 \; p-cho-enabled 1 \;
+;
+#X connect 1 0 0 0;
+#X connect 1 0 2 0;
+#X connect 3 0 47 0;
+#X connect 7 0 8 0;
+#X connect 7 0 6 0;
+#X connect 11 0 10 0;
+#X connect 11 0 12 0;
+#X connect 15 0 16 0;
+#X connect 15 0 14 0;
+#X connect 18 0 17 0;
+#X connect 18 0 19 0;
+#X connect 22 0 21 0;
+#X connect 22 0 23 0;
+#X connect 26 0 27 0;
+#X connect 26 0 25 0;
+#X connect 29 0 28 0;
+#X connect 29 0 30 0;
+#X connect 33 0 32 0;
+#X connect 35 0 34 0;
+#X connect 36 0 54 0;
+#X connect 37 0 22 0;
+#X connect 38 0 18 0;
+#X connect 39 0 29 0;
+#X connect 40 0 1 0;
+#X connect 41 0 7 0;
+#X connect 42 0 11 0;
+#X connect 43 0 26 0;
+#X connect 44 0 35 0;
+#X connect 45 0 15 0;
+#X connect 46 0 33 0;
+#X connect 50 0 49 0;
+#X connect 50 0 51 0;
+#X connect 53 0 50 0;
+#X coords 0 -1 1 1 660 310 2 480 240;
+#X restore 540 100 pd fx_parameters;
+#X text 10 480 TODO: AGR;
+#X text 10 460 TODO: Oscillator;
+#X text 10 440 TODO: Envelope Generator GUI;
+#X text 10 10 MiniClavier Synthesizer;
+#X obj 10 40 ./_main;
