@@ -1,7 +1,7 @@
-#N struct 1424_main float polyphony array voices 1424_voice;
-#N struct 1424_voice float x float y float voice float note float velocity
+#N struct 1003_voice float x float y float voice float note float velocity
 float active float time float sustain float sustenuto float bg_color
 float sustain_color float sustenuto_color;
+#N struct 1003_main float polyphony array voices 1003_voice;
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X text 10 10 Improved voice allocator to replace PD's [poly] object
@@ -33,28 +33,160 @@ positive values the opposite., f 79;
 #X obj 520 250 s \$0-in-sustenuto;
 #X text 10 150 \$1 must be the polyphony (maximum number of voices)
 ;
-#N canvas 0 49 1920 1009 \$0_data 0;
-#X scalar 1424_main 32 \; 0 0 0 60 0 0 33204.5 0 0 777 777 777 \; 210
-0 1 64 0 0 33216.1 0 0 777 777 777 \; 420 0 2 55 0 0 33192.9 0 0 777
-777 777 \; 630 0 3 0 0 0 0 0 0 777 777 777 \; 840 0 4 0 0 0 0 0 0 777
-777 777 \; 1050 0 5 0 0 0 0 0 0 777 777 777 \; 1260 0 6 0 0 0 0 0 0
-777 777 777 \; 1470 0 7 0 0 0 0 0 0 777 777 777 \; 0 170 8 0 0 0 0
-0 0 777 777 777 \; 210 170 9 0 0 0 0 0 0 777 777 777 \; 420 170 10
-0 0 0 0 0 0 777 777 777 \; 630 170 11 0 0 0 0 0 0 777 777 777 \; 840
-170 12 0 0 0 0 0 0 777 777 777 \; 1050 170 13 0 0 0 0 0 0 777 777 777
-\; 1260 170 14 0 0 0 0 0 0 777 777 777 \; 1470 170 15 0 0 0 0 0 0 777
-777 777 \; 0 340 16 0 0 0 0 0 0 777 777 777 \; 210 340 17 0 0 0 0 0
-0 777 777 777 \; 420 340 18 0 0 0 0 0 0 777 777 777 \; 630 340 19 0
-0 0 0 0 0 777 777 777 \; 840 340 20 0 0 0 0 0 0 777 777 777 \; 1050
-340 21 0 0 0 0 0 0 777 777 777 \; 1260 340 22 0 0 0 0 0 0 777 777 777
-\; 1470 340 23 0 0 0 0 0 0 777 777 777 \; 0 510 24 0 0 0 0 0 0 777
-777 777 \; 210 510 25 0 0 0 0 0 0 777 777 777 \; 420 510 26 0 0 0 0
-0 0 777 777 777 \; 630 510 27 0 0 0 0 0 0 777 777 777 \; 840 510 28
-0 0 0 0 0 0 777 777 777 \; 1050 510 29 0 0 0 0 0 0 777 777 777 \; 1260
-510 30 0 0 0 0 0 0 777 777 777 \; 1470 510 31 0 0 0 0 0 0 777 777 777
-\; \;;
-#X restore 100 470 pd \$0_data;
-#N canvas 0 49 1920 1009 \$0_handle_note_on 0;
+#N canvas 0 49 1920 1009 vac__struct_voice 0;
+#X text 10 10 A single voice of the voice allocator;
+#X text 10 40 NOTE: To prevent a warning when the voice allocator is
+loaded \, the template for the voice structure should be created before
+the main structure. This is due to the encapsulation using \$0 in the
+structure name used here., f 75;
+#X obj 100 300 filledpolygon -x bg_color 0 1 0 0 200 0 200 160 0 160
+;
+#X obj 100 330 drawnumber voice 10 10 500 Voice:;
+#X obj 100 400 drawnumber note 10 30 5 Note:;
+#X obj 100 430 drawnumber velocity 10 50 5 Velocity:;
+#X obj 100 460 drawnumber active 10 70 5 Active:;
+#X obj 100 490 drawnumber time 10 90 5 Time:;
+#X obj 100 550 filledpolygon -x sustain_color sustain_color 1 10 110
+110 110 110 125 10 125, f 77;
+#X obj 100 580 drawnumber sustain 10 110 0 Sustain:;
+#X obj 100 640 filledpolygon -x sustenuto_color sustenuto_color 1 10
+130 110 130 110 145 10 145, f 81;
+#X obj 100 670 drawnumber sustenuto 10 130 0 Sustenuto:;
+#X obj 100 200 struct \$0_voice float x float y float voice float note
+float velocity float active float time float sustain float sustenuto
+float bg_color float sustain_color float sustenuto_color, f 182;
+#X restore 100 380 pd vac__struct_voice;
+#N canvas 0 49 1920 1009 vac__struct_main 0;
+#X obj 100 260 drawnumber polyphony 10 10 0 Polyphony:;
+#X obj 100 290 plot voices 999 1 10 40;
+#X obj 100 200 struct \$0_main float polyphony array voices \$0_voice
+;
+#X text 10 10 Main structure of the voice allocator;
+#X text 10 40 NOTE: To prevent a warning when the voice allocator is
+loaded \, the template for the voice structure should be created before
+this one. This is due to the encapsulation using \$0 in the structure
+name used here., f 75;
+#X restore 100 410 pd vac__struct_main;
+#N canvas 0 49 1920 1009 vac__data 0;
+#X scalar 1003_main 0 \; 0 0 0 0 0 0 0 0 0 777 777 777 \; \;;
+#X restore 100 470 pd vac__data;
+#N canvas 0 49 1920 1009 vac__init 0;
+#X obj 100 100 loadbang;
+#X msg 130 230 clear;
+#X obj 100 130 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 100 429 pointer;
+#X obj 100 460 trigger b p, f 24;
+#X obj 100 840 until;
+#X msg 250 780 0;
+#X obj 100 590 trigger b b p;
+#X obj 100 750 trigger b b;
+#X obj 100 871 f;
+#X obj 140 871 + 1;
+#X msg 560 230 777;
+#X text 110 180 ---- Delete previous data and initialize varaibles
+----;
+#X obj 100 901 trigger b f;
+#X msg 420 230 777;
+#X obj 100 1031 trigger b b b p;
+#X text 110 310 ---- Start event timer ----;
+#X obj 100 810 - 1;
+#X msg 770 230 955;
+#X obj 150 1160 expr ($f1 % 8) * 210;
+#X obj 310 1160 expr int($f1 / 8) * 170;
+#X obj 100 1130 trigger b f f b;
+#X obj 270 260 value _\$0_polyphony;
+#X obj 420 260 value _\$0_bg_color;
+#X obj 560 260 value _\$0_sustain_color_off;
+#X obj 770 260 value _\$0_sustain_color_on;
+#X obj 100 490 value _\$0_polyphony;
+#X obj 170 650 value _\$0_polyphony;
+#X obj 100 780 value _\$0_polyphony;
+#X obj 100 931 value _\$0_init_voice_nr;
+#X obj 100 1101 value _\$0_init_voice_nr;
+#X obj 620 1160 value _\$0_bg_color;
+#X obj 770 1160 value _\$0_sustain_color_off;
+#X obj 100 1220 s \$0-init-done;
+#X obj 100 330 va-timer-init \$0;
+#X obj 490 1160 va-timer-get \$0;
+#X text 10 10 Initialization of the main data structure;
+#X obj 270 230 f \$1;
+#X obj 100 200 trigger b b;
+#X obj 100 520 append \$0_main polyphony;
+#X text 290 520 Output: main pointer;
+#X obj 100 1000 element \$0_main voices;
+#X text 270 1000 Output: voice pointer;
+#X obj 170 680 setsize \$0_main voices;
+#X obj 350 650 r \$0-init-main-pointer;
+#X obj 280 970 r \$0-init-main-pointer;
+#X obj 200 1061 s \$0-init-note-pointer;
+#X obj 990 1160 r \$0-init-note-pointer;
+#X obj 220 620 s \$0-init-main-pointer;
+#X text 110 730 ---- Initialize voice instances ----;
+#X text 110 570 ---- Create child voice instances ----;
+#X obj 120 1190 set \$0_voice voice x y time bg_color sustain_color
+sustenuto_color, f 77;
+#X text 110 380 ---- Create main instance ----;
+#X obj 130 260 send pd-vac__data;
+#X msg 100 400 traverse pd-vac__data \, bang;
+#X connect 0 0 2 0;
+#X connect 1 0 53 0;
+#X connect 2 0 38 0;
+#X connect 3 0 4 0;
+#X connect 4 0 26 0;
+#X connect 4 1 39 1;
+#X connect 5 0 9 0;
+#X connect 6 0 9 0;
+#X connect 7 0 8 0;
+#X connect 7 1 27 0;
+#X connect 7 2 48 0;
+#X connect 8 0 28 0;
+#X connect 8 1 6 0;
+#X connect 9 0 10 0;
+#X connect 9 0 13 0;
+#X connect 10 0 9 1;
+#X connect 11 0 24 0;
+#X connect 13 0 29 0;
+#X connect 13 1 29 0;
+#X connect 14 0 23 0;
+#X connect 15 0 30 0;
+#X connect 15 3 46 0;
+#X connect 17 0 5 0;
+#X connect 18 0 25 0;
+#X connect 19 0 51 1;
+#X connect 20 0 51 2;
+#X connect 21 0 33 0;
+#X connect 21 1 51 0;
+#X connect 21 2 19 0;
+#X connect 21 2 20 0;
+#X connect 21 3 31 0;
+#X connect 21 3 32 0;
+#X connect 21 3 35 0;
+#X connect 26 0 39 0;
+#X connect 27 0 43 0;
+#X connect 28 0 17 0;
+#X connect 29 0 41 0;
+#X connect 30 0 21 0;
+#X connect 31 0 51 4;
+#X connect 32 0 51 6;
+#X connect 32 0 51 5;
+#X connect 34 0 54 0;
+#X connect 35 0 51 3;
+#X connect 37 0 22 0;
+#X connect 38 0 34 0;
+#X connect 38 1 1 0;
+#X connect 38 1 37 0;
+#X connect 38 1 14 0;
+#X connect 38 1 11 0;
+#X connect 38 1 18 0;
+#X connect 39 0 7 0;
+#X connect 41 0 15 0;
+#X connect 44 0 43 1;
+#X connect 45 0 41 1;
+#X connect 47 0 51 7;
+#X connect 54 0 3 0;
+#X restore 100 500 pd vac__init;
+#N canvas 0 49 1920 1009 vac__handle_note_on 0;
 #X obj 100 210 spigot;
 #X msg 200 310 -1;
 #X msg 670 310 -1;
@@ -273,8 +405,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 103 3 62 0;
 #X connect 103 4 63 0;
 #X connect 103 5 64 0;
-#X restore 100 560 pd \$0_handle_note_on;
-#N canvas 0 49 1920 1009 \$0_handle_note_off 0;
+#X restore 100 560 pd vac__handle_note_on;
+#N canvas 0 49 1920 1009 vac__handle_note_off 0;
 #X obj 100 230 spigot;
 #X obj 100 130 trigger b f;
 #X obj 300 160 expr \\$f1 == 0;
@@ -343,8 +475,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 31 1 19 0;
 #X connect 31 2 20 0;
 #X connect 31 3 21 0;
-#X restore 100 590 pd \$0_handle_note_off;
-#N canvas 0 49 1920 1009 \$0_handle_sustain_on 0;
+#X restore 100 590 pd vac__handle_note_off;
+#N canvas 0 49 1920 1009 vac__handle_sustain_on 0;
 #X obj 100 158 spigot;
 #X obj 100 129 trigger b f;
 #X obj 120 299 select 1;
@@ -370,8 +502,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 7 0 11 1;
 #X connect 9 0 3 0;
 #X connect 10 0 2 0;
-#X restore 100 620 pd \$0_handle_sustain_on;
-#N canvas 0 49 1920 1009 \$0_handle_sustain_off 0;
+#X restore 100 620 pd vac__handle_sustain_on;
+#N canvas 0 49 1920 1009 vac__handle_sustain_off 0;
 #X obj 100 189 spigot;
 #X obj 100 160 trigger b f;
 #X obj 100 130 expr \\$f1 == 0;
@@ -427,8 +559,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 26 1 15 0;
 #X connect 26 2 14 0;
 #X connect 26 3 13 0;
-#X restore 100 650 pd \$0_handle_sustain_off;
-#N canvas 0 49 1920 1009 \$0_handle_sustenuto_on 0;
+#X restore 100 650 pd vac__handle_sustain_off;
+#N canvas 0 49 1920 1009 vac__handle_sustenuto_on 0;
 #X obj 100 158 spigot;
 #X obj 100 129 trigger b f;
 #X obj 120 299 select 1;
@@ -454,8 +586,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 7 0 11 1;
 #X connect 9 0 3 0;
 #X connect 10 0 2 0;
-#X restore 100 680 pd \$0_handle_sustenuto_on;
-#N canvas 0 49 1920 1009 \$0_handle_sustenuto_off 0;
+#X restore 100 680 pd vac__handle_sustenuto_on;
+#N canvas 0 49 1920 1009 vac__handle_sustenuto_off 0;
 #X obj 100 189 spigot;
 #X obj 100 160 trigger b f;
 #X obj 100 130 expr \\$f1 == 0;
@@ -511,157 +643,16 @@ sustenuto sustenuto_color, f 87;
 #X connect 25 1 15 0;
 #X connect 25 2 14 0;
 #X connect 25 3 13 0;
-#X restore 100 710 pd \$0_handle_sustenuto_off;
-#N canvas 0 49 1920 1009 \$0_init 0;
-#X obj 100 100 loadbang;
-#X msg 130 230 clear;
-#X obj 100 130 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000 1;
-#X obj 100 429 pointer;
-#X obj 100 460 trigger b p, f 24;
-#X obj 100 840 until;
-#X msg 250 780 0;
-#X obj 100 590 trigger b b p;
-#X obj 100 750 trigger b b;
-#X obj 100 871 f;
-#X obj 140 871 + 1;
-#X msg 550 230 777;
-#X text 110 180 ---- Delete previous data and initialize varaibles
-----;
-#X obj 100 901 trigger b f;
-#X msg 410 230 777;
-#X obj 100 1031 trigger b b b p;
-#X text 110 310 ---- Start event timer ----;
-#X obj 100 810 - 1;
-#X msg 760 230 955;
-#X obj 150 1160 expr ($f1 % 8) * 210;
-#X obj 310 1160 expr int($f1 / 8) * 170;
-#X obj 100 1130 trigger b f f b;
-#X obj 260 260 value _\$0_polyphony;
-#X obj 410 260 value _\$0_bg_color;
-#X obj 550 260 value _\$0_sustain_color_off;
-#X obj 760 260 value _\$0_sustain_color_on;
-#X obj 100 490 value _\$0_polyphony;
-#X obj 170 650 value _\$0_polyphony;
-#X obj 100 780 value _\$0_polyphony;
-#X obj 100 931 value _\$0_init_voice_nr;
-#X obj 100 1101 value _\$0_init_voice_nr;
-#X obj 620 1160 value _\$0_bg_color;
-#X obj 770 1160 value _\$0_sustain_color_off;
-#X obj 100 1220 s \$0-init-done;
-#X obj 100 330 va-timer-init \$0;
-#X obj 490 1160 va-timer-get \$0;
-#X text 10 10 Initialization of the main data structure;
-#X obj 260 230 f \$1;
-#X obj 100 200 trigger b b;
-#X obj 130 260 send pd-\$0_data;
-#X msg 100 400 traverse pd-\$0_data \, bang;
-#X obj 100 520 append \$0_main polyphony;
-#X text 290 520 Output: main pointer;
-#X obj 100 1000 element \$0_main voices;
-#X text 270 1000 Output: voice pointer;
-#X obj 170 680 setsize \$0_main voices;
-#X obj 350 650 r \$0-init-main-pointer;
-#X obj 280 970 r \$0-init-main-pointer;
-#X obj 200 1061 s \$0-init-note-pointer;
-#X obj 990 1160 r \$0-init-note-pointer;
-#X obj 220 620 s \$0-init-main-pointer;
-#X text 110 730 ---- Initialize voice instances ----;
-#X text 110 570 ---- Create child voice instances ----;
-#X obj 120 1190 set \$0_voice voice x y time bg_color sustain_color
-sustenuto_color, f 77;
-#X text 110 380 ---- Create main instance ----;
-#X connect 0 0 2 0;
-#X connect 1 0 39 0;
-#X connect 2 0 38 0;
-#X connect 3 0 4 0;
-#X connect 4 0 26 0;
-#X connect 4 1 41 1;
-#X connect 5 0 9 0;
-#X connect 6 0 9 0;
-#X connect 7 0 8 0;
-#X connect 7 1 27 0;
-#X connect 7 2 50 0;
-#X connect 8 0 28 0;
-#X connect 8 1 6 0;
-#X connect 9 0 10 0;
-#X connect 9 0 13 0;
-#X connect 10 0 9 1;
-#X connect 11 0 24 0;
-#X connect 13 0 29 0;
-#X connect 13 1 29 0;
-#X connect 14 0 23 0;
-#X connect 15 0 30 0;
-#X connect 15 3 48 0;
-#X connect 17 0 5 0;
-#X connect 18 0 25 0;
-#X connect 19 0 53 1;
-#X connect 20 0 53 2;
-#X connect 21 0 33 0;
-#X connect 21 1 53 0;
-#X connect 21 2 19 0;
-#X connect 21 2 20 0;
-#X connect 21 3 31 0;
-#X connect 21 3 32 0;
-#X connect 21 3 35 0;
-#X connect 26 0 41 0;
-#X connect 27 0 45 0;
-#X connect 28 0 17 0;
-#X connect 29 0 43 0;
-#X connect 30 0 21 0;
-#X connect 31 0 53 4;
-#X connect 32 0 53 6;
-#X connect 32 0 53 5;
-#X connect 34 0 40 0;
-#X connect 35 0 53 3;
-#X connect 37 0 22 0;
-#X connect 38 0 34 0;
-#X connect 38 1 1 0;
-#X connect 38 1 37 0;
-#X connect 38 1 14 0;
-#X connect 38 1 11 0;
-#X connect 38 1 18 0;
-#X connect 40 0 3 0;
-#X connect 41 0 7 0;
-#X connect 43 0 15 0;
-#X connect 46 0 45 1;
-#X connect 47 0 43 1;
-#X connect 49 0 53 7;
-#X restore 100 500 pd \$0_init;
-#N canvas 0 49 1920 1009 \$0_struct_voice 0;
-#X text 10 10 A single voice of the voice allocator;
-#X text 10 40 NOTE: To prevent a warning when the voice allocator is
-loaded \, the template for the voice structure should be created before
-the main structure. This is due to the encapsulation using \$0 in the
-structure name used here., f 75;
-#X obj 100 300 filledpolygon -x bg_color 0 1 0 0 200 0 200 160 0 160
-;
-#X obj 100 330 drawnumber voice 10 10 500 Voice:;
-#X obj 100 400 drawnumber note 10 30 5 Note:;
-#X obj 100 430 drawnumber velocity 10 50 5 Velocity:;
-#X obj 100 460 drawnumber active 10 70 5 Active:;
-#X obj 100 490 drawnumber time 10 90 5 Time:;
-#X obj 100 550 filledpolygon -x sustain_color sustain_color 1 10 110
-110 110 110 125 10 125, f 77;
-#X obj 100 580 drawnumber sustain 10 110 0 Sustain:;
-#X obj 100 640 filledpolygon -x sustenuto_color sustenuto_color 1 10
-130 110 130 110 145 10 145, f 81;
-#X obj 100 670 drawnumber sustenuto 10 130 0 Sustenuto:;
-#X obj 100 200 struct \$0_voice float x float y float voice float note
-float velocity float active float time float sustain float sustenuto
-float bg_color float sustain_color float sustenuto_color, f 182;
-#X restore 100 380 pd \$0_struct_voice;
-#N canvas 0 49 1920 1009 \$0_struct_main 0;
-#X obj 100 260 drawnumber polyphony 10 10 0 Polyphony:;
-#X obj 100 290 plot voices 999 1 10 40;
-#X obj 100 200 struct \$0_main float polyphony array voices \$0_voice
-;
-#X text 10 10 Main structure of the voice allocator;
-#X text 10 40 NOTE: To prevent a warning when the voice allocator is
-loaded \, the template for the voice structure should be created before
-this one. This is due to the encapsulation using \$0 in the structure
-name used here., f 75;
-#X restore 100 410 pd \$0_struct_main;
+#X restore 100 710 pd vac__handle_sustenuto_off;
+#X text 600 10 CAVEAT: This abstraction should be fairly well isolated
+from the pure data environment. However \, PD Vanilla doesn't support
+dollar variables for naming sub-patches (tested with 0.54-1). Therefor
+we use a vac__ prefix for the sub-patches. This should almost never
+be a problem. Unless you have sub-patch with the same name in a patch.
+The sub-patch vac__data will be cleared by the voice allocator and
+used to store its data structure instances (scalars). Also avoid placing
+scalars in vac__xxx sub-patches yourself to not mess-up the voice allocator.
+, f 114;
 #X connect 9 0 13 0;
 #X connect 10 0 14 0;
 #X connect 11 0 15 0;
