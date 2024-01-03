@@ -1,7 +1,7 @@
-#N struct va_main float polyphony array voices va_voice;
 #N struct va_voice float x float y float voice float note float velocity
 float active float time float sustain float sustenuto float bg_color
 float sustain_color float sustenuto_color;
+#N struct va_main float polyphony array voices va_voice;
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X text 10 10 Improved voice allocator to replace PD's [poly] object
@@ -12,168 +12,28 @@ float sustain_color float sustenuto_color;
 #X text 10 100 - Retriggers notes \, if already playing;
 #X text 10 120 - Steals note with the lowest velocity \, when necessary
 ;
-#N canvas 0 49 1920 1009 va_data 0;
-#X scalar va_main 32 \; 0 0 0 60 0 0 0 0 0 777 777 777 \; 210 0 1 0
-0 0 0 0 0 777 777 777 \; 420 0 2 0 0 0 0 0 0 777 777 777 \; 630 0 3
-0 0 0 0 0 0 777 777 777 \; 840 0 4 0 0 0 0 0 0 777 777 777 \; 1050
-0 5 0 0 0 0 0 0 777 777 777 \; 1260 0 6 0 0 0 0 0 0 777 777 777 \;
-1470 0 7 0 0 0 0 0 0 777 777 777 \; 0 170 8 0 0 0 0 0 0 777 777 777
-\; 210 170 9 0 0 0 0 0 0 777 777 777 \; 420 170 10 0 0 0 0 0 0 777
-777 777 \; 630 170 11 0 0 0 0 0 0 777 777 777 \; 840 170 12 0 0 0 0
-0 0 777 777 777 \; 1050 170 13 0 0 0 0 0 0 777 777 777 \; 1260 170
-14 0 0 0 0 0 0 777 777 777 \; 1470 170 15 0 0 0 0 0 0 777 777 777 \;
-0 340 16 0 0 0 0 0 0 777 777 777 \; 210 340 17 0 0 0 0 0 0 777 777
-777 \; 420 340 18 0 0 0 0 0 0 777 777 777 \; 630 340 19 0 0 0 0 0 0
-777 777 777 \; 840 340 20 0 0 0 0 0 0 777 777 777 \; 1050 340 21 0
-0 0 0 0 0 777 777 777 \; 1260 340 22 0 0 0 0 0 0 777 777 777 \; 1470
-340 23 0 0 0 0 0 0 777 777 777 \; 0 510 24 0 0 0 0 0 0 777 777 777
-\; 210 510 25 0 0 0 0 0 0 777 777 777 \; 420 510 26 0 0 0 0 0 0 777
-777 777 \; 630 510 27 0 0 0 0 0 0 777 777 777 \; 840 510 28 0 0 0 0
-0 0 777 777 777 \; 1050 510 29 0 0 0 0 0 0 777 777 777 \; 1260 510
-30 0 0 0 0 0 0 777 777 777 \; 1470 510 31 0 0 0 0 0 0 777 777 777 \;
-\;;
-#X restore 100 470 pd va_data;
-#N canvas 0 49 1920 1009 va_struct_voice 0;
-#X obj 100 200 filledpolygon -x bg_color 0 1 0 0 200 0 200 160 0 160
+#X obj 100 800 outlet;
+#X text 100 830 Output: List with voice number (0 indexed) \, note
+number \, velocity, f 66;
+#X obj 100 220 inlet;
+#X obj 220 220 inlet;
+#X obj 360 220 inlet;
+#X obj 520 220 inlet;
+#X obj 100 249 s \$0-in-note;
+#X obj 220 249 s \$0-in-velocity;
+#X obj 360 250 s \$0-in-sustain;
+#X text 100 200 Note number;
+#X text 220 200 Velocity number;
+#X text 360 200 Sustain pedal;
+#X text 520 200 Sustenuto pedal;
+#X text 100 280 The actual numbers don't matter for the inlets \, as
+long as 0 means "note off" \, "no velocity" \, "pedal released" and
+positive values the opposite., f 79;
+#X obj 100 770 r \$0-output;
+#X obj 520 250 s \$0-in-sustenuto;
+#X text 10 150 \$1 must be the polyphony (maximum number of voices)
 ;
-#X obj 100 100 struct va_voice float x float y float voice float note
-float velocity float active float time float sustain float sustenuto
-float bg_color float sustain_color float sustenuto_color, f 182;
-#X obj 100 230 drawnumber voice 10 10 500 Voice:;
-#X obj 100 300 drawnumber note 10 30 5 Note:;
-#X obj 100 330 drawnumber velocity 10 50 5 Velocity:;
-#X obj 100 360 drawnumber active 10 70 5 Active:;
-#X obj 100 390 drawnumber time 10 90 5 Time:;
-#X obj 100 450 filledpolygon -x sustain_color sustain_color 1 10 110
-110 110 110 125 10 125, f 77;
-#X obj 100 480 drawnumber sustain 10 110 0 Sustain:;
-#X obj 100 540 filledpolygon -x sustenuto_color sustenuto_color 1 10
-130 110 130 110 145 10 145, f 81;
-#X obj 100 570 drawnumber sustenuto 10 130 0 Sustenuto:;
-#X restore 100 390 pd va_struct_voice;
-#N canvas 0 49 1920 1009 va_struct_main 0;
-#X obj 100 160 drawnumber polyphony 10 10 0 Polyphony:;
-#X obj 100 190 plot voices 999 1 10 40;
-#X obj 100 100 struct va_main float polyphony array voices va_voice
-;
-#X restore 100 360 pd va_struct_main;
-#N canvas 0 49 1920 1009 va_init 0;
-#X obj 100 100 loadbang;
-#X msg 130 230 clear;
-#X obj 100 130 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000 1;
-#X obj 130 260 send pd-va_data;
-#X msg 100 400 traverse pd-va_data \, bang;
-#X obj 100 429 pointer;
-#X obj 100 460 trigger b p, f 24;
-#X obj 100 840 until;
-#X msg 250 780 0;
-#X obj 100 590 trigger b b p;
-#X obj 100 750 trigger b b;
-#X obj 100 871 f;
-#X obj 140 871 + 1;
-#X msg 550 230 777;
-#X text 110 180 ---- Delete previous data and initialize varaibles
-----;
-#X text 110 380 ---- Create va_state instance ----;
-#X obj 100 901 trigger b f;
-#X text 110 570 ---- Create child va_voice instances ----;
-#X text 110 730 ---- Initialize va_voice instances ----;
-#X msg 410 230 777;
-#X obj 100 1031 trigger b b b p;
-#X text 110 310 ---- Start event timer ----;
-#X obj 100 810 - 1;
-#X text 270 1000 Output: va_voice pointer;
-#X msg 760 230 955;
-#X obj 120 1190 set va_voice voice x y time bg_color sustain_color
-sustenuto_color, f 77;
-#X obj 150 1160 expr ($f1 % 8) * 210;
-#X obj 310 1160 expr int($f1 / 8) * 170;
-#X obj 100 1130 trigger b f f b;
-#X obj 100 520 append va_main polyphony;
-#X text 290 520 Output: va_main pointer;
-#X obj 100 1000 element va_main voices;
-#X obj 260 260 value _\$0_polyphony;
-#X obj 410 260 value _\$0_bg_color;
-#X obj 550 260 value _\$0_sustain_color_off;
-#X obj 760 260 value _\$0_sustain_color_on;
-#X obj 100 490 value _\$0_polyphony;
-#X obj 220 620 s \$0-init-va_state-pointer;
-#X obj 350 650 r \$0-init-va_state-pointer;
-#X obj 170 650 value _\$0_polyphony;
-#X obj 170 680 setsize va_main voices;
-#X obj 100 780 value _\$0_polyphony;
-#X obj 100 931 value _\$0_init_voice_nr;
-#X obj 280 970 r \$0-init-va_state-pointer;
-#X obj 200 1061 s \$0-init-va_note-pointer;
-#X obj 100 1101 value _\$0_init_voice_nr;
-#X obj 620 1160 value _\$0_bg_color;
-#X obj 770 1160 value _\$0_sustain_color_off;
-#X obj 990 1160 r \$0-init-va_note-pointer;
-#X obj 100 1220 s \$0-init-done;
-#X obj 100 330 va-timer-init \$0;
-#X obj 490 1160 va-timer-get \$0;
-#X text 10 10 Initialization of the main data structure;
-#X obj 260 230 f \$1;
-#X obj 100 200 trigger b b;
-#X connect 0 0 2 0;
-#X connect 1 0 3 0;
-#X connect 2 0 54 0;
-#X connect 4 0 5 0;
-#X connect 5 0 6 0;
-#X connect 6 0 36 0;
-#X connect 6 1 29 1;
-#X connect 7 0 11 0;
-#X connect 8 0 11 0;
-#X connect 9 0 10 0;
-#X connect 9 1 39 0;
-#X connect 9 2 37 0;
-#X connect 10 0 41 0;
-#X connect 10 1 8 0;
-#X connect 11 0 12 0;
-#X connect 11 0 16 0;
-#X connect 12 0 11 1;
-#X connect 13 0 34 0;
-#X connect 16 0 42 0;
-#X connect 16 1 42 0;
-#X connect 19 0 33 0;
-#X connect 20 0 45 0;
-#X connect 20 3 44 0;
-#X connect 22 0 7 0;
-#X connect 24 0 35 0;
-#X connect 26 0 25 1;
-#X connect 27 0 25 2;
-#X connect 28 0 49 0;
-#X connect 28 1 25 0;
-#X connect 28 2 26 0;
-#X connect 28 2 27 0;
-#X connect 28 3 46 0;
-#X connect 28 3 47 0;
-#X connect 28 3 51 0;
-#X connect 29 0 9 0;
-#X connect 31 0 20 0;
-#X connect 36 0 29 0;
-#X connect 38 0 40 1;
-#X connect 39 0 40 0;
-#X connect 41 0 22 0;
-#X connect 42 0 31 0;
-#X connect 43 0 31 1;
-#X connect 45 0 28 0;
-#X connect 46 0 25 4;
-#X connect 47 0 25 6;
-#X connect 47 0 25 5;
-#X connect 48 0 25 7;
-#X connect 50 0 4 0;
-#X connect 51 0 25 3;
-#X connect 53 0 32 0;
-#X connect 54 0 50 0;
-#X connect 54 1 1 0;
-#X connect 54 1 53 0;
-#X connect 54 1 19 0;
-#X connect 54 1 13 0;
-#X connect 54 1 24 0;
-#X restore 100 500 pd va_init;
-#N canvas 0 49 1920 1009 va_note_on_event 0;
+#N canvas 0 49 1920 1009 handle_note_on 0;
 #X obj 100 210 spigot;
 #X msg 200 310 -1;
 #X msg 670 310 -1;
@@ -392,8 +252,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 99 0 100 2;
 #X connect 103 0 33 0;
 #X connect 104 0 42 3;
-#X restore 100 560 pd va_note_on_event;
-#N canvas 0 49 1920 1009 va_note_off_event 1;
+#X restore 100 560 pd handle_note_on;
+#N canvas 0 49 1920 1009 handle_note_off 0;
 #X obj 100 230 spigot;
 #X obj 100 130 trigger b f;
 #X obj 300 160 expr \\$f1 == 0;
@@ -462,8 +322,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 28 0 30 0;
 #X connect 29 0 30 1;
 #X connect 32 0 15 2;
-#X restore 100 590 pd va_note_off_event;
-#N canvas 0 49 1920 1009 va_sustain_on_event 0;
+#X restore 100 590 pd handle_note_off;
+#N canvas 0 49 1920 1009 handle_sustain_on 0;
 #X obj 100 158 spigot;
 #X obj 100 129 trigger b f;
 #X obj 120 299 select 1;
@@ -489,8 +349,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 8 0 3 0;
 #X connect 9 0 1 0;
 #X connect 10 0 6 1;
-#X restore 100 620 pd va_sustain_on_event;
-#N canvas 0 49 1920 1009 va_sustain_off_event 0;
+#X restore 100 620 pd handle_sustain_on;
+#N canvas 0 49 1920 1009 handle_sustain_off 0;
 #X obj 100 189 spigot;
 #X obj 100 160 trigger b f;
 #X obj 100 130 expr \\$f1 == 0;
@@ -546,8 +406,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 22 0 9 0;
 #X connect 23 0 25 0;
 #X connect 24 0 25 1;
-#X restore 100 650 pd va_sustain_off_event;
-#N canvas 0 49 1920 1009 va_sustenuto_on_event 0;
+#X restore 100 650 pd handle_sustain_off;
+#N canvas 0 49 1920 1009 handle_sustenuto_on 0;
 #X obj 100 158 spigot;
 #X obj 100 129 trigger b f;
 #X obj 120 299 select 1;
@@ -573,8 +433,8 @@ sustenuto sustenuto_color, f 87;
 #X connect 8 0 3 0;
 #X connect 9 0 1 0;
 #X connect 10 0 7 1;
-#X restore 100 680 pd va_sustenuto_on_event;
-#N canvas 0 49 1920 1009 va_sustenuto_off_event 0;
+#X restore 100 680 pd handle_sustenuto_on;
+#N canvas 0 49 1920 1009 handle_sustenuto_off 0;
 #X obj 100 189 spigot;
 #X obj 100 160 trigger b f;
 #X obj 100 130 expr \\$f1 == 0;
@@ -630,30 +490,151 @@ sustenuto sustenuto_color, f 87;
 #X connect 22 0 7 0;
 #X connect 23 0 25 1;
 #X connect 24 0 25 0;
-#X restore 100 710 pd va_sustenuto_off_event;
-#X obj 100 800 outlet;
-#X text 100 830 Output: List with voice number (0 indexed) \, note
-number \, velocity, f 66;
-#X obj 100 220 inlet;
-#X obj 220 220 inlet;
-#X obj 360 220 inlet;
-#X obj 520 220 inlet;
-#X obj 100 249 s \$0-in-note;
-#X obj 220 249 s \$0-in-velocity;
-#X obj 360 250 s \$0-in-sustain;
-#X text 100 200 Note number;
-#X text 220 200 Velocity number;
-#X text 360 200 Sustain pedal;
-#X text 520 200 Sustenuto pedal;
-#X text 100 280 The actual numbers don't matter for the inlets \, as
-long as 0 means "note off" \, "no velocity" \, "pedal released" and
-positive values the opposite., f 79;
-#X obj 100 770 r \$0-output;
-#X obj 520 250 s \$0-in-sustenuto;
-#X text 10 150 \$1 must be the polyphony (maximum number of voices)
+#X restore 100 710 pd handle_sustenuto_off;
+#N canvas 0 49 1920 1009 init 0;
+#X obj 100 100 loadbang;
+#X msg 130 230 clear;
+#X obj 100 130 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 130 260 send pd-va_data;
+#X msg 100 400 traverse pd-va_data \, bang;
+#X obj 100 429 pointer;
+#X obj 100 460 trigger b p, f 24;
+#X obj 100 840 until;
+#X msg 250 780 0;
+#X obj 100 590 trigger b b p;
+#X obj 100 750 trigger b b;
+#X obj 100 871 f;
+#X obj 140 871 + 1;
+#X msg 550 230 777;
+#X text 110 180 ---- Delete previous data and initialize varaibles
+----;
+#X text 110 380 ---- Create va_state instance ----;
+#X obj 100 901 trigger b f;
+#X text 110 570 ---- Create child va_voice instances ----;
+#X text 110 730 ---- Initialize va_voice instances ----;
+#X msg 410 230 777;
+#X obj 100 1031 trigger b b b p;
+#X text 110 310 ---- Start event timer ----;
+#X obj 100 810 - 1;
+#X text 270 1000 Output: va_voice pointer;
+#X msg 760 230 955;
+#X obj 120 1190 set va_voice voice x y time bg_color sustain_color
+sustenuto_color, f 77;
+#X obj 150 1160 expr ($f1 % 8) * 210;
+#X obj 310 1160 expr int($f1 / 8) * 170;
+#X obj 100 1130 trigger b f f b;
+#X obj 100 520 append va_main polyphony;
+#X text 290 520 Output: va_main pointer;
+#X obj 100 1000 element va_main voices;
+#X obj 260 260 value _\$0_polyphony;
+#X obj 410 260 value _\$0_bg_color;
+#X obj 550 260 value _\$0_sustain_color_off;
+#X obj 760 260 value _\$0_sustain_color_on;
+#X obj 100 490 value _\$0_polyphony;
+#X obj 220 620 s \$0-init-va_state-pointer;
+#X obj 350 650 r \$0-init-va_state-pointer;
+#X obj 170 650 value _\$0_polyphony;
+#X obj 170 680 setsize va_main voices;
+#X obj 100 780 value _\$0_polyphony;
+#X obj 100 931 value _\$0_init_voice_nr;
+#X obj 280 970 r \$0-init-va_state-pointer;
+#X obj 200 1061 s \$0-init-va_note-pointer;
+#X obj 100 1101 value _\$0_init_voice_nr;
+#X obj 620 1160 value _\$0_bg_color;
+#X obj 770 1160 value _\$0_sustain_color_off;
+#X obj 990 1160 r \$0-init-va_note-pointer;
+#X obj 100 1220 s \$0-init-done;
+#X obj 100 330 va-timer-init \$0;
+#X obj 490 1160 va-timer-get \$0;
+#X text 10 10 Initialization of the main data structure;
+#X obj 260 230 f \$1;
+#X obj 100 200 trigger b b;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 2 0 54 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 36 0;
+#X connect 6 1 29 1;
+#X connect 7 0 11 0;
+#X connect 8 0 11 0;
+#X connect 9 0 10 0;
+#X connect 9 1 39 0;
+#X connect 9 2 37 0;
+#X connect 10 0 41 0;
+#X connect 10 1 8 0;
+#X connect 11 0 12 0;
+#X connect 11 0 16 0;
+#X connect 12 0 11 1;
+#X connect 13 0 34 0;
+#X connect 16 0 42 0;
+#X connect 16 1 42 0;
+#X connect 19 0 33 0;
+#X connect 20 0 45 0;
+#X connect 20 3 44 0;
+#X connect 22 0 7 0;
+#X connect 24 0 35 0;
+#X connect 26 0 25 1;
+#X connect 27 0 25 2;
+#X connect 28 0 49 0;
+#X connect 28 1 25 0;
+#X connect 28 2 26 0;
+#X connect 28 2 27 0;
+#X connect 28 3 46 0;
+#X connect 28 3 47 0;
+#X connect 28 3 51 0;
+#X connect 29 0 9 0;
+#X connect 31 0 20 0;
+#X connect 36 0 29 0;
+#X connect 38 0 40 1;
+#X connect 39 0 40 0;
+#X connect 41 0 22 0;
+#X connect 42 0 31 0;
+#X connect 43 0 31 1;
+#X connect 45 0 28 0;
+#X connect 46 0 25 4;
+#X connect 47 0 25 6;
+#X connect 47 0 25 5;
+#X connect 48 0 25 7;
+#X connect 50 0 4 0;
+#X connect 51 0 25 3;
+#X connect 53 0 32 0;
+#X connect 54 0 50 0;
+#X connect 54 1 1 0;
+#X connect 54 1 53 0;
+#X connect 54 1 19 0;
+#X connect 54 1 13 0;
+#X connect 54 1 24 0;
+#X restore 100 500 pd init;
+#N canvas 0 49 1920 1009 struct_voice 0;
+#X obj 100 200 filledpolygon -x bg_color 0 1 0 0 200 0 200 160 0 160
 ;
-#X connect 19 0 23 0;
-#X connect 20 0 24 0;
-#X connect 21 0 25 0;
-#X connect 22 0 32 0;
-#X connect 31 0 17 0;
+#X obj 100 100 struct va_voice float x float y float voice float note
+float velocity float active float time float sustain float sustenuto
+float bg_color float sustain_color float sustenuto_color, f 182;
+#X obj 100 230 drawnumber voice 10 10 500 Voice:;
+#X obj 100 300 drawnumber note 10 30 5 Note:;
+#X obj 100 330 drawnumber velocity 10 50 5 Velocity:;
+#X obj 100 360 drawnumber active 10 70 5 Active:;
+#X obj 100 390 drawnumber time 10 90 5 Time:;
+#X obj 100 450 filledpolygon -x sustain_color sustain_color 1 10 110
+110 110 110 125 10 125, f 77;
+#X obj 100 480 drawnumber sustain 10 110 0 Sustain:;
+#X obj 100 540 filledpolygon -x sustenuto_color sustenuto_color 1 10
+130 110 130 110 145 10 145, f 81;
+#X obj 100 570 drawnumber sustenuto 10 130 0 Sustenuto:;
+#X restore 100 390 pd struct_voice;
+#N canvas 0 49 1920 1009 struct_main 0;
+#X obj 100 160 drawnumber polyphony 10 10 0 Polyphony:;
+#X obj 100 190 plot voices 999 1 10 40;
+#X obj 100 100 struct va_main float polyphony array voices va_voice
+;
+#X restore 100 360 pd struct_main;
+#N canvas 0 49 1920 1009 va_data 0;
+#X restore 100 470 pd va_data;
+#X connect 9 0 13 0;
+#X connect 10 0 14 0;
+#X connect 11 0 15 0;
+#X connect 12 0 22 0;
+#X connect 21 0 7 0;
