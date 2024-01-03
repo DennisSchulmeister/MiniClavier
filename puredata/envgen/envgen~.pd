@@ -1,7 +1,6 @@
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X obj 500 10 inlet;
-#X obj 520 330 route start end;
 #X obj 520 1310 vline~;
 #X obj 520 1370 outlet~;
 #X obj 500 920 list cat;
@@ -9,45 +8,30 @@
 #X obj 500 950 spigot;
 #X obj 560 950 r \$0-enable-output;
 #X text 510 1260 ---- Feed vline~ with three element lists ----;
-#X obj 640 890 r \$0-list-start-2;
-#X obj 500 890 r \$0-list-start-1;
-#X obj 800 890 r \$0-list-end-1;
-#X obj 920 890 r \$0-list-end-2;
-#X msg 1060 330 \; \$0-enable-output 1 \; \$0-list-start-1 bang;
-#X msg 1350 330 \; \$0-enable-output 1 \; \$0-list-end-1 bang;
 #X obj 540 370 trigger l b;
 #X obj 820 370 trigger l b;
 #X text 630 370 Start;
 #X text 910 370 End;
-#X obj 500 290 route set start end;
-#X text 720 330 Set parameters;
-#X obj 640 330 s \$0-error;
-#X obj 650 290 s \$0-error;
-#X text 730 290 Parse input list;
-#X text 1210 330 Start envelope;
-#X text 1500 330 End envelope;
-#X obj 1100 890 r \$0-error;
-#X text 1100 870 ---- Log error messages ----;
+#X text 750 330 Set parameters;
+#X obj 670 330 s \$0-error;
+#X obj 680 290 s \$0-error;
+#X text 760 290 Parse input list;
+#X obj 1200 890 r \$0-error;
+#X text 1200 870 ---- Log error messages ----;
 #X obj 560 550 unpack f f;
 #X obj 560 610 pack f f f;
-#X obj 560 800 s \$0-list-start-1;
 #X text 570 780 ---- Append to list ---;
 #X obj 840 550 unpack f f;
 #X text 850 780 ---- Append to list ---;
-#X obj 840 800 s \$0-list-end-1;
 #X text 550 500 ---- Build list entries ----;
 #X text 830 500 ---- Build list entries ----;
 #X text 1100 600 <-- Target value \, Duration [ms] \, Initial delay
 [ms];
 #X text 1100 550 <-- Target value \, Duration [ms];
-#X obj 1100 920 print [envgen~] unknown message;
+#X obj 1200 920 print [envgen~] unknown message;
 #X obj 560 640 trigger l l;
 #X obj 580 670 unpack f f f;
 #X obj 650 580 r \$0-delay;
-#X msg 570 400 \; \$0-enable-output 0 \; \$0-list-start-2 clear \;
-\$0-delay 0;
-#X msg 850 400 \; \$0-enable-output 0 \; \$0-list-end-2 clear \; \$0-delay
-0;
 #X obj 640 700 +;
 #X obj 640 730 s \$0-delay;
 #X obj 840 610 pack f f f;
@@ -56,23 +40,16 @@
 #X obj 930 580 r \$0-delay;
 #X obj 920 700 +;
 #X obj 920 730 s \$0-delay;
-#X obj 820 520 foreach-list-split 2;
-#X obj 500 1280 foreach-list-split 3;
-#X obj 540 520 foreach-list-split 2;
-#X text 500 870 ---- Lists storing start and end envelopes ----;
 #X obj 500 50 route symbol, f 19;
 #X obj 500 80 list trim 1;
 #X obj 800 1370 outlet;
 #X obj 1100 1370 outlet;
-#X text 510 160 ---- Mirror received message on the message outlet
-----;
 #X text 510 270 ---- Handle received message ----;
 #X obj 800 1340 delay;
 #X text 510 1000 ---- Set delay for a bang at the end ----;
 #X obj 800 1310 r \$0-finished-delay;
 #X obj 530 1210 s \$0-finished-delay;
 #X obj 500 1020 trigger l l;
-#X obj 560 1090 foreach-list-split 3;
 #X obj 580 1120 unpack f f f;
 #X obj 640 1151 +;
 #X obj 530 1060 trigger b l b;
@@ -83,80 +60,119 @@
 #X obj 530 220 s \$0-echo-outlet;
 #X obj 1100 1310 r \$0-echo-outlet;
 #X obj 500 110 route list;
-#X text 10 10 Flexible Envelope Generator===========================
-Creates flexible linear envelops for note start/end. For this the
-envelopes must be defined in advance with the following messages:[set
-start v0 d0 v1 d1 ...([set end v0 d0 v1 d1 ...( v0 \, v1 \, ...
-Valuesd0 \, d1 \, ... Durations to reach those values The [envgen-gui]
-abstraction can be used to display a graphical envelope editor in the
-parent patch.The following messages trigger the envelope: [start([end(
-[start( triggers the start envelope that should normally be defined
-as to end on a value greater than zero. [end( triggers the end envelope
-which should be defined to reach zero. Outlets------- 1 - Envelope
-output2 - Bang on finish of an envelope3 - Received messages The
-second outlet sends a bang \, when the start or end envelope has finished.
-This is meant to be able to disable DSP processing when a note has
-stopped playing. The third outlet simply echoes all received messages
+#X obj 540 520 ./foreach-list-split 2;
+#X obj 820 520 ./foreach-list-split 2;
+#X obj 560 1090 ./foreach-list-split 3;
+#X obj 500 1280 ./foreach-list-split 3;
+#X text 510 160 ---- Mirror received message on the echo outlet ----
+;
+#X text 10 40 Creates flexible linear envelops for note start/end.
+For this the envelopes must be defined in advance with the following
+messages:, f 55;
+#X text 10 150 v0 \, v1 \, ... Values, f 55;
+#X text 10 170 d0 \, d1 \, ... Durations to reach those values, f
+55;
+#X text 10 210 The [envgen-gui] abstraction can be used to display
+a graphical envelope editor in the parent patch., f 55;
+#X text 10 260 The following messages trigger the envelope:, f 55
+;
+#X text 10 310 [release(, f 55;
+#X text 10 290 [attack(, f 55;
+#X text 10 340 [attack( triggers the attack envelope that should normally
+be defined as to end on a value greater than zero., f 55;
+#X text 10 400 [release( triggers the release envelope which should
+be defined to reach zero.;
+#X text 10 490 1 - Envelope output, f 55;
+#X text 10 510 2 - Bang on finish of an envelope, f 55;
+#X text 10 530 3 - Received messages, f 55;
+#X text 10 560 The second outlet sends a bang \, when the start or
+end envelope has finished. This is meant to be able to disable DSP
+processing when a note has stopped playing., f 55;
+#X text 10 620 The third outlet simply echoes all received messages
 on the inlet. This is meant for two-way data binding between the [envgen~]
-and [envgen-gui] objects.;
-#X connect 1 0 58 0;
-#X connect 2 0 16 0;
-#X connect 2 1 17 0;
-#X connect 2 2 22 0;
-#X connect 3 0 4 0;
-#X connect 5 0 7 0;
-#X connect 6 0 7 0;
-#X connect 7 0 68 0;
-#X connect 8 0 7 1;
-#X connect 10 0 5 1;
-#X connect 11 0 5 0;
-#X connect 12 0 6 0;
-#X connect 13 0 6 1;
-#X connect 16 0 56 0;
-#X connect 16 1 44 0;
-#X connect 17 0 54 0;
-#X connect 17 1 45 0;
-#X connect 20 0 2 0;
-#X connect 20 1 14 0;
-#X connect 20 2 15 0;
-#X connect 20 3 23 0;
-#X connect 27 0 40 0;
-#X connect 29 0 30 0;
-#X connect 29 1 30 1;
-#X connect 30 0 41 0;
-#X connect 33 0 48 0;
-#X connect 33 1 48 1;
-#X connect 41 0 31 0;
-#X connect 41 1 42 0;
-#X connect 42 1 46 0;
-#X connect 42 2 46 1;
-#X connect 43 0 30 2;
-#X connect 46 0 47 0;
-#X connect 48 0 49 0;
-#X connect 49 0 35 0;
-#X connect 49 1 50 0;
-#X connect 50 1 52 0;
-#X connect 50 2 52 1;
-#X connect 51 0 48 2;
-#X connect 52 0 53 0;
-#X connect 54 0 33 0;
-#X connect 55 0 3 0;
-#X connect 56 0 29 0;
-#X connect 58 0 59 0;
-#X connect 58 1 79 0;
-#X connect 59 0 79 0;
-#X connect 64 0 60 0;
-#X connect 66 0 64 0;
-#X connect 68 0 55 0;
-#X connect 68 1 72 0;
-#X connect 69 0 70 0;
-#X connect 70 1 71 0;
-#X connect 70 2 71 1;
-#X connect 71 0 74 0;
-#X connect 72 0 67 0;
-#X connect 72 1 69 0;
-#X connect 72 2 73 0;
-#X connect 76 0 20 0;
-#X connect 76 1 77 0;
-#X connect 78 0 61 0;
-#X connect 79 1 76 0;
+and [envgen-gui] objects., f 55;
+#X text 10 100 [set attack v0 d0 v1 d1 ...(, f 55;
+#X text 10 120 [set release v0 d0 v1 d1 ...(, f 55;
+#X obj 500 290 route set attack release;
+#X obj 520 330 route attack release;
+#X text 1220 330 Attack envelope;
+#X text 1530 330 Release envelope;
+#X msg 570 400 \; \$0-enable-output 0 \; \$0-list-attack-2 clear \;
+\$0-delay 0;
+#X msg 850 400 \; \$0-enable-output 0 \; \$0-list-release-2 clear \;
+\$0-delay 0;
+#X msg 1060 330 \; \$0-enable-output 1 \; \$0-list-attack-1 bang;
+#X msg 1360 330 \; \$0-enable-output 1 \; \$0-list-release-1 bang;
+#X obj 560 800 s \$0-list-attack-1;
+#X obj 840 800 s \$0-list-release-1;
+#X text 500 870 ---- Lists storing the attack and release envelopes
+----;
+#X obj 500 890 r \$0-list-attack-1;
+#X obj 640 890 r \$0-list-attack-2;
+#X obj 800 890 r \$0-list-release-1;
+#X obj 950 890 r \$0-list-release-2;
+#X obj 0 0 cnv 15 400 30 empty empty Flexible\ Envelope\ Generator
+10 12 0 14 #e0e0e0 #404040 0;
+#X obj 0 460 cnv 15 400 15 empty empty Outlets 10 5 0 12 #e0e0e0 #404040
+0;
+#X connect 1 0 40 0;
+#X connect 2 0 3 0;
+#X connect 4 0 6 0;
+#X connect 5 0 6 0;
+#X connect 6 0 49 0;
+#X connect 7 0 6 1;
+#X connect 9 0 60 0;
+#X connect 9 1 85 0;
+#X connect 10 0 61 0;
+#X connect 10 1 86 0;
+#X connect 17 0 28 0;
+#X connect 19 0 20 0;
+#X connect 19 1 20 1;
+#X connect 20 0 29 0;
+#X connect 22 0 34 0;
+#X connect 22 1 34 1;
+#X connect 29 0 89 0;
+#X connect 29 1 30 0;
+#X connect 30 1 32 0;
+#X connect 30 2 32 1;
+#X connect 31 0 20 2;
+#X connect 32 0 33 0;
+#X connect 34 0 35 0;
+#X connect 35 0 90 0;
+#X connect 35 1 36 0;
+#X connect 36 1 38 0;
+#X connect 36 2 38 1;
+#X connect 37 0 34 2;
+#X connect 38 0 39 0;
+#X connect 40 0 41 0;
+#X connect 40 1 59 0;
+#X connect 41 0 59 0;
+#X connect 45 0 42 0;
+#X connect 47 0 45 0;
+#X connect 49 0 63 0;
+#X connect 49 1 52 0;
+#X connect 50 1 51 0;
+#X connect 50 2 51 1;
+#X connect 51 0 54 0;
+#X connect 52 0 48 0;
+#X connect 52 1 62 0;
+#X connect 52 2 53 0;
+#X connect 56 0 81 0;
+#X connect 56 1 57 0;
+#X connect 58 0 43 0;
+#X connect 59 1 56 0;
+#X connect 60 0 19 0;
+#X connect 61 0 22 0;
+#X connect 62 0 50 0;
+#X connect 63 0 2 0;
+#X connect 81 0 82 0;
+#X connect 81 1 87 0;
+#X connect 81 2 88 0;
+#X connect 81 3 15 0;
+#X connect 82 0 9 0;
+#X connect 82 1 10 0;
+#X connect 82 2 14 0;
+#X connect 92 0 4 0;
+#X connect 93 0 4 1;
+#X connect 94 0 5 0;
+#X connect 95 0 5 1;
