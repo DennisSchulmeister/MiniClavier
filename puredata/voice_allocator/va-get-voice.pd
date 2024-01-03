@@ -1,23 +1,23 @@
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X obj 200 150 inlet;
-#X text 200 50 Get a single voice from the voice allocator. Send the
-voice number (zero-indexed) to the inlet to get the va_voice pointer.
-, f 65;
 #X obj 200 180 trigger f b;
 #X obj 310 270 pointer;
-#X text 370 270 va_state pointer;
-#X text 510 240 This gets the va_state instance \, because it is the
-only scalar in the va_data canvas., f 33;
 #X obj 200 330 outlet;
-#X obj 200 300 element va_main voices;
 #X text 200 100 \$1 must be \$0 of the voice allocator;
 #X msg 310 240 traverse pd-\$1_data \, next;
 #X obj 310 210 f \$1;
-#X connect 1 0 3 0;
-#X connect 3 0 8 0;
-#X connect 3 1 11 0;
-#X connect 4 0 8 1;
-#X connect 8 0 7 0;
-#X connect 10 0 4 0;
-#X connect 11 0 10 0;
+#X obj 200 300 element \$1_main voices;
+#X text 200 50 Get a single voice from the voice allocator. Send the
+voice number (zero-indexed) to the inlet to get the voice pointer.
+, f 65;
+#X text 370 270 \$1_main pointer;
+#X text 510 240 This gets the \$1_main instance \, because it is the
+only scalar in the \$1_data canvas., f 33;
+#X connect 1 0 2 0;
+#X connect 2 0 8 0;
+#X connect 2 1 7 0;
+#X connect 3 0 8 1;
+#X connect 6 0 3 0;
+#X connect 7 0 6 0;
+#X connect 8 0 4 0;

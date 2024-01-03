@@ -1,55 +1,55 @@
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X obj 100 430 pointer;
-#X text 110 350 ---- Get va_state instance ----;
 #X text 110 540 ---- Loop over all voices ---;
 #X obj 100 620 - 1;
 #X obj 100 650 until;
 #X obj 100 690 f;
 #X obj 140 690 + 1;
-#X text 160 430 va_state pointer;
-#X text 270 720 Output: va_voice pointer;
 #X obj 100 300 inlet;
 #X obj 100 460 trigger p p;
 #X obj 100 790 outlet;
-#X text 110 770 ---- Output va_voice pointer ----;
 #X obj 400 570 inlet;
 #X obj 100 590 trigger f b;
 #X msg 160 650 0;
 #X obj 400 600 bang;
-#X obj 200 490 s \$0-va_main-pointer;
-#X obj 100 560 get va_main polyphony;
-#X obj 280 690 r \$0-va_main-pointer;
-#X obj 100 720 element va_main voices;
-#X text 10 10 Another small abstraction to simplify the implementation
-of the voice allocator. This time iterating over all va_voice instances
-\, which is needed whenever the voice allocator receives an event that
-it must handle., f 61;
-#X text 10 90 Send a bang to the first inlet to start the iteration.
-The outlet will output the va_voice pointers one after another.;
 #X text 10 140 Send a bang to the second inlet to end the iteration
 early.;
 #X text 10 170 \$1 must be \$0 of the voice allocator.;
 #X msg 100 400 traverse pd-\$1_data \, next;
-#X text 400 400 This gets the va_state instance \, because it is the
-only scalar in the \$1_data canvas., f 33;
 #X obj 100 370 f \$1;
-#X connect 1 0 11 0;
+#X obj 200 490 s \$0-main-pointer;
+#X obj 280 690 r \$0-main-pointer;
+#X obj 100 560 get \$1_main polyphony;
+#X obj 100 720 element \$1_main voices;
+#X text 110 350 ---- Get \$1_main instance ----;
+#X text 270 720 Output: voice pointer;
+#X text 160 430 Output: main pointer;
+#X text 110 770 ---- Output voice pointer ----;
+#X text 10 10 Another small abstraction to simplify the implementation
+of the voice allocator. This time iterating over all voice instances
+\, which is needed whenever the voice allocator receives an event that
+it must handle., f 61;
+#X text 10 90 Send a bang to the first inlet to start the iteration.
+The outlet will output the voice pointers one after another.;
+#X text 400 400 This gets the \$1_main instance \, because it is the
+only scalar in the \$1_data canvas., f 33;
+#X connect 1 0 8 0;
+#X connect 3 0 4 0;
 #X connect 4 0 5 0;
 #X connect 5 0 6 0;
-#X connect 6 0 7 0;
-#X connect 6 0 21 0;
-#X connect 7 0 6 1;
-#X connect 10 0 28 0;
-#X connect 11 0 19 0;
-#X connect 11 1 18 0;
-#X connect 14 0 17 0;
-#X connect 15 0 4 0;
-#X connect 15 1 16 0;
-#X connect 16 0 6 0;
-#X connect 17 0 5 1;
-#X connect 19 0 15 0;
-#X connect 20 0 21 1;
-#X connect 21 0 12 0;
-#X connect 26 0 1 0;
-#X connect 28 0 26 0;
+#X connect 5 0 21 0;
+#X connect 6 0 5 1;
+#X connect 7 0 17 0;
+#X connect 8 0 20 0;
+#X connect 8 1 18 0;
+#X connect 10 0 13 0;
+#X connect 11 0 3 0;
+#X connect 11 1 12 0;
+#X connect 12 0 5 0;
+#X connect 13 0 4 1;
+#X connect 16 0 1 0;
+#X connect 17 0 16 0;
+#X connect 19 0 21 1;
+#X connect 20 0 11 0;
+#X connect 21 0 9 0;
