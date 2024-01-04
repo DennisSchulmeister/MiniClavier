@@ -7,14 +7,14 @@
 #X text 200 50 Get a single voice from the voice allocator. Send the
 voice number (zero-indexed) to the inlet to get the voice pointer.
 , f 65;
-#X text 370 240 \$1_main pointer;
 #X msg 310 210 traverse pd-vac__data \, next;
 #X obj 200 270 element vac__main voices;
-#X text 520 210 This gets the vac__main instance \, because it is the
+#X text 560 210 This gets the vac__main instance \, because it is the
 only scalar in the vac__data canvas., f 33;
+#X text 370 240 Output: main pointer;
 #X connect 1 0 2 0;
-#X connect 2 0 8 0;
-#X connect 2 1 7 0;
-#X connect 3 0 8 1;
-#X connect 7 0 3 0;
-#X connect 8 0 4 0;
+#X connect 2 0 7 0;
+#X connect 2 1 6 0;
+#X connect 3 0 7 1;
+#X connect 6 0 3 0;
+#X connect 7 0 4 0;

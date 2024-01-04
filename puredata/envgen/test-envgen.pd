@@ -1,9 +1,7 @@
-#N struct egg_breakpoint float x float y float enabled float selected
+#N struct egui__main float y array start egui__breakpoint array end
+egui__breakpoint;
+#N struct egui__breakpoint float x float y float enabled float selected
 float value float duration float starttime;
-#N struct egg_state array start egg_breakpoint array end egg_breakpoint
-;
-#N struct egg_main float y array start egg_breakpoint array end egg_breakpoint
-;
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X obj 720 520 metro;

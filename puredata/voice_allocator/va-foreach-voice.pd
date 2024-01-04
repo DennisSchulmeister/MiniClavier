@@ -4,11 +4,11 @@
 #X text 110 410 ---- Loop over all voices ---;
 #X obj 100 490 - 1;
 #X obj 100 520 until;
-#X obj 100 560 f;
-#X obj 140 560 + 1;
+#X obj 120 560 f;
+#X obj 160 560 + 1;
 #X obj 100 200 inlet;
 #X obj 100 330 trigger p p;
-#X obj 100 660 outlet;
+#X obj 120 660 outlet;
 #X obj 400 440 inlet;
 #X obj 100 460 trigger f b;
 #X msg 160 520 0;
@@ -16,10 +16,10 @@
 #X text 10 140 Send a bang to the second inlet to end the iteration
 early., f 69;
 #X obj 200 360 s \$0-main-pointer;
-#X obj 280 560 r \$0-main-pointer;
-#X text 280 590 Output: voice pointer;
+#X obj 300 560 r \$0-main-pointer;
+#X text 300 590 Output: voice pointer;
 #X text 160 300 Output: main pointer;
-#X text 110 640 ---- Output voice pointer ----;
+#X text 130 640 ---- Output voice pointer ----;
 #X text 10 10 Another small abstraction to simplify the implementation
 of the voice allocator. This time iterating over all voice instances
 \, which is needed whenever the voice allocator receives an event that
@@ -32,7 +32,7 @@ The outlet will output the voice pointers one after another., f 69
 #X text 400 270 This gets the vac__main instance \, because it is the
 only scalar in the vac__data canvas., f 33;
 #X obj 100 430 get vac__main polyphony;
-#X obj 100 590 element vac__main voices;
+#X obj 120 590 element vac__main voices;
 #X connect 1 0 8 0;
 #X connect 3 0 4 0;
 #X connect 4 0 5 0;

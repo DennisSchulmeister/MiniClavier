@@ -435,7 +435,7 @@ and sends the resulting values to everybody who wants to receive them.
 #X connect 24 0 15 0;
 #X restore 100 300 pd volume_and_pan;
 #X obj 100 270 /~ 8;
-#N canvas 0 49 1920 1009 audio_output 1;
+#N canvas 0 49 1920 1009 audio_output 0;
 #X obj 100 100 inlet~;
 #X obj 100 129 hip~ 1;
 #X obj 100 158 clip~ -1 1;
