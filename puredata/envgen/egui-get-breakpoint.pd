@@ -1,0 +1,31 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X obj 100 200 inlet;
+#X obj 100 430 outlet;
+#X obj 100 230 trigger a b, f 12;
+#X obj 100 340 route bang float;
+#X obj 230 340 print invalid value;
+#X obj 100 370 f \$2;
+#X obj 100 400 element egui__main \$1, f 22;
+#X obj 130 290 s \$0-main-pointer;
+#X obj 270 400 r \$0-main-pointer;
+#X text 10 10 Get a single breakpoint from the envelope generator UI.
+, f 69;
+#X text 10 40 \$1 must be "attack" or "release" to choose the envelope
+part., f 69;
+#X text 10 60 \$2 can be the breakpoint number (zero-based)., f 69
+;
+#X text 10 90 Send a bang to the inlet to get the breakpoint pointer.
+Alternatively send a float with the requested number \, in which case
+\$2 can be omitted., f 69;
+#X obj 130 260 ./egui-get-main;
+#X connect 1 0 3 0;
+#X connect 3 0 4 0;
+#X connect 3 1 14 0;
+#X connect 4 0 6 0;
+#X connect 4 1 6 0;
+#X connect 4 2 5 0;
+#X connect 6 0 7 0;
+#X connect 7 0 2 0;
+#X connect 9 0 7 1;
+#X connect 14 0 8 0;

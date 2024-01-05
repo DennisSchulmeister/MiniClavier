@@ -3,5 +3,12 @@
 #X text 10 10 Refresh UI widgets for the selected breakpoint, f 69
 ;
 #X obj 100 200 inlet;
-#X text 10 30 Send a bang to the inlet to trigger the sending., f
+#X text 10 40 Send a bang to the inlet to trigger the sending., f
 69;
+#X obj 100 950 outlet;
+#X obj 100 920 trigger b;
+#X text 110 900 ---- Confirm execution ----;
+#X text 10 60 Sends a bang on its outlet when finished processing.
+, f 69;
+#X connect 2 0 5 0;
+#X connect 5 0 4 0;

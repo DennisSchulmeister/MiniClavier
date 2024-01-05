@@ -1,0 +1,14 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X obj 100 160 pointer;
+#X msg 100 130 traverse pd-egui__ui \, next;
+#X text 310 130 This gets the egui__main instance \, because it is
+the only scalar in the egui__ui canvas., f 35;
+#X text 10 10 Get the main struct pointer from the envelope generator
+UI., f 69;
+#X text 10 40 Send a bang to the inlet to get the pointer., f 69;
+#X obj 100 100 inlet;
+#X obj 100 190 outlet;
+#X connect 1 0 7 0;
+#X connect 2 0 1 0;
+#X connect 6 0 2 0;

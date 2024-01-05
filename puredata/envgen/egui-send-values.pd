@@ -6,3 +6,10 @@ Befor this the [æb recalc-breakpoints] should have been called to
 update the breakpoint arrays., f 69;
 #X text 10 80 Send a bang to the inlet to trigger the sending., f
 69;
+#X obj 100 950 outlet;
+#X obj 100 920 trigger b;
+#X text 110 900 ---- Confirm execution ----;
+#X text 10 100 Sends a bang on its outlet when finished processing.
+, f 69;
+#X connect 1 0 5 0;
+#X connect 5 0 4 0;

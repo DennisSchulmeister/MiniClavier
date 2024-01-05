@@ -1,0 +1,37 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X text 10 10 Internal abstraction used by egui-recalc-breakpoints
+to calculate the start time of each breakpoint. Has been split into
+its own abstraction \, because the some algorithm is needed four times.
+, f 69;
+#X obj 100 250 trigger b b;
+#X obj 180 470 set egui__breakpoint starttime, f 31;
+#X msg 150 310 0;
+#X obj 120 280 trigger b b;
+#X obj 150 500 get egui__breakpoint duration;
+#X obj 150 410 trigger p b p, f 35;
+#X obj 100 200 inlet;
+#X obj 100 610 outlet;
+#X obj 150 339 value _\$0_starttime;
+#X obj 120 380 ./egui-foreach-breakpoint \$1;
+#X obj 180 440 value _\$0_starttime;
+#X obj 150 529 expr \\$f1 + _\$0_starttime;
+#X obj 150 558 value _\$0_starttime;
+#X text 10 70 \$1 must be the name of the array (attack or release).
+, f 69;
+#X text 10 90 A bang on the inlet starts the iteration., f 69;
+#X text 10 110 Sends a bang on its outlet when finished processing.
+, f 69;
+#X connect 2 0 9 0;
+#X connect 2 1 5 0;
+#X connect 4 0 10 0;
+#X connect 5 0 11 0;
+#X connect 5 1 4 0;
+#X connect 6 0 13 0;
+#X connect 7 0 6 0;
+#X connect 7 1 12 0;
+#X connect 7 2 3 1;
+#X connect 8 0 2 0;
+#X connect 11 0 7 0;
+#X connect 12 0 3 0;
+#X connect 13 0 14 0;
