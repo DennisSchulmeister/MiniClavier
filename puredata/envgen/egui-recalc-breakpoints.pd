@@ -6,7 +6,7 @@ a change of the underlying data. Updates the following fields:, f
 69;
 #X text 10 230 Send a bang to the inlet to trigger the recalculation.
 , f 69;
-#X obj 100 940 outlet;
+#X obj 100 971 outlet;
 #X text 10 130 - vd = Recalculate value/duration from x/y values,
 f 69;
 #X text 10 110 - xy = Recalculate x/y values from value/duration,
@@ -15,8 +15,8 @@ f 69;
 GOP height., f 69;
 #X text 10 190 In any case will be starttime be recalculated as the
 sum of all previous durations., f 69;
-#X obj 100 910 trigger b;
-#X text 110 890 ---- Confirm execution ----;
+#X obj 100 941 trigger b;
+#X text 110 921 ---- Confirm execution ----;
 #X msg 220 490 0;
 #X msg 140 490 0;
 #X obj 140 520 set egui__breakpoint x y prev_x prev_y value duration
@@ -26,8 +26,8 @@ starttime enabled selected, f 82;
 #X text 110 370 ---- Enforce fixed values for dummy breakpoint at the
 beginning ----, f 70;
 #X obj 140 430 ./egui-get-breakpoint attack 0;
-#X obj 130 649 route xy vd;
-#X obj 220 650 print Unknown message;
+#X obj 130 680 route xy vd;
+#X obj 220 681 print Unknown message;
 #X obj 100 590 trigger b b;
 #X text 10 250 Sends a bang on its outlet when finished processing.
 , f 69;
@@ -37,23 +37,24 @@ beginning ----, f 70;
 #X text 10 60 Argument \$1 must be \$0 of the calling [envgen-gui]
 instance., f 69;
 #X text 110 570 ---- Recalculate breakpoint data ----;
-#X text 170 690 ---- x/y needs updated start time ----;
-#X text 610 790 ---- Now we can recalc the start time ----;
-#X text 170 790 ---- Now we can recalc x/y ----;
-#X obj 160 710 ./egui-recalc-breakpoints-starttime attack;
-#X obj 160 740 ./egui-recalc-breakpoints-starttime release;
-#X obj 600 810 ./egui-recalc-breakpoints-starttime attack;
-#X obj 600 840 ./egui-recalc-breakpoints-starttime release;
-#X obj 160 810 ./egui-recalc-breakpoints-xy \$0 attack;
-#X obj 160 840 ./egui-recalc-breakpoints-xy \$0 release;
-#X obj 600 700 ./egui-recalc-breakpoints-vd \$0 attack;
-#X obj 600 730 ./egui-recalc-breakpoints-vd \$0 release;
-#X text 610 680 ---- duration affects start time ----;
-#X obj 400 940 outlet;
-#X text 400 890 ---- Data has been changed ----;
-#X obj 400 910 r \$0-data-changed;
-#X obj 890 700 s \$0-data-changed;
-#X obj 890 730 s \$0-data-changed;
+#X text 170 721 ---- x/y needs updated start time ----;
+#X text 610 821 ---- Now we can recalc the start time ----;
+#X text 170 821 ---- Now we can recalc x/y ----;
+#X obj 160 741 ./egui-recalc-breakpoints-starttime attack;
+#X obj 160 771 ./egui-recalc-breakpoints-starttime release;
+#X obj 600 841 ./egui-recalc-breakpoints-starttime attack;
+#X obj 600 871 ./egui-recalc-breakpoints-starttime release;
+#X obj 160 841 ./egui-recalc-breakpoints-xy \$0 attack;
+#X obj 160 871 ./egui-recalc-breakpoints-xy \$0 release;
+#X obj 600 731 ./egui-recalc-breakpoints-vd \$0 attack;
+#X obj 600 761 ./egui-recalc-breakpoints-vd \$0 release;
+#X text 610 711 ---- duration affects start time ----;
+#X obj 400 971 outlet;
+#X text 400 921 ---- Data has been changed ----;
+#X obj 400 941 r \$0-data-changed;
+#X obj 890 731 s \$0-data-changed;
+#X obj 890 761 s \$0-data-changed;
+#X obj 130 650 list trim 1;
 #X connect 1 0 15 0;
 #X connect 9 0 4 0;
 #X connect 11 0 13 4;
@@ -76,7 +77,7 @@ instance., f 69;
 #X connect 18 2 19 0;
 #X connect 20 0 9 0;
 #X connect 20 1 22 0;
-#X connect 22 0 18 0;
+#X connect 22 0 43 0;
 #X connect 29 0 30 0;
 #X connect 30 0 33 0;
 #X connect 31 0 32 0;
@@ -86,3 +87,4 @@ instance., f 69;
 #X connect 36 0 31 0;
 #X connect 36 1 42 0;
 #X connect 40 0 38 0;
+#X connect 43 0 18 0;

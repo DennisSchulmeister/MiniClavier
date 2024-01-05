@@ -1,15 +1,93 @@
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X obj 100 200 inlet;
-#X text 10 10 Send current values to the controlled [envgen~] object.
-Befor this the [æb recalc-breakpoints] should have been called to
-update the breakpoint arrays., f 69;
-#X text 10 80 Send a bang to the inlet to trigger the sending., f
+#X text 10 120 Send a bang to the inlet to trigger the sending., f
 69;
-#X obj 100 950 outlet;
-#X obj 100 920 trigger b;
-#X text 110 900 ---- Confirm execution ----;
-#X text 10 100 Sends a bang on its outlet when finished processing.
+#X obj 100 1480 outlet;
+#X obj 100 1450 trigger b;
+#X text 110 1430 ---- Confirm execution ----;
+#X text 10 140 Sends a bang on its outlet when finished processing.
 , f 69;
-#X connect 1 0 5 0;
-#X connect 5 0 4 0;
+#X text 10 10 Send current values to the controlled [envgen~] object.
+Befor this [egui-recalc-breakpoints] should have been called to update
+the breakpoint arrays., f 69;
+#X text 10 70 Argument \$1 must be \$0 of the calling [envgen-gui]
+instance., f 69;
+#X obj 100 270 trigger b b;
+#X obj 130 300 delay 500;
+#X obj 200 400 s \$1-send-receive-lock;
+#X obj 160 340 trigger b b;
+#X text 170 320 ---- Prevent receiving our own values ----;
+#X msg 200 370 1;
+#X obj 200 1380 s \$1-send-receive-lock;
+#X obj 160 1320 trigger b b;
+#X text 170 1300 ---- Release send/receive lock ----;
+#X msg 200 1350 0;
+#X text 170 450 ---- Send attack breakpoints ----;
+#X text 170 870 ---- Send release breackpoints ----;
+#X text 110 250 ---- Schedule debounced data transfer to envelope generator
+----, f 66;
+#X obj 200 580 ./egui-foreach-breakpoint attack;
+#X obj 230 660 get egui__breakpoint value duration;
+#X msg 230 690 \$1 \$2;
+#X obj 230 720 list cat;
+#X obj 230 760 spigot;
+#X text 10 90 \$2 must be the name of the generator's receiver: [r
+...]-->[envgen~], f 69;
+#X obj 230 830 s \$2;
+#X obj 300 720 r \$0-list-clear;
+#X obj 160 470 trigger b b b;
+#X text 440 590 Last iteration;
+#X obj 230 1080 get egui__breakpoint value duration;
+#X msg 230 1110 \$1 \$2;
+#X obj 230 1150 list cat;
+#X obj 230 1180 spigot;
+#X obj 300 1150 r \$0-list-clear;
+#X obj 160 890 trigger b b b;
+#X text 440 1010 Last iteration;
+#X obj 200 1000 ./egui-foreach-breakpoint release;
+#X msg 240 930 \; \$0-list-clear clear \; \$0-send-data 0;
+#X obj 300 1180 r \$0-send-data;
+#X obj 300 760 r \$0-send-data;
+#X msg 240 510 \; \$0-list-clear clear \; \$0-send-data 0;
+#X obj 230 800 list prepend set attack;
+#X obj 230 1250 s \$2;
+#X obj 230 1220 list prepend set release;
+#X msg 390 1030 \; \$0-send-data 1;
+#X msg 390 610 \; \$0-send-data 1;
+#X connect 1 0 9 0;
+#X connect 4 0 3 0;
+#X connect 9 0 4 0;
+#X connect 9 1 10 0;
+#X connect 10 0 12 0;
+#X connect 12 0 30 0;
+#X connect 12 1 14 0;
+#X connect 14 0 11 0;
+#X connect 16 1 18 0;
+#X connect 18 0 15 0;
+#X connect 22 0 23 0;
+#X connect 22 2 48 0;
+#X connect 23 0 24 0;
+#X connect 23 1 24 0;
+#X connect 24 0 25 0;
+#X connect 25 0 26 0;
+#X connect 26 0 44 0;
+#X connect 29 0 25 1;
+#X connect 30 0 37 0;
+#X connect 30 1 22 0;
+#X connect 30 2 43 0;
+#X connect 32 0 33 0;
+#X connect 32 1 33 0;
+#X connect 33 0 34 0;
+#X connect 34 0 35 0;
+#X connect 35 0 46 0;
+#X connect 36 0 34 1;
+#X connect 37 0 16 0;
+#X connect 37 1 39 0;
+#X connect 37 2 40 0;
+#X connect 39 0 32 0;
+#X connect 39 2 47 0;
+#X connect 41 0 35 1;
+#X connect 42 0 26 1;
+#X connect 44 0 28 0;
+#X connect 46 0 45 0;
