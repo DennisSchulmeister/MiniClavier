@@ -18,42 +18,36 @@ duplication and make the logic easier to understand., f 69;
 #X obj 630 420 value _\$1_plot_h;
 #X text 760 420 [expr] only understands \$0;
 #X obj 100 520 trigger b b;
-#X obj 160 760 trigger p p;
-#X obj 160 730 spigot;
-#X text 360 580 Skip dummy breakpoint;
-#X obj 160 860 trigger b p, f 94;
-#X obj 190 790 get egui__breakpoint value duration starttime;
+#X obj 160 610 trigger p p;
+#X obj 160 580 spigot;
+#X text 220 580 Skip dummy breakpoint;
+#X obj 160 710 trigger b p, f 94;
+#X obj 190 640 get egui__breakpoint value duration starttime;
 #X text 10 110 \$2 must be the name of the array (attack or release).
 , f 69;
 #X text 10 90 \$1 must be \$0 of the envelope generator ui., f 69
 ;
 #X obj 130 550 ./egui-foreach-breakpoint \$2;
-#X obj 100 1080 outlet;
+#X obj 100 930 outlet;
 #X text 110 500 ---- Recalculate x and y ----;
-#X obj 190 819 value _\$0_value;
-#X obj 330 820 value _\$0_duration;
-#X obj 490 820 value _\$0_starttime;
+#X obj 190 669 value _\$0_value;
+#X obj 330 670 value _\$0_duration;
+#X obj 490 670 value _\$0_starttime;
 #X obj 630 451 value _\$0_height;
 #X obj 480 450 value _\$0_width;
 #X obj 320 450 value _\$0_padding2;
 #X obj 130 450 value _\$0_padding;
-#X obj 260 670 route attack;
-#X obj 260 640 pack s f, f 12;
-#X obj 260 580 trigger b f, f 12;
-#X msg 340 700 1;
-#X obj 160 580 trigger p;
-#X obj 160 1030 set egui__breakpoint x prev_x y prev_y, f 94;
-#X obj 160 890 expr 0 \; _\$0_padding + (((_\$0_starttime + _\$0_duration)
+#X obj 160 880 set egui__breakpoint x prev_x y prev_y, f 94;
+#X obj 160 740 expr 0 \; _\$0_padding + (((_\$0_starttime + _\$0_duration)
 / _\$0_view) * (_\$0_width - _\$0_padding2)) \; _\$0_padding + (_\$0_value
 * (_\$0_height - _\$0_padding2)) \;, f 91;
-#X obj 160 1000 trigger f f;
+#X obj 160 850 trigger f f;
 #X text 10 160 Sends a bang on its outlet when finished processing.
 , f 69;
-#X obj 160 970 expr max(_\$0_padding \, min(_\$0_padding + _\$0_width
+#X obj 160 820 expr max(_\$0_padding \, min(_\$0_padding + _\$0_width
 \, \\$f1));
-#X obj 400 1000 expr max(_\$0_padding \, min(_\$0_padding + _\$0_height
+#X obj 400 850 expr max(_\$0_padding \, min(_\$0_padding + _\$0_height
 \, \\$f1));
-#X obj 260 610 symbol \$2;
 #X connect 3 0 4 0;
 #X connect 4 0 9 0;
 #X connect 4 1 5 0;
@@ -73,25 +67,17 @@ duplication and make the logic easier to understand., f 69;
 #X connect 16 0 19 0;
 #X connect 16 1 20 0;
 #X connect 17 0 16 0;
-#X connect 19 0 39 0;
-#X connect 19 1 38 4;
+#X connect 19 0 34 0;
+#X connect 19 1 33 4;
 #X connect 20 0 26 0;
 #X connect 20 1 27 0;
 #X connect 20 2 28 0;
-#X connect 23 0 37 0;
-#X connect 23 1 35 0;
-#X connect 33 0 17 1;
-#X connect 33 1 36 0;
-#X connect 34 0 33 0;
-#X connect 35 0 44 0;
-#X connect 35 1 34 1;
-#X connect 36 0 17 1;
-#X connect 37 0 17 0;
-#X connect 39 1 42 0;
-#X connect 39 2 43 0;
-#X connect 40 0 38 0;
-#X connect 40 1 38 1;
-#X connect 42 0 40 0;
-#X connect 43 0 38 2;
-#X connect 43 0 38 3;
-#X connect 44 0 34 0;
+#X connect 23 0 17 0;
+#X connect 23 1 17 1;
+#X connect 34 1 37 0;
+#X connect 34 2 38 0;
+#X connect 35 0 33 0;
+#X connect 35 1 33 1;
+#X connect 37 0 35 0;
+#X connect 38 0 33 2;
+#X connect 38 0 33 3;

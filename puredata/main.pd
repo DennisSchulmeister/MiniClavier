@@ -210,8 +210,11 @@ f 5;
 #X connect 53 0 50 0;
 #X coords 0 -1 1 1 660 290 2 480 240;
 #X restore 670 100 pd fx_parameters;
-#X text 10 480 TODO: AGR;
 #X text 10 460 TODO: Oscillator;
 #X text 10 440 TODO: Envelope Generator GUI;
 #X text 10 10 MiniClavier Synthesizer;
 #X obj 10 40 ./_main;
+#X text 10 480 TODO: AGR (probablky not needes);
+#X text 10 500 TODO: Master volume slider in dB (instead of AGR);
+#X text 10 520 TODO: Preset save/load (serpate impl and ui) [ (load)
+(save) (BANG)unsaved changes ], f 88;
