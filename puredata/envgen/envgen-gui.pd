@@ -379,7 +379,7 @@ only) ----, f 67;
 #X obj 1240 680 s \$0-ui-view;
 #X text 1210 590 ---- Initialize UI header ----;
 #X msg 1350 680 \; \$0-ui-label label \$1;
-#N canvas 0 49 1920 1009 egui__handle_plot_interaction 1;
+#N canvas 0 49 1920 1009 egui__handle_plot_interaction 0;
 #X text 10 10 Handle mouse interaction with the plotted breakpoints
 , f 69;
 #X obj 100 390 ./egui-recalc-breakpoints \$0 vd;
@@ -409,8 +409,6 @@ for struct array elements. Only for atomic struct values., f 69;
 #X connect 12 0 9 0;
 #X restore 100 480 pd egui__handle_plot_interaction;
 #N canvas 0 49 1920 1009 egui__ui 0;
-#X scalar egui__main 320 160 3 137 5000 \; -20 -20 -20 -20 0 0 0 0
-0 \; \; -20 -20 -20 -20 0 0 0 0 0 \; \;;
 #X coords 0 0 300 140 300 140 2 0 0;
 #X restore 700 140 pd egui__ui;
 #X msg 1230 370 300;
