@@ -3,7 +3,7 @@ array attack egui__breakpoint array release egui__breakpoint;
 #N struct egui__breakpoint float x float y float prev_x float prev_y
 float enabled float selected float value float duration float starttime
 ;
-#N canvas 0 236 1920 822 12;
+#N canvas 384 25 1536 1033 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X obj 720 520 metro;
 #X obj 700 560 snapshot~;
@@ -64,7 +64,7 @@ float enabled float selected float value float duration float starttime
 #X obj 100 470 bng 20 250 50 0 empty bang-finished Finished 22 8 0
 12 #fcfcfc #ff0000 #000000 0;
 #X obj 730 380 s bang-finished;
-#X msg 380 470 set release 0.1 500 0 1000;
+#X msg 380 470 set release 0.0895523 12787.8 0.1 250 0 1000;
 #X obj 100 440 r bang-finished;
 #X obj 380 440 r echo-message;
 #X text 210 470 Last received message:;
@@ -75,10 +75,12 @@ float enabled float selected float value float duration float starttime
 #X obj 100 100 ./envgen-gui Test_Envelope eg-input eg-echo;
 #X obj 860 380 s eg-echo;
 #X obj 720 290 r eg-input;
-#X obj 860 350 trigger a a;
 #X obj 940 130 s eg-input;
 #X msg 940 100 set attack 1 500 0.5 1000 0.25 400;
 #X msg 1200 100 set release 0.1 500 0.1 250 0 1000;
+#X msg 920 60 set attack 1 500;
+#X obj 860 350 trigger a a a;
+#X obj 1090 380 print envgen echo;
 #X connect 1 0 2 0;
 #X connect 2 0 4 0;
 #X connect 4 0 3 0;
@@ -104,11 +106,13 @@ float enabled float selected float value float duration float starttime
 #X connect 26 0 24 0;
 #X connect 29 0 2 0;
 #X connect 29 1 23 0;
-#X connect 29 2 35 0;
+#X connect 29 2 39 0;
 #X connect 30 0 15 0;
 #X connect 31 0 15 0;
 #X connect 34 0 29 0;
-#X connect 35 0 33 0;
-#X connect 35 1 20 0;
-#X connect 37 0 36 0;
-#X connect 38 0 36 0;
+#X connect 36 0 35 0;
+#X connect 37 0 35 0;
+#X connect 38 0 35 0;
+#X connect 39 0 33 0;
+#X connect 39 1 20 0;
+#X connect 39 2 40 0;
