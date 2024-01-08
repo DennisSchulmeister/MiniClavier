@@ -47,10 +47,6 @@ moved to the bottom of the GOP \, but the Y-coordinate must be flipped.
 , f 67;
 #X msg 790 420 0;
 #X obj 790 449 value _\$0_st_offset;
-#X obj 160 1010 expr 0 \; max(0 \, (_\$0_st_offset + _\$0_starttime
-+ _\$0_duration) / _\$0_view) * (_\$0_width - _\$0_padding2) \; max(0
-\, min(1 \, _\$0_value)) * (_\$0_height - _\$0_padding2) * -1 \;,
-f 96;
 #X obj 100 540 trigger b b;
 #X obj 130 570 symbol \$2;
 #X obj 130 599 select release;
@@ -59,12 +55,15 @@ f 96;
 #X obj 130 686 +;
 #X obj 130 715 value _\$0_st_offset;
 #X text 110 520 ---- Get offset for release breakpoints ----;
+#X obj 160 1010 expr 0 \; ((_\$0_st_offset + _\$0_starttime + _\$0_duration)
+/ _\$0_view) * (_\$0_width - _\$0_padding2) \; _\$0_value * (_\$0_height
+- _\$0_padding2) * -1 \;, f 96;
 #X connect 3 0 4 0;
 #X connect 4 0 9 0;
 #X connect 4 1 5 0;
 #X connect 5 0 6 0;
 #X connect 6 0 7 0;
-#X connect 9 0 40 0;
+#X connect 9 0 39 0;
 #X connect 9 1 10 0;
 #X connect 9 1 12 0;
 #X connect 9 1 13 0;
@@ -79,7 +78,7 @@ f 96;
 #X connect 16 0 19 0;
 #X connect 16 1 20 0;
 #X connect 17 0 16 0;
-#X connect 19 0 39 0;
+#X connect 19 0 47 0;
 #X connect 19 1 33 4;
 #X connect 20 0 26 0;
 #X connect 20 1 27 0;
@@ -89,14 +88,14 @@ f 96;
 #X connect 34 0 33 0;
 #X connect 34 1 33 1;
 #X connect 37 0 38 0;
-#X connect 39 1 34 0;
-#X connect 39 2 33 3;
-#X connect 39 2 33 2;
-#X connect 40 0 15 0;
-#X connect 40 1 41 0;
+#X connect 39 0 15 0;
+#X connect 39 1 40 0;
+#X connect 40 0 41 0;
 #X connect 41 0 42 0;
 #X connect 42 0 43 0;
 #X connect 43 0 44 0;
+#X connect 43 1 44 1;
 #X connect 44 0 45 0;
-#X connect 44 1 45 1;
-#X connect 45 0 46 0;
+#X connect 47 1 34 0;
+#X connect 47 2 33 3;
+#X connect 47 2 33 2;

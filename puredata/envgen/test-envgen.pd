@@ -3,7 +3,7 @@ array attack egui__breakpoint array release egui__breakpoint;
 #N struct egui__breakpoint float x float y float prev_x float prev_y
 float enabled float selected float value float duration float starttime
 ;
-#N canvas 384 25 1536 1033 12;
+#N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X obj 720 520 metro;
 #X obj 700 560 snapshot~;
@@ -64,7 +64,7 @@ float enabled float selected float value float duration float starttime
 #X obj 100 470 bng 20 250 50 0 empty bang-finished Finished 22 8 0
 12 #fcfcfc #ff0000 #000000 0;
 #X obj 730 380 s bang-finished;
-#X msg 380 470 set release 0.0895523 12787.8 0.1 250 0 1000;
+#X msg 380 470 set release 0.1 500 0.1 250 0 1000;
 #X obj 100 440 r bang-finished;
 #X obj 380 440 r echo-message;
 #X text 210 470 Last received message:;

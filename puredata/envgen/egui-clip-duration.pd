@@ -1,0 +1,8 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X obj 100 100 inlet;
+#X obj 100 160 outlet;
+#X obj 100 130 expr max(0 \, \\$f1);
+#X text 10 10 Clip duration to allowed ranges;
+#X connect 1 0 3 0;
+#X connect 3 0 2 0;

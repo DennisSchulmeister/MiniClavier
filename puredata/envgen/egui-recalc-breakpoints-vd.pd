@@ -106,11 +106,14 @@ enabled selected starttime, f 91;
 at the top-left corner in PD. To make up for this \, the plots are
 moved to the bottom of the GOP \, but the Y-coordinate must be flipped.
 , f 67;
-#X obj 180 1040 expr 2 \; ((max(0 \, _\$0_x) / (_\$0_width - _\$0_padding2))
-* _\$0_view) - _\$0_prev_starttime \; max(0 \, min(1 \, _\$0_y / (_\$0_height
-- _\$0_padding2) * -1)) \; _\$0_x \; _\$0_y \;, f 89;
 #X obj 180 1180 set egui__breakpoint selected duration value prev_x
 prev_y, f 92;
+#X obj 180 1040 expr 2 \; ((_\$0_x / (_\$0_width - _\$0_padding2))
+* _\$0_view) - _\$0_prev_starttime \; _\$0_y / (_\$0_height - _\$0_padding2)
+* -1 \; _\$0_x \; _\$0_y \;, f 89;
+#X obj 220 1150 ./egui-clip-duration;
+#X obj 420 1150 ./egui-clip-value;
+#X obj 1050 1180 print new duration;
 #X connect 3 0 4 0;
 #X connect 4 0 9 0;
 #X connect 4 1 5 0;
@@ -147,8 +150,8 @@ prev_y, f 92;
 #X connect 41 4 35 0;
 #X connect 43 0 61 0;
 #X connect 43 1 66 0;
-#X connect 48 0 93 0;
-#X connect 48 1 94 5;
+#X connect 48 0 94 0;
+#X connect 48 1 93 5;
 #X connect 49 0 37 0;
 #X connect 49 1 53 0;
 #X connect 50 0 51 0;
@@ -199,8 +202,11 @@ prev_y, f 92;
 #X connect 90 0 84 0;
 #X connect 90 1 89 1;
 #X connect 91 0 90 0;
-#X connect 93 0 94 0;
-#X connect 93 1 94 1;
-#X connect 93 2 94 2;
-#X connect 93 3 94 3;
-#X connect 93 4 94 4;
+#X connect 94 0 93 0;
+#X connect 94 1 95 0;
+#X connect 94 2 96 0;
+#X connect 94 3 93 3;
+#X connect 94 4 93 4;
+#X connect 95 0 93 1;
+#X connect 95 0 97 0;
+#X connect 96 0 93 2;
