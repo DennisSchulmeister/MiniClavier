@@ -1,13 +1,13 @@
-#N canvas 0 49 1920 1009 12;
+#N canvas 960 25 960 1033 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X text 10 10 Refresh UI widgets for the selected breakpoint, f 69
 ;
 #X obj 100 150 inlet;
 #X text 10 70 Send a bang to the inlet to trigger the sending., f
 69;
-#X obj 100 2320 outlet;
-#X obj 100 2290 trigger b;
-#X text 110 2270 ---- Confirm execution ----;
+#X obj 100 2350 outlet;
+#X obj 100 2320 trigger b;
+#X text 110 2300 ---- Confirm execution ----;
 #X text 10 90 Sends a bang on its outlet when finished processing.
 , f 69;
 #X obj 130 250 ./egui-get-main;
@@ -80,7 +80,7 @@ be selected, f 71;
 #X obj 160 930 s \$0-break-early;
 #X obj 680 941 trigger b;
 #X obj 100 970 trigger b;
-#X obj 200 2290 r \$0-break-early;
+#X obj 200 2320 r \$0-break-early;
 #X msg 190 870 number \$1 \, interactive 0;
 #X text 110 700 ---- No breakpoints: Disable controls and skip rest
 ----;
