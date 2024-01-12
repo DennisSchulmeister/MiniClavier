@@ -1,7 +1,6 @@
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #X obj 100 231 symbol \$2;
-#X obj 170 310 ./egui-get-breakpoint attack -1;
 #X obj 170 339 get egui__breakpoint starttime duration;
 #X obj 170 368 +;
 #X text 10 110 \$2 must be the name of the array (attack or release).
@@ -20,12 +19,13 @@ abstractions to calculate the starttime offset for the attack or release
 array on the GOP canvas. This has been split into its own file \, as
 the same calculation is needed to recalculate the x/y and value/duration
 pairs., f 84;
-#X connect 1 0 10 0;
+#X obj 170 310 ./egui-get-breakpoint \$1 attack -1;
+#X connect 1 0 9 0;
 #X connect 2 0 3 0;
-#X connect 3 0 4 0;
-#X connect 3 1 4 1;
-#X connect 4 0 11 0;
-#X connect 9 0 1 0;
-#X connect 10 0 12 0;
-#X connect 10 1 2 0;
-#X connect 12 0 11 0;
+#X connect 2 1 3 1;
+#X connect 3 0 10 0;
+#X connect 8 0 1 0;
+#X connect 9 0 11 0;
+#X connect 9 1 13 0;
+#X connect 11 0 10 0;
+#X connect 13 0 2 0;
