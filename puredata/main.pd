@@ -29,7 +29,7 @@ float sustain_color float sustenuto_color;
 #X floatatom 659 410 5 -1 1 3 Pitchbend - in-pitchbend 0 0 1, f 5
 ;
 #X obj 770 490 tgl 15 0 in-sustain empty Sustain 17 7 0 10 #fcfcfc
-#be0000 #000000 0 0.188976 1;
+#be0000 #000000 0 0.598425 1;
 #X obj 840 490 tgl 15 0 in-sustenuto empty Sustenuto 17 7 0 10 #fcfcfc
 #be0000 #000000 0 1 1;
 #X msg 680 570 set \$1;
@@ -217,16 +217,17 @@ f 5;
 #X connect 53 0 50 0;
 #X coords 0 -1 1 1 660 290 2 480 240;
 #X restore 670 80 pd fx_parameters;
-#X text 10 460 TODO: Oscillator;
-#X text 10 480 TODO: Preset save/load (separate impl and ui) [ (load)
-(save) (BANG)unsaved changes ], f 88;
-#N canvas 0 49 1920 1009 dsp 0;
+#X text 10 400 TODO: Oscillator;
+#N canvas 0 49 1920 1009 dsp 1;
 #X obj 0 0 cnv 15 1320 60 empty empty MiniClavier\ (PD) 20 23 0 30
 #144678 #f5f5f5 0;
-#X obj 1030 18 bng 25 250 50 0 empty empty Load\ Preset 30 10 0 15
-#144678 #79d9ec #f5f5f5 1;
-#X obj 1178 18 bng 25 250 50 0 empty empty Save\ Preset 30 10 0 15
-#144678 #79d9ec #f5f5f5 1;
-#X obj 100 180 ./_main;
+#X obj 970 18 bng 25 250 50 0 cmd-load-preset empty Load\ Preset 30
+10 0 15 #144678 #79d9ec #f5f5f5 1;
+#X obj 810 18 bng 25 250 50 0 cmd-save-preset empty Save\ Preset 30
+10 0 15 #144678 #79d9ec #f5f5f5 1;
+#X obj 10 80 ./main1;
+#X text 100 80 <-- Synth enginge + preset handling;
+#X obj 1130 18 bng 25 250 50 0 cmd-reset-parameters empty Reset\ Parameters
+30 10 0 15 #144678 #79d9ec #f5f5f5 1;
 #X coords 0 -1 1 1 1320 60 2 0 0;
 #X restore 10 10 pd dsp;

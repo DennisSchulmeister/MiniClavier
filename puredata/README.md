@@ -16,14 +16,16 @@ Root Directory
 
 The root directory consists of the following files:
 
- * `main.pd`: Main file with user interface
- * `_main.pd`: The actual synthesizer without the user interface
+ * `main.pd`:  All-in-one synthesizer with UI and preset management (wraps `main1.pd`)
+ * `main1.pd`: The synthesizer with preset managenet but no UI (wraps `main2.pd`)
+ * `main2.pd`: Just the synthesizer engine without presets and UI (e.g. for embedding)
 
 The first is meant to be used stand-alone with Pure Data. Simply open this
 patch and connect a MIDI keyboard that sends on MIDI channel 1 to play the
-synthesizer.
+synthesizer. If the UI is too heavy on the CPU, you can try `main1.pd` instead
+and load one of the available presets. 
 
-The latter implements the actual synthesizer. It is split from the user
+`main2.pd` implements the actual synthesizer. It is split from the user
 interface to be embedded into host applications that provide their own
 user interface. Communication between user interface and synthesizer is
 happening via well-known send/receive objects, except for the MIDI messages,
@@ -34,6 +36,12 @@ The smaller ones use only inlets and outlets to communicate with the outside
 world. But the larger components rely on the aforementioned send/receive objects
 to know what to do. All in all they form the "private" implementation of the
 synthesizer.
+
+Presets
+-------
+
+The `presets` directory contains a few preset files that can be loaded into
+the synthesizer via the corresponding buttons (bangs).
 
 Stand-alone Abstractions
 ------------------------
@@ -49,6 +57,12 @@ has been done to make them as well-behaved and isolated as possible.
 
  * `envgen`: Envelope generator with unlimited breakpoints for attack and release
 
+ * `preset`: Simple mechanism to save and load the synthesier parameters from
+   preset files. Can also be used to save parameters in memory when the same
+   user interface widgets are used to control different parts of the synthesizer,
+   (e.g. the same controls are used to program partials 1, 2, 3, 4 and we need
+   a mechanism to switch the currently edited partial).
+ 
  * `voice_allocator`: What PD's `[poly]` should have been but never was. A proper
    voice allocator that is easy to use, easy to debug (look at the data sub-patch
    to see what's going on), and most importantly handles sustain and sustenuto pedals,
