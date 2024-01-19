@@ -8,11 +8,10 @@ float sustain_color float sustenuto_color;
 #X obj 430 270 vsl 15 128 0 1 0 0 p-glb-volume empty empty 0 -11 0
 12 #2f6036 #a0ffa0 #000000 12700 1 0 1;
 #X msg 410 180 set \$1;
-#X obj 1300 150 loadbang;
 #X obj 840 270 vsl 15 128 0 1 0 0 in-expression empty empty 0 -11 0
 12 #4078b4 #a5cdf8 #000000 12700 1 0 1;
 #X msg 1030 180 set \$1;
-#X obj 430 470 hsl 128 14 -1 1 0 0 p-glb-panorama empty empty -2 -8
+#X obj 430 470 hsl 128 14 -1 1 0 0 p-glb-balance empty empty -2 -8
 0 10 #f0a966 #a54040 #000000 6350 1 0 1;
 #X msg 450 570 set \$1;
 #X floatatom 520 410 5 0 48 3 Pitchbend_Range - p-glb-pbrange 0 0 1
@@ -21,16 +20,15 @@ float sustain_color float sustenuto_color;
 #X floatatom 430 410 5 0 1 3 Volume - p-glb-volume 0 0 1, f 5;
 #X floatatom 840 410 5 0 1 3 Expression - in-expression 0 0 1, f 5
 ;
-#X floatatom 570 470 5 -1 1 3 Panorama - p-glb-panorama 0 0 1, f 5
-;
+#X floatatom 570 470 5 -1 1 3 Balance - p-glb-balance 0 0 1, f 5;
 #X obj 660 270 vsl 15 128 -1 1 0 0 in-pitchbend empty empty 0 -9 0
 10 #4078b4 #a5cdf8 #000000 6350 1 0 1;
 #X msg 740 180 set \$1;
 #X floatatom 659 410 5 -1 1 3 Pitchbend - in-pitchbend 0 0 1, f 5
 ;
-#X obj 770 490 tgl 15 0 in-sustain empty Sustain 17 7 0 10 #fcfcfc
+#X obj 770 490 tgl 15 0 in-sustain empty Sustain 17 6 0 10 #fcfcfc
 #be0000 #000000 0 1 1;
-#X obj 840 490 tgl 15 0 in-sustenuto empty Sustenuto 17 7 0 10 #fcfcfc
+#X obj 840 490 tgl 15 0 in-sustenuto empty Sustenuto 17 6 0 10 #fcfcfc
 #be0000 #000000 0 1 1;
 #X msg 680 570 set \$1;
 #X msg 820 570 set \$1;
@@ -41,7 +39,7 @@ float sustain_color float sustenuto_color;
 #X msg 880 180 set \$1;
 #X obj 420 240 cnv 15 220 15 empty empty Global\ Parameters 4 6 0 12
 #e0e0e0 #404040 0;
-#X obj 1300 360 loadbang;
+#X obj 1100 270 loadbang;
 #X obj 520 270 vsl 15 128 0 48 0 0 p-glb-pbrange empty empty 0 -9 0
 10 #2f6036 #a0ffa0 #000000 529 1 0 1;
 #X obj 650 240 cnv 15 270 15 empty empty Input\ Monitor 4 6 0 12 #e0e0e0
@@ -51,13 +49,10 @@ float sustain_color float sustenuto_color;
 #X obj 740 150 r in-pitchbend;
 #X obj 880 150 r in-modulation;
 #X obj 1030 150 r in-expression;
-#X obj 450 540 r p-glb-panorama;
 #X obj 680 540 r in-sustain;
 #X obj 820 540 r in-sustenuto;
-#X msg 1300 390 \; in-expression 1 \; in-pitchbend 0 \; in-modulation
+#X msg 1100 300 \; in-expression 1 \; in-pitchbend 0 \; in-modulation
 0 \; in-sustain 0 \; in-sustenuto 0 \;;
-#X msg 1300 180 \; p-glb-volume 1 \; p-glb-panorama 0 \; p-glb-pbrange
-2 \;;
 #X obj 300 270 vu 15 200 empty empty -1 -8 0 10 #404040 #000000 1 0
 ;
 #X obj 180 150 r out-vu-rms1;
@@ -73,37 +68,37 @@ float sustain_color float sustenuto_color;
 #X text 340 480 dB;
 #X obj 110 420 r p-out-mastervolume;
 #X msg 110 449 set \$1;
-#X connect 1 0 9 0;
+#X obj 450 540 r p-glb-balance;
+#X connect 1 0 8 0;
 #X connect 1 0 0 0;
-#X connect 2 0 35 0;
-#X connect 4 0 10 0;
-#X connect 4 0 3 0;
-#X connect 6 0 11 0;
-#X connect 6 0 5 0;
-#X connect 8 0 24 0;
-#X connect 8 0 7 0;
-#X connect 13 0 12 0;
-#X connect 13 0 14 0;
+#X connect 3 0 9 0;
+#X connect 3 0 2 0;
+#X connect 5 0 10 0;
+#X connect 5 0 4 0;
+#X connect 7 0 23 0;
+#X connect 7 0 6 0;
+#X connect 12 0 11 0;
+#X connect 12 0 13 0;
+#X connect 16 0 14 0;
 #X connect 17 0 15 0;
-#X connect 18 0 16 0;
-#X connect 19 0 20 0;
-#X connect 21 0 19 0;
-#X connect 21 0 20 0;
-#X connect 23 0 34 0;
-#X connect 26 0 1 0;
-#X connect 27 0 8 0;
-#X connect 28 0 13 0;
-#X connect 29 0 21 0;
-#X connect 30 0 4 0;
-#X connect 31 0 6 0;
-#X connect 32 0 17 0;
-#X connect 33 0 18 0;
-#X connect 37 0 36 0;
-#X connect 38 0 39 0;
-#X connect 40 0 36 1;
-#X connect 41 0 39 1;
-#X connect 45 0 46 0;
-#X connect 46 0 43 0;
+#X connect 18 0 19 0;
+#X connect 20 0 18 0;
+#X connect 20 0 19 0;
+#X connect 22 0 32 0;
+#X connect 25 0 1 0;
+#X connect 26 0 7 0;
+#X connect 27 0 12 0;
+#X connect 28 0 20 0;
+#X connect 29 0 3 0;
+#X connect 30 0 16 0;
+#X connect 31 0 17 0;
+#X connect 34 0 33 0;
+#X connect 35 0 36 0;
+#X connect 37 0 33 1;
+#X connect 38 0 36 1;
+#X connect 42 0 43 0;
+#X connect 43 0 40 0;
+#X connect 44 0 5 0;
 #X coords 0 -1 1 1 650 290 2 280 230;
 #X restore 10 80 pd global_parameters;
 #N canvas 0 49 1920 1009 fx_parameters 0;
@@ -153,10 +148,10 @@ f 5;
 #X floatatom 780 420 5 0 100 3 Feedback - p-cho-feedback 0 0 1, f
 5;
 #X text 820 420 %;
-#X obj 880 500 tgl 15 0 p-rev-enabled empty Reverb\ enabled 17 7 0
+#X obj 880 500 tgl 15 0 p-rev-enabled empty Reverb\ enabled 17 6 0
 10 #fcfcfc #000000 #000000 1 1 1;
 #X msg 920 580 set \$1;
-#X obj 510 500 tgl 15 0 p-cho-enabled empty Chorus\ enabled 17 7 0
+#X obj 510 500 tgl 15 0 p-cho-enabled empty Chorus\ enabled 17 6 0
 10 #fcfcfc #000000 #000000 1 1 1;
 #X msg 540 579 set \$1;
 #X obj 1590 180 loadbang;
@@ -217,7 +212,6 @@ f 5;
 #X connect 53 0 50 0;
 #X coords 0 -1 1 1 660 290 2 480 240;
 #X restore 670 80 pd fx_parameters;
-#X text 1360 400 TODO: Oscillator;
 #N canvas 0 49 1920 1009 dsp 0;
 #X obj 0 0 cnv 15 1320 60 empty empty MiniClavier\ (PD) 20 23 0 30
 #144678 #f5f5f5 0;
@@ -232,89 +226,860 @@ f 5;
 #X coords 0 -1 1 1 1320 60 2 0 0;
 #X restore 10 10 pd dsp;
 #N canvas 0 49 1920 1009 partial_parameters 0;
-#X obj 300 400 cnv 15 1320 30 empty empty Partial 80 12 0 14 #144678
+#X obj 700 400 cnv 15 1320 30 empty empty Partial 80 12 0 14 #144678
 #f5f5f5 0;
-#X obj 310 407 hradio 16 0 0 4 ui-partial empty empty 0 -8 0 10 #5783b2
+#X obj 710 407 hradio 16 0 0 4 ui-partial empty empty 0 -8 0 10 #5783b2
 #000000 #000000 0 1;
-#X obj 180 341 r ui-partial;
-#X msg 180 370 set \$1;
-#X floatatom 500 440 5 0 0 1 Harmonic - p-px-osc1-f 0 0 1, f 5;
-#X msg 500 369 set \$1;
-#X obj 310 440 tgl 20 0 p-px-enabled empty Enabled 22 7 0 12 #fcfcfc
+#X obj 710 330 r ui-partial;
+#X msg 710 359 set \$1;
+#X obj 710 470 tgl 20 0 p-px-enabled empty Enabled 22 7 0 12 #fcfcfc
 #000000 #000000 1 1 1;
-#X msg 310 369 set \$1;
-#X obj 310 340 r p-px-enabled;
-#X obj 500 340 r p-px-osc1-f;
-#N canvas 0 49 1920 1009 handle_partial_switching 0;
-#X obj 100 100 r ui-partial;
-#X msg 100 460 restore-values;
-#X text 10 10 Handle switching the currently visible/edited partial
+#X msg 580 360 set \$1;
+#X obj 580 330 r p-px-enabled;
+#X obj 10 179 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 1;
+#X obj 10 237 s ui-partial;
+#X msg 10 208 0;
+#X obj 10 150 r reinit;
+#X obj 10 290 r ui-partial;
+#X msg 10 550 restore-values;
+#X obj 10 360 trigger f b;
+#X obj 10 580 send;
+#X obj 10 520 trigger b f;
+#X text 20 340 ---- Save current values in preset manager memory ----
 ;
-#X obj 100 170 trigger f b;
-#X obj 100 490 send;
-#X obj 100 430 trigger b f;
-#X text 110 150 ---- Save current values in preset manager memory ----
+#X text 20 470 ---- Restore values from selected partial's preset manager
+----, f 64;
+#X obj 100 490 s ui-selected-partial;
+#X obj 10 490 trigger f f;
+#X msg 40 390 store-values;
+#X obj 40 420 s ui-partial-0;
+#X obj 400 420 s ui-partial-3;
+#X obj 280 420 s ui-partial-2;
+#X obj 160 420 s ui-partial-1;
+#X obj 10 10 ./ui-partial 0;
+#X obj 10 40 ./ui-partial 1;
+#X obj 10 70 ./ui-partial 2;
+#X obj 10 100 ./ui-partial 3;
+#X msg 580 460 set \$1;
+#X obj 710 560 hsl 128 14 -1 1 0 0 p-px-balance empty empty -2 -8 0
+10 #f0a966 #a54040 #000000 6350 1 0 1;
+#X msg 580 530 set \$1;
+#X floatatom 850 510 5 0 1 3 Volume - p-px-volume 0 0 1, f 5;
+#X floatatom 850 560 5 -1 1 3 Balance - p-px-balance 0 0 1, f 5;
+#X obj 710 440 cnv 15 250 15 empty empty Partial\ Parameters 4 6 0
+12 #e0e0e0 #404040 0;
+#X obj 580 430 r p-px-volume;
+#X obj 710 510 hsl 128 15 0 1 0 0 p-px-volume empty empty -2 -8 0 10
+#2f6036 #a0ffa0 #000000 12700 1 0 1;
+#X obj 970 440 cnv 15 1040 15 empty empty Carrier 4 6 0 12 #e0e0e0
+#404040 0;
+#X obj 1060 500 vsl 15 128 0 1 0 0 p-px-car1-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 12700 1 0 1;
+#X msg 1060 130 set \$1;
+#X obj 1060 100 r p-px-car1-volume;
+#X floatatom 1060 640 5 0 1 3 - - p-px-car1-volume 0 0 1, f 5;
+#X floatatom 1060 670 5 -1 1 3 - - p-px-car1-panorama 0 0 1, f 5;
+#X floatatom 1060 700 5 0 32 3 - - p-px-car1-frequency 0 0 1, f 5
 ;
-#X text 110 330 ---- Restore values from selected partial's preset
-manager ----, f 64;
-#X msg 130 200 \; --ui-values-partial-0 store-values \; --ui-values-partial-1
-store-values \; --ui-values-partial-2 store-values \; --ui-values-partial-3
-store-values \;;
-#X msg 220 460 symbol --ui-values-partial-\$1;
-#X obj 130 380 s ui-selected-partial;
-#X obj 100 350 trigger f f;
-#X connect 0 0 3 0;
-#X connect 1 0 4 0;
-#X connect 3 0 11 0;
-#X connect 3 1 8 0;
-#X connect 5 0 1 0;
-#X connect 5 1 9 0;
-#X connect 9 0 4 1;
-#X connect 11 0 5 0;
-#X connect 11 1 10 0;
-#X restore 300 130 pd handle_partial_switching;
-#N canvas 0 49 1920 1009 partial_manager_and_values 0;
-#X obj 500 140 ./preset/preset-manager partial1;
-#X obj 900 140 ./preset/preset-manager partial2;
-#X obj 1300 140 ./preset/preset-manager partial3;
-#X obj 500 110 r --ui-values-partial-1;
-#X obj 900 110 r --ui-values-partial-2;
-#X obj 1300 110 r --ui-values-partial-3;
-#X text 10 10 Preset manager and preset value objects needed to switch
-the visible partial in the UI, f 88;
-#X text 500 80 ==== Partail 1 ====;
-#X text 900 80 ==== Partail 2 ====;
-#X text 1300 80 ==== Partail 3 ====;
-#X obj 500 200 ./ui-partial-value 1 float enabled;
-#X obj 500 230 ./ui-partial-value 1 float osc1-f;
-#X obj 900 200 ./ui-partial-value 2 float enabled;
-#X obj 900 230 ./ui-partial-value 2 float osc1-f;
-#X obj 100 140 ./preset/preset-manager partial0;
-#X obj 100 110 r --ui-values-partial-0;
-#X text 100 80 ==== Partail 0 ====;
-#X obj 100 200 ./ui-partial-value 0 float enabled;
-#X obj 100 230 ./ui-partial-value 0 float osc1-f;
-#X obj 1300 200 ./ui-partial-value 3 float enabled;
-#X obj 1300 230 ./ui-partial-value 3 float osc1-f;
-#X connect 3 0 0 0;
-#X connect 4 0 1 0;
-#X connect 5 0 2 0;
-#X connect 15 0 14 0;
-#X restore 300 100 pd partial_manager_and_values;
-#X obj 100 129 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000 1;
-#X obj 100 187 s ui-partial;
-#X msg 100 158 0;
-#X obj 100 100 r reinit;
+#X obj 1060 470 tgl 20 0 p-px-car1-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 1 1 1;
+#X text 980 500 Volume;
+#X text 980 670 Panorama;
+#X text 980 700 Frequency;
+#X text 980 470 Enabled;
+#X msg 1060 200 set \$1;
+#X obj 1060 170 r p-px-car1-panorama;
+#X msg 1060 270 set \$1;
+#X obj 1060 240 r p-px-car1-frequency;
+#X msg 1060 60 set \$1;
+#X obj 1060 30 r p-px-car1-enabled;
+#X obj 1120 500 vsl 15 128 0 1 0 0 p-px-car2-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 1240 130 set \$1;
+#X floatatom 1120 640 5 0 1 3 - - p-px-car2-volume 0 0 1, f 5;
+#X floatatom 1120 670 5 -1 1 3 - - p-px-car2-panorama 0 0 1, f 5;
+#X floatatom 1120 700 5 0 32 3 - - p-px-car2-frequency 0 0 1, f 5
+;
+#X obj 1120 470 tgl 20 0 p-px-car2-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1240 200 set \$1;
+#X msg 1240 270 set \$1;
+#X msg 1240 60 set \$1;
+#X obj 1180 500 vsl 15 128 0 1 0 0 p-px-car3-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 1410 130 set \$1;
+#X floatatom 1180 640 5 0 1 3 - - p-px-car3-volume 0 0 1, f 5;
+#X floatatom 1180 670 5 -1 1 3 - - p-px-car3-panorama 0 0 1, f 5;
+#X floatatom 1180 700 5 0 32 3 - - p-px-car3-frequency 0 0 1, f 5
+;
+#X obj 1180 470 tgl 20 0 p-px-car3-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1410 200 set \$1;
+#X msg 1410 270 set \$1;
+#X msg 1410 60 set \$1;
+#X obj 1240 500 vsl 15 128 0 1 0 0 p-px-car4-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 1580 130 set \$1;
+#X floatatom 1240 640 5 0 1 3 - - p-px-car4-volume 0 0 1, f 5;
+#X floatatom 1240 670 5 -1 1 3 - - p-px-car4-panorama 0 0 1, f 5;
+#X floatatom 1240 700 5 0 32 3 - - p-px-car4-frequency 0 0 1, f 5
+;
+#X obj 1240 470 tgl 20 0 p-px-car4-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1580 200 set \$1;
+#X msg 1580 270 set \$1;
+#X msg 1580 60 set \$1;
+#X obj 1300 500 vsl 15 128 0 1 0 0 p-px-car5-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 1750 130 set \$1;
+#X floatatom 1300 640 5 0 1 3 - - p-px-car5-volume 0 0 1, f 5;
+#X floatatom 1300 670 5 -1 1 3 - - p-px-car5-panorama 0 0 1, f 5;
+#X floatatom 1300 700 5 0 32 3 - - p-px-car5-frequency 0 0 1, f 5
+;
+#X obj 1300 470 tgl 20 0 p-px-car5-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1750 200 set \$1;
+#X msg 1750 270 set \$1;
+#X msg 1750 60 set \$1;
+#X obj 1360 500 vsl 15 128 0 1 0 0 p-px-car6-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 1930 130 set \$1;
+#X floatatom 1360 640 5 0 1 3 - - p-px-car6-volume 0 0 1, f 5;
+#X floatatom 1360 670 5 -1 1 3 - - p-px-car6-panorama 0 0 1, f 5;
+#X floatatom 1360 700 5 0 32 3 - - p-px-car6-frequency 0 0 1, f 5
+;
+#X obj 1360 470 tgl 20 0 p-px-car6-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1930 200 set \$1;
+#X msg 1930 270 set \$1;
+#X msg 1930 60 set \$1;
+#X obj 1420 500 vsl 15 128 0 1 0 0 p-px-car7-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 2100 130 set \$1;
+#X floatatom 1420 640 5 0 1 3 - - p-px-car7-volume 0 0 1, f 5;
+#X floatatom 1420 670 5 -1 1 3 - - p-px-car7-panorama 0 0 1, f 5;
+#X floatatom 1420 700 5 0 32 3 - - p-px-car7-frequency 0 0 1, f 5
+;
+#X obj 1420 470 tgl 20 0 p-px-car7-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 2100 200 set \$1;
+#X msg 2100 270 set \$1;
+#X msg 2100 60 set \$1;
+#X obj 1480 500 vsl 15 128 0 1 0 0 p-px-car8-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 2270 130 set \$1;
+#X floatatom 1480 640 5 0 1 3 - - p-px-car8-volume 0 0 1, f 5;
+#X floatatom 1480 670 5 -1 1 3 - - p-px-car8-panorama 0 0 1, f 5;
+#X floatatom 1480 700 5 0 32 3 - - p-px-car8-frequency 0 0 1, f 5
+;
+#X obj 1480 470 tgl 20 0 p-px-car8-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 2270 200 set \$1;
+#X msg 2270 270 set \$1;
+#X msg 2270 60 set \$1;
+#X obj 1540 500 vsl 15 128 0 1 0 0 p-px-car9-volume empty empty 0 -9
+0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 2440 130 set \$1;
+#X floatatom 1540 640 5 0 1 3 - - p-px-car9-volume 0 0 1, f 5;
+#X floatatom 1540 670 5 -1 1 3 - - p-px-car9-panorama 0 0 1, f 5;
+#X floatatom 1540 700 5 0 32 3 - - p-px-car9-frequency 0 0 1, f 5
+;
+#X obj 1540 470 tgl 20 0 p-px-car9-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 2440 200 set \$1;
+#X msg 2440 270 set \$1;
+#X msg 2440 60 set \$1;
+#X obj 1600 500 vsl 15 128 0 1 0 0 p-px-car10-volume empty empty 0
+-9 0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 2620 130 set \$1;
+#X floatatom 1600 640 5 0 1 3 - - p-px-car10-volume 0 0 1, f 5;
+#X floatatom 1600 670 5 -1 1 3 - - p-px-car10-panorama 0 0 1, f 5
+;
+#X floatatom 1600 700 5 0 32 3 - - p-px-car10-frequency 0 0 1, f 5
+;
+#X obj 1600 470 tgl 20 0 p-px-car10-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 2620 200 set \$1;
+#X msg 2620 270 set \$1;
+#X msg 2620 60 set \$1;
+#X obj 1660 500 vsl 15 128 0 1 0 0 p-px-car11-volume empty empty 0
+-9 0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 2790 130 set \$1;
+#X floatatom 1660 640 5 0 1 3 - - p-px-car11-volume 0 0 1, f 5;
+#X floatatom 1660 670 5 -1 1 3 - - p-px-car11-panorama 0 0 1, f 5
+;
+#X floatatom 1660 700 5 0 32 3 - - p-px-car11-frequency 0 0 1, f 5
+;
+#X obj 1660 470 tgl 20 0 p-px-car11-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 2790 200 set \$1;
+#X msg 2790 270 set \$1;
+#X msg 2790 60 set \$1;
+#X obj 1720 500 vsl 15 128 0 1 0 0 p-px-car12-volume empty empty 0
+-9 0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 2960 130 set \$1;
+#X floatatom 1720 640 5 0 1 3 - - p-px-car12-volume 0 0 1, f 5;
+#X floatatom 1720 670 5 -1 1 3 - - p-px-car12-panorama 0 0 1, f 5
+;
+#X floatatom 1720 700 5 0 32 3 - - p-px-car12-frequency 0 0 1, f 5
+;
+#X obj 1720 470 tgl 20 0 p-px-car12-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 2960 200 set \$1;
+#X msg 2960 270 set \$1;
+#X msg 2960 60 set \$1;
+#X obj 1780 500 vsl 15 128 0 1 0 0 p-px-car13-volume empty empty 0
+-9 0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 3130 130 set \$1;
+#X floatatom 1780 640 5 0 1 3 - - p-px-car13-volume 0 0 1, f 5;
+#X floatatom 1780 670 5 -1 1 3 - - p-px-car13-panorama 0 0 1, f 5
+;
+#X floatatom 1780 700 5 0 32 3 - - p-px-car13-frequency 0 0 1, f 5
+;
+#X obj 1780 470 tgl 20 0 p-px-car13-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 3130 200 set \$1;
+#X msg 3130 270 set \$1;
+#X msg 3130 60 set \$1;
+#X obj 1840 500 vsl 15 128 0 1 0 0 p-px-car14-volume empty empty 0
+-9 0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 3310 130 set \$1;
+#X floatatom 1840 640 5 0 1 3 - - p-px-car14-volume 0 0 1, f 5;
+#X floatatom 1840 670 5 -1 1 3 - - p-px-car14-panorama 0 0 1, f 5
+;
+#X floatatom 1840 700 5 0 32 3 - - p-px-car14-frequency 0 0 1, f 5
+;
+#X obj 1840 470 tgl 20 0 p-px-car14-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 3310 200 set \$1;
+#X msg 3310 270 set \$1;
+#X msg 3310 60 set \$1;
+#X obj 1900 500 vsl 15 128 0 1 0 0 p-px-car15-volume empty empty 0
+-9 0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 3480 130 set \$1;
+#X floatatom 1900 640 5 0 1 3 - - p-px-car15-volume 0 0 1, f 5;
+#X floatatom 1900 670 5 -1 1 3 - - p-px-car15-panorama 0 0 1, f 5
+;
+#X floatatom 1900 700 5 0 32 3 - - p-px-car15-frequency 0 0 1, f 5
+;
+#X obj 1900 470 tgl 20 0 p-px-car15-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 3480 200 set \$1;
+#X msg 3480 270 set \$1;
+#X msg 3480 60 set \$1;
+#X obj 1960 500 vsl 15 128 0 1 0 0 p-px-car16-volume empty empty 0
+-9 0 10 #dcbebe #825050 #000000 0 1 0 1;
+#X msg 3650 130 set \$1;
+#X floatatom 1960 640 5 0 1 3 - - p-px-car16-volume 0 0 1, f 5;
+#X floatatom 1960 670 5 -1 1 3 - - p-px-car16-panorama 0 0 1, f 5
+;
+#X floatatom 1960 700 5 0 32 3 - - p-px-car16-frequency 0 0 1, f 5
+;
+#X obj 1960 470 tgl 20 0 p-px-car16-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 3650 200 set \$1;
+#X msg 3650 270 set \$1;
+#X msg 3650 60 set \$1;
+#X obj 1240 100 r p-px-car2-volume;
+#X obj 1240 170 r p-px-car2-panorama;
+#X obj 1240 240 r p-px-car2-frequency;
+#X obj 1240 30 r p-px-car2-enabled;
+#X obj 1410 100 r p-px-car3-volume;
+#X obj 1410 170 r p-px-car3-panorama;
+#X obj 1410 240 r p-px-car3-frequency;
+#X obj 1410 30 r p-px-car3-enabled;
+#X obj 1580 100 r p-px-car4-volume;
+#X obj 1580 170 r p-px-car4-panorama;
+#X obj 1580 240 r p-px-car4-frequency;
+#X obj 1580 30 r p-px-car4-enabled;
+#X obj 1750 100 r p-px-car5-volume;
+#X obj 1750 170 r p-px-car5-panorama;
+#X obj 1750 240 r p-px-car5-frequency;
+#X obj 1750 30 r p-px-car5-enabled;
+#X obj 1930 100 r p-px-car6-volume;
+#X obj 1930 170 r p-px-car6-panorama;
+#X obj 1930 240 r p-px-car6-frequency;
+#X obj 1930 30 r p-px-car6-enabled;
+#X obj 2100 100 r p-px-car7-volume;
+#X obj 2100 170 r p-px-car7-panorama;
+#X obj 2100 240 r p-px-car7-frequency;
+#X obj 2100 30 r p-px-car7-enabled;
+#X obj 2270 100 r p-px-car8-volume;
+#X obj 2270 170 r p-px-car8-panorama;
+#X obj 2270 240 r p-px-car8-frequency;
+#X obj 2270 30 r p-px-car8-enabled;
+#X obj 2440 100 r p-px-car9-volume;
+#X obj 2440 170 r p-px-car9-panorama;
+#X obj 2440 240 r p-px-car9-frequency;
+#X obj 2440 30 r p-px-car9-enabled;
+#X obj 2620 100 r p-px-car10-volume;
+#X obj 2620 170 r p-px-car10-panorama;
+#X obj 2620 240 r p-px-car10-frequency;
+#X obj 2620 30 r p-px-car10-enabled;
+#X obj 2790 100 r p-px-car11-volume;
+#X obj 2790 170 r p-px-car11-panorama;
+#X obj 2790 240 r p-px-car11-frequency;
+#X obj 2790 30 r p-px-car11-enabled;
+#X obj 2960 100 r p-px-car12-volume;
+#X obj 2960 170 r p-px-car12-panorama;
+#X obj 2960 240 r p-px-car12-frequency;
+#X obj 2960 30 r p-px-car12-enabled;
+#X obj 3130 100 r p-px-car13-volume;
+#X obj 3130 170 r p-px-car13-panorama;
+#X obj 3130 240 r p-px-car13-frequency;
+#X obj 3130 30 r p-px-car13-enabled;
+#X obj 3310 100 r p-px-car14-volume;
+#X obj 3310 170 r p-px-car14-panorama;
+#X obj 3310 240 r p-px-car14-frequency;
+#X obj 3310 30 r p-px-car14-enabled;
+#X obj 3480 100 r p-px-car15-volume;
+#X obj 3480 170 r p-px-car15-panorama;
+#X obj 3480 240 r p-px-car15-frequency;
+#X obj 3480 30 r p-px-car15-enabled;
+#X obj 3650 100 r p-px-car16-volume;
+#X obj 3650 170 r p-px-car16-panorama;
+#X obj 3650 240 r p-px-car16-frequency;
+#X obj 3650 30 r p-px-car16-enabled;
+#X obj 1060 730 vradio 20 0 0 4 p-px-car1-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X text 980 730 Sine;
+#X text 980 750 Saw;
+#X text 980 790 Noise;
+#X text 980 770 Square;
+#X obj 1120 730 vradio 20 0 0 4 p-px-car2-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1180 730 vradio 20 0 0 4 p-px-car3-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1240 730 vradio 20 0 0 4 p-px-car4-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1300 730 vradio 20 0 0 4 p-px-car5-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1360 730 vradio 20 0 0 4 p-px-car6-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1420 730 vradio 20 0 0 4 p-px-car7-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1480 730 vradio 20 0 0 4 p-px-car8-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1540 730 vradio 20 0 0 4 p-px-car9-waveform empty empty 0 -8
+0 10 #ffffff #000000 #825050 0 1;
+#X obj 1600 730 vradio 20 0 0 4 p-px-car10-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1660 730 vradio 20 0 0 4 p-px-car11-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1720 730 vradio 20 0 0 4 p-px-car12-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1780 730 vradio 20 0 0 4 p-px-car13-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1840 730 vradio 20 0 0 4 p-px-car14-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1900 730 vradio 20 0 0 4 p-px-car15-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1960 730 vradio 20 0 0 4 p-px-car16-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X msg 1060 340 set \$1;
+#X obj 1060 310 r p-px-car1-waveform;
+#X msg 1240 340 set \$1;
+#X msg 1410 340 set \$1;
+#X msg 1580 340 set \$1;
+#X msg 1750 340 set \$1;
+#X msg 1930 340 set \$1;
+#X msg 2100 340 set \$1;
+#X msg 2270 340 set \$1;
+#X msg 2440 340 set \$1;
+#X msg 2620 340 set \$1;
+#X msg 2790 340 set \$1;
+#X msg 2960 340 set \$1;
+#X msg 3130 340 set \$1;
+#X msg 3310 340 set \$1;
+#X msg 3480 340 set \$1;
+#X msg 3650 340 set \$1;
+#X obj 1240 310 r p-px-car2-waveform;
+#X obj 1410 310 r p-px-car3-waveform;
+#X obj 1580 310 r p-px-car4-waveform;
+#X obj 1750 310 r p-px-car5-waveform;
+#X obj 1930 310 r p-px-car6-waveform;
+#X obj 2100 310 r p-px-car7-waveform;
+#X obj 2270 310 r p-px-car8-waveform;
+#X obj 2440 310 r p-px-car9-waveform;
+#X obj 2620 310 r p-px-car10-waveform;
+#X obj 2790 310 r p-px-car11-waveform;
+#X obj 2960 310 r p-px-car12-waveform;
+#X obj 3130 310 r p-px-car13-waveform;
+#X obj 3310 310 r p-px-car14-waveform;
+#X obj 3480 310 r p-px-car15-waveform;
+#X obj 3650 310 r p-px-car16-waveform;
+#X text 980 640 Volume;
+#X obj 970 840 cnv 15 1040 15 empty empty Modulator 4 6 0 12 #e0e0e0
+#404040 0;
+#X obj 1060 900 vsl 15 128 0 1 0 0 p-px-mod1-volume empty empty 0 -9
+0 10 #f5f5be #969600 #000000 12700 1 0 1;
+#X msg 1060 1350 set \$1;
+#X floatatom 1060 1040 5 0 1 3 - - p-px-car1-volume 0 0 1, f 5;
+#X floatatom 1060 1070 5 -1 1 3 - - p-px-mod1-panorama 0 0 1, f 5
+;
+#X floatatom 1060 1100 5 0 32 3 - - p-px-mod1-frequency 0 0 1, f 5
+;
+#X obj 1060 870 tgl 20 0 p-px-mod1-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 1 1 1;
+#X text 980 900 Volume;
+#X text 980 1070 Panorama;
+#X text 980 1100 Frequency;
+#X text 980 870 Enabled;
+#X msg 1060 1420 set \$1;
+#X msg 1060 1490 set \$1;
+#X msg 1060 1280 set \$1;
+#X obj 1120 900 vsl 15 128 0 1 0 0 p-px-car2-volume empty empty 0 -9
+0 10 #f5f5be #969600 #000000 0 1 0 1;
+#X msg 1240 1350 set \$1;
+#X floatatom 1121 1040 5 0 1 3 - - p-px-mod2-volume 0 0 1, f 5;
+#X floatatom 1120 1070 5 -1 1 3 - - p-px-mod2-panorama 0 0 1, f 5
+;
+#X floatatom 1120 1100 5 0 32 3 - - p-px-mod2-frequency 0 0 1, f 5
+;
+#X obj 1120 870 tgl 20 0 p-px-mod2-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1240 1420 set \$1;
+#X msg 1240 1490 set \$1;
+#X msg 1240 1280 set \$1;
+#X obj 1180 900 vsl 15 128 0 1 0 0 p-px-car3-volume empty empty 0 -9
+0 10 #f5f5be #969600 #000000 0 1 0 1;
+#X msg 1410 1350 set \$1;
+#X floatatom 1180 1040 5 0 1 3 - - p-px-mod3-volume 0 0 1, f 5;
+#X floatatom 1180 1070 5 -1 1 3 - - p-px-mod3-panorama 0 0 1, f 5
+;
+#X floatatom 1180 1100 5 0 32 3 - - p-px-mod3-frequency 0 0 1, f 5
+;
+#X obj 1180 870 tgl 20 0 p-px-mod3-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1410 1420 set \$1;
+#X msg 1410 1490 set \$1;
+#X msg 1410 1280 set \$1;
+#X obj 1240 900 vsl 15 128 0 1 0 0 p-px-car4-volume empty empty 0 -9
+0 10 #f5f5be #969600 #000000 0 1 0 1;
+#X msg 1580 1350 set \$1;
+#X floatatom 1240 1040 5 0 1 3 - - p-px-mod4-volume 0 0 1, f 5;
+#X floatatom 1240 1070 5 -1 1 3 - - p-px-mod4-panorama 0 0 1, f 5
+;
+#X floatatom 1240 1100 5 0 32 3 - - p-px-mod4-frequency 0 0 1, f 5
+;
+#X obj 1240 870 tgl 20 0 p-px-mod4-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1580 1420 set \$1;
+#X msg 1580 1490 set \$1;
+#X msg 1580 1280 set \$1;
+#X obj 1300 900 vsl 15 128 0 1 0 0 p-px-car5-volume empty empty 0 -9
+0 10 #f5f5be #969600 #000000 0 1 0 1;
+#X msg 1750 1350 set \$1;
+#X floatatom 1300 1040 5 0 1 3 - - p-px-mod5-volume 0 0 1, f 5;
+#X floatatom 1300 1070 5 -1 1 3 - - p-px-mod5-panorama 0 0 1, f 5
+;
+#X floatatom 1300 1100 5 0 32 3 - - p-px-mod5-frequency 0 0 1, f 5
+;
+#X obj 1300 870 tgl 20 0 p-px-mod5-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1750 1420 set \$1;
+#X msg 1750 1490 set \$1;
+#X msg 1750 1280 set \$1;
+#X obj 1360 900 vsl 15 128 0 1 0 0 p-px-car6-volume empty empty 0 -9
+0 10 #f5f5be #969600 #000000 0 1 0 1;
+#X msg 1930 1350 set \$1;
+#X floatatom 1360 1040 5 0 1 3 - - p-px-mod6-volume 0 0 1, f 5;
+#X floatatom 1360 1070 5 -1 1 3 - - p-px-mod6-panorama 0 0 1, f 5
+;
+#X floatatom 1360 1100 5 0 32 3 - - p-px-mod6-frequency 0 0 1, f 5
+;
+#X obj 1360 870 tgl 20 0 p-px-mod6-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 1930 1420 set \$1;
+#X msg 1930 1490 set \$1;
+#X msg 1930 1280 set \$1;
+#X obj 1420 900 vsl 15 128 0 1 0 0 p-px-car7-volume empty empty 0 -9
+0 10 #f5f5be #969600 #000000 0 1 0 1;
+#X msg 2100 1350 set \$1;
+#X floatatom 1420 1040 5 0 1 3 - - p-px-mod7-volume 0 0 1, f 5;
+#X floatatom 1420 1070 5 -1 1 3 - - p-px-mod7-panorama 0 0 1, f 5
+;
+#X floatatom 1420 1100 5 0 32 3 - - p-px-mod7-frequency 0 0 1, f 5
+;
+#X obj 1420 870 tgl 20 0 p-px-mod7-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 2100 1420 set \$1;
+#X msg 2100 1490 set \$1;
+#X msg 2100 1280 set \$1;
+#X obj 1480 900 vsl 15 128 0 1 0 0 p-px-car8-volume empty empty 0 -9
+0 10 #f5f5be #969600 #000000 0 1 0 1;
+#X msg 2270 1350 set \$1;
+#X floatatom 1480 1040 5 0 1 3 - - p-px-mod8-volume 0 0 1, f 5;
+#X floatatom 1480 1070 5 -1 1 3 - - p-px-mod8-panorama 0 0 1, f 5
+;
+#X floatatom 1480 1100 5 0 32 3 - - p-px-mod8-frequency 0 0 1, f 5
+;
+#X obj 1480 870 tgl 20 0 p-px-mod8-enabled empty empty 0 27 0 12 #ffffff
+#000000 #000000 0 1 1;
+#X msg 2270 1420 set \$1;
+#X msg 2270 1490 set \$1;
+#X msg 2270 1280 set \$1;
+#X obj 1930 1320 r p-px-car6-volume;
+#X obj 1930 1390 r p-px-car6-panorama;
+#X obj 1930 1460 r p-px-car6-frequency;
+#X obj 1930 1250 r p-px-car6-enabled;
+#X obj 2100 1320 r p-px-car7-volume;
+#X obj 2100 1390 r p-px-car7-panorama;
+#X obj 2100 1460 r p-px-car7-frequency;
+#X obj 2100 1250 r p-px-car7-enabled;
+#X obj 2270 1320 r p-px-car8-volume;
+#X obj 2270 1390 r p-px-car8-panorama;
+#X obj 2270 1460 r p-px-car8-frequency;
+#X obj 2270 1250 r p-px-car8-enabled;
+#X obj 1060 1130 vradio 20 0 0 4 p-px-mod1-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X text 980 1130 Sine;
+#X text 980 1150 Saw;
+#X text 980 1190 Noise;
+#X text 980 1170 Square;
+#X obj 1120 1130 vradio 20 0 0 4 p-px-mod2-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1180 1130 vradio 20 0 0 4 p-px-mod3-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1240 1130 vradio 20 0 0 4 p-px-mod4-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1300 1130 vradio 20 0 0 4 p-px-mod5-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1360 1130 vradio 20 0 0 4 p-px-mod6-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1420 1130 vradio 20 0 0 4 p-px-mod7-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X obj 1480 1130 vradio 20 0 0 4 p-px-mod8-waveform empty empty 0 -8
+0 10 #ffffff #000000 #000000 0 1;
+#X msg 1060 1560 set \$1;
+#X msg 1240 1560 set \$1;
+#X msg 1410 1560 set \$1;
+#X msg 1580 1560 set \$1;
+#X msg 1750 1560 set \$1;
+#X msg 1930 1560 set \$1;
+#X msg 2100 1560 set \$1;
+#X msg 2270 1560 set \$1;
+#X obj 1930 1530 r p-px-car6-waveform;
+#X obj 2100 1530 r p-px-car7-waveform;
+#X obj 2270 1530 r p-px-car8-waveform;
+#X text 980 1040 Volume;
+#X obj 1060 1250 r p-px-mod1-enabled;
+#X obj 1240 1250 r p-px-mod2-enabled;
+#X obj 1410 1250 r p-px-mod3-enabled;
+#X obj 1580 1250 r p-px-mod4-enabled;
+#X obj 1752 1249 r p-px-mod5-enabled;
+#X obj 1752 1319 r p-px-mod5-volume;
+#X obj 1582 1319 r p-px-mod4-volume;
+#X obj 1412 1319 r p-px-mod3-volume;
+#X obj 1240 1320 r p-px-mod2-volume;
+#X obj 1062 1319 r p-px-mod1-volume;
+#X obj 1060 1390 r p-px-mod1-panorama;
+#X obj 1240 1390 r p-px-mod2-panorama;
+#X obj 1410 1390 r p-px-mod3-panorama;
+#X obj 1582 1389 r p-px-mod4-panorama;
+#X obj 1752 1389 r p-px-mod5-panorama;
+#X obj 1062 1459 r p-px-mod1-frequency;
+#X obj 1240 1460 r p-px-mod2-frequency;
+#X obj 1412 1459 r p-px-mod3-frequency;
+#X obj 1580 1460 r p-px-mod4-frequency;
+#X obj 1750 1460 r p-px-mod5-frequency;
+#X obj 1060 1530 r p-px-mod1-waveform;
+#X obj 1240 1530 r p-px-mod2-waveform;
+#X obj 1412 1529 r p-px-mod3-waveform;
+#X obj 1580 1530 r p-px-mod4-waveform;
+#X obj 1750 1530 r p-px-mod5-waveform;
+#X msg 130 550 symbol ui-partial-\$1;
+#X obj 580 500 r p-px-balance;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
 #X connect 5 0 4 0;
-#X connect 7 0 6 0;
-#X connect 8 0 7 0;
-#X connect 9 0 5 0;
+#X connect 6 0 5 0;
+#X connect 7 0 9 0;
+#X connect 9 0 8 0;
+#X connect 10 0 7 0;
+#X connect 11 0 13 0;
 #X connect 12 0 14 0;
-#X connect 14 0 13 0;
+#X connect 13 0 19 0;
+#X connect 13 1 20 0;
 #X connect 15 0 12 0;
-#X coords 0 -1 1 1 1320 200 2 300 400;
+#X connect 15 1 441 0;
+#X connect 19 0 15 0;
+#X connect 19 1 18 0;
+#X connect 20 0 21 0;
+#X connect 20 0 24 0;
+#X connect 20 0 23 0;
+#X connect 20 0 22 0;
+#X connect 29 0 36 0;
+#X connect 29 0 32 0;
+#X connect 31 0 33 0;
+#X connect 31 0 30 0;
+#X connect 35 0 29 0;
+#X connect 39 0 38 0;
+#X connect 39 0 41 0;
+#X connect 40 0 39 0;
+#X connect 49 0 42 0;
+#X connect 50 0 49 0;
+#X connect 51 0 43 0;
+#X connect 52 0 51 0;
+#X connect 53 0 44 0;
+#X connect 54 0 53 0;
+#X connect 56 0 55 0;
+#X connect 56 0 57 0;
+#X connect 61 0 58 0;
+#X connect 62 0 59 0;
+#X connect 63 0 60 0;
+#X connect 65 0 64 0;
+#X connect 65 0 66 0;
+#X connect 70 0 67 0;
+#X connect 71 0 68 0;
+#X connect 72 0 69 0;
+#X connect 74 0 73 0;
+#X connect 74 0 75 0;
+#X connect 79 0 76 0;
+#X connect 80 0 77 0;
+#X connect 81 0 78 0;
+#X connect 83 0 82 0;
+#X connect 83 0 84 0;
+#X connect 88 0 85 0;
+#X connect 89 0 86 0;
+#X connect 90 0 87 0;
+#X connect 92 0 93 0;
+#X connect 92 0 91 0;
+#X connect 97 0 94 0;
+#X connect 98 0 95 0;
+#X connect 99 0 96 0;
+#X connect 101 0 100 0;
+#X connect 101 0 102 0;
+#X connect 106 0 103 0;
+#X connect 107 0 104 0;
+#X connect 108 0 105 0;
+#X connect 110 0 111 0;
+#X connect 110 0 109 0;
+#X connect 115 0 112 0;
+#X connect 116 0 113 0;
+#X connect 117 0 114 0;
+#X connect 119 0 118 0;
+#X connect 119 0 120 0;
+#X connect 124 0 121 0;
+#X connect 125 0 122 0;
+#X connect 126 0 123 0;
+#X connect 128 0 127 0;
+#X connect 128 0 129 0;
+#X connect 133 0 130 0;
+#X connect 134 0 131 0;
+#X connect 135 0 132 0;
+#X connect 137 0 138 0;
+#X connect 137 0 136 0;
+#X connect 142 0 139 0;
+#X connect 143 0 140 0;
+#X connect 144 0 141 0;
+#X connect 146 0 145 0;
+#X connect 146 0 147 0;
+#X connect 151 0 148 0;
+#X connect 152 0 149 0;
+#X connect 153 0 150 0;
+#X connect 155 0 154 0;
+#X connect 155 0 156 0;
+#X connect 160 0 157 0;
+#X connect 161 0 158 0;
+#X connect 162 0 159 0;
+#X connect 164 0 165 0;
+#X connect 164 0 163 0;
+#X connect 169 0 166 0;
+#X connect 170 0 167 0;
+#X connect 171 0 168 0;
+#X connect 173 0 172 0;
+#X connect 173 0 174 0;
+#X connect 178 0 175 0;
+#X connect 179 0 176 0;
+#X connect 180 0 177 0;
+#X connect 182 0 181 0;
+#X connect 182 0 183 0;
+#X connect 187 0 184 0;
+#X connect 188 0 185 0;
+#X connect 189 0 186 0;
+#X connect 190 0 56 0;
+#X connect 191 0 61 0;
+#X connect 192 0 62 0;
+#X connect 193 0 63 0;
+#X connect 194 0 65 0;
+#X connect 195 0 70 0;
+#X connect 196 0 71 0;
+#X connect 197 0 72 0;
+#X connect 198 0 74 0;
+#X connect 199 0 79 0;
+#X connect 200 0 80 0;
+#X connect 201 0 81 0;
+#X connect 202 0 83 0;
+#X connect 203 0 88 0;
+#X connect 204 0 89 0;
+#X connect 205 0 90 0;
+#X connect 206 0 92 0;
+#X connect 207 0 97 0;
+#X connect 208 0 98 0;
+#X connect 209 0 99 0;
+#X connect 210 0 101 0;
+#X connect 211 0 106 0;
+#X connect 212 0 107 0;
+#X connect 213 0 108 0;
+#X connect 214 0 110 0;
+#X connect 215 0 115 0;
+#X connect 216 0 116 0;
+#X connect 217 0 117 0;
+#X connect 218 0 119 0;
+#X connect 219 0 124 0;
+#X connect 220 0 125 0;
+#X connect 221 0 126 0;
+#X connect 222 0 128 0;
+#X connect 223 0 133 0;
+#X connect 224 0 134 0;
+#X connect 225 0 135 0;
+#X connect 226 0 137 0;
+#X connect 227 0 142 0;
+#X connect 228 0 143 0;
+#X connect 229 0 144 0;
+#X connect 230 0 146 0;
+#X connect 231 0 151 0;
+#X connect 232 0 152 0;
+#X connect 233 0 153 0;
+#X connect 234 0 155 0;
+#X connect 235 0 160 0;
+#X connect 236 0 161 0;
+#X connect 237 0 162 0;
+#X connect 238 0 164 0;
+#X connect 239 0 169 0;
+#X connect 240 0 170 0;
+#X connect 241 0 171 0;
+#X connect 242 0 173 0;
+#X connect 243 0 178 0;
+#X connect 244 0 179 0;
+#X connect 245 0 180 0;
+#X connect 246 0 182 0;
+#X connect 247 0 187 0;
+#X connect 248 0 188 0;
+#X connect 249 0 189 0;
+#X connect 270 0 250 0;
+#X connect 271 0 270 0;
+#X connect 272 0 255 0;
+#X connect 273 0 256 0;
+#X connect 274 0 257 0;
+#X connect 275 0 258 0;
+#X connect 276 0 259 0;
+#X connect 277 0 260 0;
+#X connect 278 0 261 0;
+#X connect 279 0 262 0;
+#X connect 280 0 263 0;
+#X connect 281 0 264 0;
+#X connect 282 0 265 0;
+#X connect 283 0 266 0;
+#X connect 284 0 267 0;
+#X connect 285 0 268 0;
+#X connect 286 0 269 0;
+#X connect 287 0 272 0;
+#X connect 288 0 273 0;
+#X connect 289 0 274 0;
+#X connect 290 0 275 0;
+#X connect 291 0 276 0;
+#X connect 292 0 277 0;
+#X connect 293 0 278 0;
+#X connect 294 0 279 0;
+#X connect 295 0 280 0;
+#X connect 296 0 281 0;
+#X connect 297 0 282 0;
+#X connect 298 0 283 0;
+#X connect 299 0 284 0;
+#X connect 300 0 285 0;
+#X connect 301 0 286 0;
+#X connect 305 0 304 0;
+#X connect 305 0 306 0;
+#X connect 314 0 307 0;
+#X connect 315 0 308 0;
+#X connect 316 0 309 0;
+#X connect 318 0 317 0;
+#X connect 318 0 319 0;
+#X connect 323 0 320 0;
+#X connect 324 0 321 0;
+#X connect 325 0 322 0;
+#X connect 327 0 326 0;
+#X connect 327 0 328 0;
+#X connect 332 0 329 0;
+#X connect 333 0 330 0;
+#X connect 334 0 331 0;
+#X connect 336 0 335 0;
+#X connect 336 0 337 0;
+#X connect 341 0 338 0;
+#X connect 342 0 339 0;
+#X connect 343 0 340 0;
+#X connect 345 0 344 0;
+#X connect 345 0 346 0;
+#X connect 350 0 347 0;
+#X connect 351 0 348 0;
+#X connect 352 0 349 0;
+#X connect 354 0 355 0;
+#X connect 354 0 353 0;
+#X connect 359 0 356 0;
+#X connect 360 0 357 0;
+#X connect 361 0 358 0;
+#X connect 363 0 362 0;
+#X connect 363 0 364 0;
+#X connect 368 0 365 0;
+#X connect 369 0 366 0;
+#X connect 370 0 367 0;
+#X connect 372 0 373 0;
+#X connect 372 0 371 0;
+#X connect 377 0 374 0;
+#X connect 378 0 375 0;
+#X connect 379 0 376 0;
+#X connect 380 0 354 0;
+#X connect 381 0 359 0;
+#X connect 382 0 360 0;
+#X connect 383 0 361 0;
+#X connect 384 0 363 0;
+#X connect 385 0 368 0;
+#X connect 386 0 369 0;
+#X connect 387 0 370 0;
+#X connect 388 0 372 0;
+#X connect 389 0 377 0;
+#X connect 390 0 378 0;
+#X connect 391 0 379 0;
+#X connect 404 0 392 0;
+#X connect 405 0 397 0;
+#X connect 406 0 398 0;
+#X connect 407 0 399 0;
+#X connect 408 0 400 0;
+#X connect 409 0 401 0;
+#X connect 410 0 402 0;
+#X connect 411 0 403 0;
+#X connect 412 0 409 0;
+#X connect 413 0 410 0;
+#X connect 414 0 411 0;
+#X connect 416 0 316 0;
+#X connect 417 0 325 0;
+#X connect 418 0 334 0;
+#X connect 419 0 343 0;
+#X connect 420 0 352 0;
+#X connect 421 0 345 0;
+#X connect 422 0 336 0;
+#X connect 423 0 327 0;
+#X connect 424 0 318 0;
+#X connect 425 0 305 0;
+#X connect 426 0 314 0;
+#X connect 427 0 323 0;
+#X connect 428 0 332 0;
+#X connect 429 0 341 0;
+#X connect 430 0 350 0;
+#X connect 431 0 315 0;
+#X connect 432 0 324 0;
+#X connect 433 0 333 0;
+#X connect 434 0 342 0;
+#X connect 435 0 351 0;
+#X connect 436 0 404 0;
+#X connect 437 0 405 0;
+#X connect 438 0 406 0;
+#X connect 439 0 407 0;
+#X connect 440 0 408 0;
+#X connect 441 0 14 1;
+#X connect 442 0 31 0;
+#X coords 0 -1 1 1 1320 820 2 700 400;
 #X restore 10 380 pd partial_parameters;
-#X text 1360 380 TODO: Stereo voices;
