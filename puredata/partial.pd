@@ -5,10 +5,10 @@
 #X obj 300 100 inlet;
 #X obj 100 390 osc~;
 #X obj 100 470 *~;
-#X floatatom 100 130 5 0 0 1 Frequency_Hz - - 0 0 0, f 5;
-#X floatatom 300 129 5 0 0 1 Velocity - - 0 0 0, f 5;
-#X floatatom 500 160 5 0 0 1 Enabled - - 0 0 0, f 5;
-#X floatatom 700 160 5 0 0 1 Harmonic - - 0 0 0, f 5;
+#X floatatom 100 130 5 0 0 1 Frequency_Hz - - 0 0 1, f 5;
+#X floatatom 300 130 5 0 0 1 Velocity - - 0 0 1, f 5;
+#X floatatom 500 160 5 0 0 1 Enabled - - 0 0 1, f 5;
+#X floatatom 700 160 5 0 0 1 Harmonic - - 0 0 1, f 5;
 #X obj 500 130 ./utils/declick;
 #X obj 700 130 ./utils/declick;
 #X obj 100 360 *;
@@ -23,10 +23,10 @@
 #X obj 100 300 r \$0-frequency;
 #X obj 140 440 r \$0-velocity;
 #X text 100 270 ==== Tone Generation ====;
-#X obj 500 100 r p-partial-\$1-enabled;
-#X obj 700 100 r p-partial-\$1-osc1-f;
 #X obj 700 200 s \$0-osc1-f;
 #X obj 140 330 r \$0-osc1-f;
+#X obj 500 100 r p-p\$1-enabled;
+#X obj 700 100 r p-p\$1-osc1-f;
 #X connect 2 0 6 0;
 #X connect 3 0 7 0;
 #X connect 4 0 5 0;
@@ -34,7 +34,7 @@
 #X connect 6 0 17 0;
 #X connect 7 0 15 0;
 #X connect 8 0 13 0;
-#X connect 9 0 26 0;
+#X connect 9 0 24 0;
 #X connect 10 0 8 0;
 #X connect 11 0 9 0;
 #X connect 12 0 4 0;
@@ -43,6 +43,6 @@
 #X connect 16 0 14 1;
 #X connect 21 0 12 0;
 #X connect 22 0 5 1;
-#X connect 24 0 10 0;
-#X connect 25 0 11 0;
-#X connect 27 0 12 1;
+#X connect 25 0 12 1;
+#X connect 26 0 10 0;
+#X connect 27 0 11 0;

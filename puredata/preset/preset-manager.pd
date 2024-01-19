@@ -7,16 +7,6 @@
 #X text 10 260 \$1 - Name of the preset manager obejct, f 68;
 #X obj 0 390 cnv 15 500 15 empty empty Usage 10 5 0 12 #e0e0e0 #404040
 0;
-#X text 10 40 This abstraction can be used to save the parameters of
-a synthesizer of effect to a preset file and to restore the values
-from a file. As the name suggests this is meant to manage presets.
-, f 68;
-#X text 10 100 An additional \, advanced usage is to not save the parameters
-to a file but in memory. This can be used in a user interface to switch
-between different parts that are controlled by some of the UI. Here
-the preset manager is just a temporary storage for the UI to save some
-values while they are not visible on screen \, and to get the values
-back when needed., f 68;
 #X text 10 210 Both use cases are equally supported by this object.
 , f 68;
 #X text 10 290 The name is used to communicate with the preset value
@@ -156,7 +146,7 @@ values to/from memory., f 68;
 #X connect 9 0 2 0;
 #X connect 9 1 4 0;
 #X restore 820 190 pd store-values;
-#N canvas 0 49 1920 1009 restore-values 1;
+#N canvas 0 49 1920 1009 restore-values 0;
 #X text 10 10 Restore preset values from memory;
 #X obj 100 100 inlet;
 #X obj 100 470 outlet;
@@ -261,34 +251,44 @@ memory. This doesn't affact the preset value objects \, though., f
 68;
 #X obj 1090 160 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
 #000000 #000000 1;
-#X connect 13 0 24 0;
-#X connect 15 0 41 0;
-#X connect 16 0 41 0;
-#X connect 17 0 41 0;
-#X connect 19 0 41 0;
-#X connect 19 1 20 0;
-#X connect 24 0 46 0;
-#X connect 25 0 27 0;
-#X connect 26 0 25 0;
-#X connect 30 0 31 0;
-#X connect 31 0 42 0;
-#X connect 31 1 32 0;
-#X connect 33 0 43 0;
+#X text 10 40 This abstraction can be used to save the parameters of
+a synthesizer or effect to a preset file and to restore the values
+from a file. As the name suggests this is meant to manage presets.
+, f 68;
+#X text 10 100 An additional advanced usage is to not save the parameters
+to a file but in memory. This can be used in a user interface to switch
+between different parts that are controlled by some of the UI. Here
+the preset manager is just a temporary storage for the UI to save some
+values while they are not visible on screen \, and to get the values
+back when needed., f 68;
+#X connect 11 0 22 0;
+#X connect 13 0 39 0;
+#X connect 14 0 39 0;
+#X connect 15 0 39 0;
+#X connect 17 0 39 0;
+#X connect 17 1 18 0;
+#X connect 22 0 44 0;
+#X connect 23 0 25 0;
+#X connect 24 0 23 0;
+#X connect 28 0 29 0;
+#X connect 29 0 40 0;
+#X connect 29 1 30 0;
+#X connect 31 0 41 0;
+#X connect 34 0 12 0;
+#X connect 35 0 13 0;
 #X connect 36 0 14 0;
 #X connect 37 0 15 0;
-#X connect 38 0 16 0;
-#X connect 39 0 17 0;
-#X connect 40 0 24 0;
-#X connect 41 0 18 0;
-#X connect 42 0 33 0;
-#X connect 43 0 44 0;
-#X connect 43 1 34 0;
+#X connect 38 0 22 0;
+#X connect 39 0 16 0;
+#X connect 40 0 31 0;
+#X connect 41 0 42 0;
+#X connect 41 1 32 0;
+#X connect 42 0 32 0;
+#X connect 43 0 39 0;
 #X connect 44 0 34 0;
-#X connect 45 0 41 0;
-#X connect 46 0 36 0;
-#X connect 46 1 37 0;
-#X connect 46 2 38 0;
-#X connect 46 3 39 0;
-#X connect 46 4 48 0;
-#X connect 46 5 19 0;
-#X connect 48 0 45 0;
+#X connect 44 1 35 0;
+#X connect 44 2 36 0;
+#X connect 44 3 37 0;
+#X connect 44 4 46 0;
+#X connect 44 5 17 0;
+#X connect 46 0 43 0;

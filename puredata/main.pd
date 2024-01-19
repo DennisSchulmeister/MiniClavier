@@ -29,7 +29,7 @@ float sustain_color float sustenuto_color;
 #X floatatom 659 410 5 -1 1 3 Pitchbend - in-pitchbend 0 0 1, f 5
 ;
 #X obj 770 490 tgl 15 0 in-sustain empty Sustain 17 7 0 10 #fcfcfc
-#be0000 #000000 0 0.598425 1;
+#be0000 #000000 0 1 1;
 #X obj 840 490 tgl 15 0 in-sustenuto empty Sustenuto 17 7 0 10 #fcfcfc
 #be0000 #000000 0 1 1;
 #X msg 680 570 set \$1;
@@ -217,7 +217,7 @@ f 5;
 #X connect 53 0 50 0;
 #X coords 0 -1 1 1 660 290 2 480 240;
 #X restore 670 80 pd fx_parameters;
-#X text 1350 50 TODO: Oscillator;
+#X text 1350 30 TODO: Oscillator;
 #N canvas 0 49 1920 1009 dsp 0;
 #X obj 0 0 cnv 15 1320 60 empty empty MiniClavier\ (PD) 20 23 0 30
 #144678 #f5f5f5 0;
@@ -231,63 +231,90 @@ f 5;
 30 10 0 15 #144678 #79d9ec #f5f5f5 1;
 #X coords 0 -1 1 1 1320 60 2 0 0;
 #X restore 10 10 pd dsp;
-#X text 1350 10 TODO: Partials;
 #N canvas 0 49 1920 1009 partial_parameters 0;
-#X obj 300 100 cnv 15 1320 30 empty empty Partial 80 12 0 14 #144678
+#X obj 300 400 cnv 15 1320 30 empty empty Partial 80 12 0 14 #144678
 #f5f5f5 0;
-#X obj 310 107 hradio 16 0 0 4 ui-partial empty empty 0 -8 0 10 #5783b2
-#000000 #000000 0 1;
-#X obj 180 41 r ui-partial;
-#X msg 180 70 set \$1;
-#N canvas 0 49 1920 1009 handle_partials_switcher 0;
-#X obj 100 130 ./preset/preset-manager partial1;
-#X obj 400 130 ./preset/preset-manager partial2;
-#X obj 700 130 ./preset/preset-manager partial3;
-#X obj 1000 130 ./preset/preset-manager partial4;
-#X obj 100 200 r ui-partial;
-#X msg 100 480 restore-values;
+#X obj 310 407 hradio 16 0 0 4 ui-partial empty empty 0 -8 0 10 #5783b2
+#000000 #000000 3 1;
+#X obj 180 341 r ui-partial;
+#X msg 180 370 set \$1;
+#X floatatom 500 440 5 0 0 1 Harmonic - p-px-osc1-f 0 0 1, f 5;
+#X msg 500 369 set \$1;
+#X obj 310 440 tgl 20 0 p-px-enabled empty Enabled 22 7 0 12 #fcfcfc
+#000000 #000000 1 1 1;
+#X msg 310 369 set \$1;
+#X obj 310 340 r p-px-enabled;
+#X obj 500 340 r p-px-osc1-f;
+#N canvas 0 49 1920 1009 handle_partial_switching 0;
+#X obj 100 100 r ui-partial;
+#X msg 100 460 restore-values;
 #X text 10 10 Handle switching the currently visible/edited partial
 ;
-#X obj 100 270 trigger f b;
-#X obj 100 510 send;
-#X obj 100 450 trigger b f;
-#X text 110 250 ---- Save current values in preset manager memory ----
+#X obj 100 170 trigger f b;
+#X obj 100 490 send;
+#X obj 100 430 trigger b f;
+#X text 110 150 ---- Save current values in preset manager memory ----
 ;
-#X text 110 430 ---- Restore values from selected partial's preset
+#X text 110 330 ---- Restore values from selected partial's preset
 manager ----, f 64;
-#X msg 130 300 \; --ui-values-partial-1 store-values \; --ui-values-partial-2
-store-values \; --ui-values-partial-3 store-values \; --ui-values-partial-4
+#X msg 130 200 \; --ui-values-partial-0 store-values \; --ui-values-partial-1
+store-values \; --ui-values-partial-2 store-values \; --ui-values-partial-3
 store-values \;;
-#X msg 220 480 --ui-values-partial-\$1;
-#X obj 100 100 r --ui-values-partial-1;
-#X obj 400 100 r --ui-values-partial-2;
-#X obj 700 100 r --ui-values-partial-3;
-#X obj 1000 100 r --ui-values-partial-4;
-#X connect 4 0 7 0;
-#X connect 5 0 8 0;
-#X connect 7 0 9 0;
-#X connect 7 1 12 0;
-#X connect 9 0 5 0;
-#X connect 9 1 13 0;
-#X connect 13 0 8 1;
-#X connect 14 0 0 0;
-#X connect 15 0 1 0;
-#X connect 16 0 2 0;
-#X connect 17 0 3 0;
-#X restore 90 110 pd handle_partials_switcher;
-#X floatatom 500 140 5 0 0 1 Harmonic - p-px-osc1-f 0 0 1, f 5;
-#X msg 500 69 set \$1;
-#X obj 310 140 tgl 20 0 p-px-enabled empty Enabled 22 7 0 12 #fcfcfc
-#000000 #000000 0 1 1;
-#X msg 310 69 set \$1;
-#X obj 310 40 r p-px-enabled;
-#X obj 500 40 r p-px-osc1-f;
+#X msg 220 460 symbol --ui-values-partial-\$1;
+#X obj 130 380 s ui-selected-partial;
+#X obj 100 350 trigger f f;
+#X connect 0 0 3 0;
+#X connect 1 0 4 0;
+#X connect 3 0 11 0;
+#X connect 3 1 8 0;
+#X connect 5 0 1 0;
+#X connect 5 1 9 0;
+#X connect 9 0 4 1;
+#X connect 11 0 5 0;
+#X connect 11 1 10 0;
+#X restore 300 130 pd handle_partial_switching;
+#N canvas 0 49 1920 1009 partial_manager_and_values 0;
+#X obj 500 140 ./preset/preset-manager partial1;
+#X obj 900 140 ./preset/preset-manager partial2;
+#X obj 1300 140 ./preset/preset-manager partial3;
+#X obj 500 110 r --ui-values-partial-1;
+#X obj 900 110 r --ui-values-partial-2;
+#X obj 1300 110 r --ui-values-partial-3;
+#X text 10 10 Preset manager and preset value objects needed to switch
+the visible partial in the UI, f 88;
+#X text 500 80 ==== Partail 1 ====;
+#X text 900 80 ==== Partail 2 ====;
+#X text 1300 80 ==== Partail 3 ====;
+#X obj 500 200 ./ui-partial-value 1 float enabled;
+#X obj 500 230 ./ui-partial-value 1 float osc1-f;
+#X obj 900 200 ./ui-partial-value 2 float enabled;
+#X obj 900 230 ./ui-partial-value 2 float osc1-f;
+#X obj 100 140 ./preset/preset-manager partial0;
+#X obj 100 110 r --ui-values-partial-0;
+#X text 100 80 ==== Partail 0 ====;
+#X obj 100 200 ./ui-partial-value 0 float enabled;
+#X obj 100 230 ./ui-partial-value 0 float osc1-f;
+#X obj 1300 200 ./ui-partial-value 3 float enabled;
+#X obj 1300 230 ./ui-partial-value 3 float osc1-f;
+#X connect 3 0 0 0;
+#X connect 4 0 1 0;
+#X connect 5 0 2 0;
+#X connect 15 0 14 0;
+#X restore 300 100 pd partial_manager_and_values;
+#X obj 100 129 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 100 187 s ui-partial;
+#X msg 100 158 0;
+#X obj 100 100 r reinit;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
-#X connect 6 0 5 0;
+#X connect 5 0 4 0;
+#X connect 7 0 6 0;
 #X connect 8 0 7 0;
-#X connect 9 0 8 0;
-#X connect 10 0 6 0;
-#X coords 0 -1 1 1 1320 200 2 300 100;
+#X connect 9 0 5 0;
+#X connect 12 0 14 0;
+#X connect 14 0 13 0;
+#X connect 15 0 12 0;
+#X coords 0 -1 1 1 1320 200 2 300 400;
 #X restore 10 380 pd partial_parameters;
-#X text 1350 30 TODO: Stereo voices;
+#X text 1350 10 TODO: Stereo voices;
