@@ -27,7 +27,7 @@ float sustain_color float sustenuto_color;
 #X floatatom 659 410 5 -1 1 3 Pitchbend - in-pitchbend 0 0 1, f 5
 ;
 #X obj 740 500 tgl 20 0 in-sustain empty Sustain 24 7 0 12 #fcfcfc
-#be0000 #000000 1 1 1;
+#be0000 #000000 0 1 1;
 #X obj 830 500 tgl 20 0 in-sustenuto empty Sustenuto 24 7 0 12 #fcfcfc
 #be0000 #000000 0 1 1;
 #X msg 680 570 set \$1;
@@ -149,10 +149,10 @@ f 5;
 5;
 #X text 820 420 %;
 #X obj 880 510 tgl 20 0 p-rev-enabled empty Reverb\ enabled 24 7 0
-12 #fcfcfc #000000 #000000 0 1 1;
+12 #fcfcfc #000000 #000000 1 1 1;
 #X msg 920 580 set \$1;
 #X obj 510 510 tgl 20 0 p-cho-enabled empty Chorus\ enabled 24 7 0
-12 #fcfcfc #000000 #000000 0 1 1;
+12 #fcfcfc #000000 #000000 1 1 1;
 #X msg 540 579 set \$1;
 #X obj 1590 180 loadbang;
 #X obj 470 170 r p-cho-frequency;
