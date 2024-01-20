@@ -272,8 +272,8 @@ f 5;
 #X obj 580 430 r p-px-volume;
 #X obj 710 510 hsl 128 19 0 1 0 0 p-px-volume empty empty -2 -8 0 10
 #2f6036 #a0ffa0 #000000 12700 1 0 1;
-#X obj 970 440 cnv 15 1040 15 empty empty Carrier 4 6 0 12 #e0e0e0
-#404040 0;
+#X obj 970 440 cnv 15 620 15 empty empty Carrier 4 6 0 12 #e0e0e0 #404040
+0;
 #X obj 1060 500 vsl 20 128 0 1 0 0 p-px-car1-volume empty empty 0 -9
 0 10 #dcbebe #825050 #000000 12700 1 0 1;
 #X msg 1060 130 set \$1;
@@ -378,109 +378,6 @@ f 5;
 #X msg 2270 200 set \$1;
 #X msg 2270 270 set \$1;
 #X msg 2270 60 set \$1;
-#X obj 1540 500 vsl 20 128 0 1 0 0 p-px-car9-volume empty empty 0 -9
-0 10 #dcbebe #825050 #000000 0 1 0 1;
-#X msg 2440 130 set \$1;
-#X floatatom 1540 640 5 0 1 3 - - p-px-car9-volume 0 0 1, f 5;
-#X floatatom 1540 670 5 -1 1 3 - - p-px-car9-panorama 0 0 1, f 5;
-#X floatatom 1540 700 5 0 32 3 - - p-px-car9-frequency 0 0 1, f 5
-;
-#X obj 1540 470 tgl 20 0 p-px-car9-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 2440 200 set \$1;
-#X msg 2440 270 set \$1;
-#X msg 2440 60 set \$1;
-#X obj 1600 500 vsl 20 128 0 1 0 0 p-px-car10-volume empty empty 0
--9 0 10 #dcbebe #825050 #000000 0 1 0 1;
-#X msg 2620 130 set \$1;
-#X floatatom 1600 640 5 0 1 3 - - p-px-car10-volume 0 0 1, f 5;
-#X floatatom 1600 670 5 -1 1 3 - - p-px-car10-panorama 0 0 1, f 5
-;
-#X floatatom 1600 700 5 0 32 3 - - p-px-car10-frequency 0 0 1, f 5
-;
-#X obj 1600 470 tgl 20 0 p-px-car10-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 2620 200 set \$1;
-#X msg 2620 270 set \$1;
-#X msg 2620 60 set \$1;
-#X obj 1660 500 vsl 20 128 0 1 0 0 p-px-car11-volume empty empty 0
--9 0 10 #dcbebe #825050 #000000 0 1 0 1;
-#X msg 2790 130 set \$1;
-#X floatatom 1660 640 5 0 1 3 - - p-px-car11-volume 0 0 1, f 5;
-#X floatatom 1660 670 5 -1 1 3 - - p-px-car11-panorama 0 0 1, f 5
-;
-#X floatatom 1660 700 5 0 32 3 - - p-px-car11-frequency 0 0 1, f 5
-;
-#X obj 1660 470 tgl 20 0 p-px-car11-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 2790 200 set \$1;
-#X msg 2790 270 set \$1;
-#X msg 2790 60 set \$1;
-#X obj 1720 500 vsl 20 128 0 1 0 0 p-px-car12-volume empty empty 0
--9 0 10 #dcbebe #825050 #000000 0 1 0 1;
-#X msg 2960 130 set \$1;
-#X floatatom 1720 640 5 0 1 3 - - p-px-car12-volume 0 0 1, f 5;
-#X floatatom 1720 670 5 -1 1 3 - - p-px-car12-panorama 0 0 1, f 5
-;
-#X floatatom 1720 700 5 0 32 3 - - p-px-car12-frequency 0 0 1, f 5
-;
-#X obj 1720 470 tgl 20 0 p-px-car12-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 2960 200 set \$1;
-#X msg 2960 270 set \$1;
-#X msg 2960 60 set \$1;
-#X obj 1780 500 vsl 20 128 0 1 0 0 p-px-car13-volume empty empty 0
--9 0 10 #dcbebe #825050 #000000 0 1 0 1;
-#X msg 3130 130 set \$1;
-#X floatatom 1780 640 5 0 1 3 - - p-px-car13-volume 0 0 1, f 5;
-#X floatatom 1780 670 5 -1 1 3 - - p-px-car13-panorama 0 0 1, f 5
-;
-#X floatatom 1780 700 5 0 32 3 - - p-px-car13-frequency 0 0 1, f 5
-;
-#X obj 1780 470 tgl 20 0 p-px-car13-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 3130 200 set \$1;
-#X msg 3130 270 set \$1;
-#X msg 3130 60 set \$1;
-#X obj 1840 500 vsl 20 128 0 1 0 0 p-px-car14-volume empty empty 0
--9 0 10 #dcbebe #825050 #000000 0 1 0 1;
-#X msg 3310 130 set \$1;
-#X floatatom 1840 640 5 0 1 3 - - p-px-car14-volume 0 0 1, f 5;
-#X floatatom 1840 670 5 -1 1 3 - - p-px-car14-panorama 0 0 1, f 5
-;
-#X floatatom 1840 700 5 0 32 3 - - p-px-car14-frequency 0 0 1, f 5
-;
-#X obj 1840 470 tgl 20 0 p-px-car14-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 3310 200 set \$1;
-#X msg 3310 270 set \$1;
-#X msg 3310 60 set \$1;
-#X obj 1900 500 vsl 20 128 0 1 0 0 p-px-car15-volume empty empty 0
--9 0 10 #dcbebe #825050 #000000 0 1 0 1;
-#X msg 3480 130 set \$1;
-#X floatatom 1900 640 5 0 1 3 - - p-px-car15-volume 0 0 1, f 5;
-#X floatatom 1900 670 5 -1 1 3 - - p-px-car15-panorama 0 0 1, f 5
-;
-#X floatatom 1900 700 5 0 32 3 - - p-px-car15-frequency 0 0 1, f 5
-;
-#X obj 1900 470 tgl 20 0 p-px-car15-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 3480 200 set \$1;
-#X msg 3480 270 set \$1;
-#X msg 3480 60 set \$1;
-#X obj 1960 500 vsl 20 128 0 1 0 0 p-px-car16-volume empty empty 0
--9 0 10 #dcbebe #825050 #000000 0 1 0 1;
-#X msg 3650 130 set \$1;
-#X floatatom 1960 640 5 0 1 3 - - p-px-car16-volume 0 0 1, f 5;
-#X floatatom 1960 670 5 -1 1 3 - - p-px-car16-panorama 0 0 1, f 5
-;
-#X floatatom 1960 700 5 0 32 3 - - p-px-car16-frequency 0 0 1, f 5
-;
-#X obj 1960 470 tgl 20 0 p-px-car16-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 3650 200 set \$1;
-#X msg 3650 270 set \$1;
-#X msg 3650 60 set \$1;
 #X obj 1240 100 r p-px-car2-volume;
 #X obj 1240 170 r p-px-car2-panorama;
 #X obj 1240 240 r p-px-car2-frequency;
@@ -509,38 +406,6 @@ f 5;
 #X obj 2270 170 r p-px-car8-panorama;
 #X obj 2270 240 r p-px-car8-frequency;
 #X obj 2270 30 r p-px-car8-enabled;
-#X obj 2440 100 r p-px-car9-volume;
-#X obj 2440 170 r p-px-car9-panorama;
-#X obj 2440 240 r p-px-car9-frequency;
-#X obj 2440 30 r p-px-car9-enabled;
-#X obj 2620 100 r p-px-car10-volume;
-#X obj 2620 170 r p-px-car10-panorama;
-#X obj 2620 240 r p-px-car10-frequency;
-#X obj 2620 30 r p-px-car10-enabled;
-#X obj 2790 100 r p-px-car11-volume;
-#X obj 2790 170 r p-px-car11-panorama;
-#X obj 2790 240 r p-px-car11-frequency;
-#X obj 2790 30 r p-px-car11-enabled;
-#X obj 2960 100 r p-px-car12-volume;
-#X obj 2960 170 r p-px-car12-panorama;
-#X obj 2960 240 r p-px-car12-frequency;
-#X obj 2960 30 r p-px-car12-enabled;
-#X obj 3130 100 r p-px-car13-volume;
-#X obj 3130 170 r p-px-car13-panorama;
-#X obj 3130 240 r p-px-car13-frequency;
-#X obj 3130 30 r p-px-car13-enabled;
-#X obj 3310 100 r p-px-car14-volume;
-#X obj 3310 170 r p-px-car14-panorama;
-#X obj 3310 240 r p-px-car14-frequency;
-#X obj 3310 30 r p-px-car14-enabled;
-#X obj 3480 100 r p-px-car15-volume;
-#X obj 3480 170 r p-px-car15-panorama;
-#X obj 3480 240 r p-px-car15-frequency;
-#X obj 3480 30 r p-px-car15-enabled;
-#X obj 3650 100 r p-px-car16-volume;
-#X obj 3650 170 r p-px-car16-panorama;
-#X obj 3650 240 r p-px-car16-frequency;
-#X obj 3650 30 r p-px-car16-enabled;
 #X obj 1060 730 vradio 20 0 0 4 p-px-car1-waveform empty empty 0 -8
 0 10 #ffffff #000000 #000000 0 1;
 #X text 980 730 Sine;
@@ -561,22 +426,6 @@ f 5;
 0 10 #ffffff #000000 #000000 0 1;
 #X obj 1480 730 vradio 20 0 0 4 p-px-car8-waveform empty empty 0 -8
 0 10 #ffffff #000000 #000000 0 1;
-#X obj 1540 730 vradio 20 0 0 4 p-px-car9-waveform empty empty 0 -8
-0 10 #ffffff #000000 #825050 0 1;
-#X obj 1600 730 vradio 20 0 0 4 p-px-car10-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1660 730 vradio 20 0 0 4 p-px-car11-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1720 730 vradio 20 0 0 4 p-px-car12-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1780 730 vradio 20 0 0 4 p-px-car13-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1840 730 vradio 20 0 0 4 p-px-car14-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1900 730 vradio 20 0 0 4 p-px-car15-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1960 730 vradio 20 0 0 4 p-px-car16-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
 #X msg 1060 340 set \$1;
 #X obj 1060 310 r p-px-car1-waveform;
 #X msg 1240 340 set \$1;
@@ -586,14 +435,6 @@ f 5;
 #X msg 1930 340 set \$1;
 #X msg 2100 340 set \$1;
 #X msg 2270 340 set \$1;
-#X msg 2440 340 set \$1;
-#X msg 2620 340 set \$1;
-#X msg 2790 340 set \$1;
-#X msg 2960 340 set \$1;
-#X msg 3130 340 set \$1;
-#X msg 3310 340 set \$1;
-#X msg 3480 340 set \$1;
-#X msg 3650 340 set \$1;
 #X obj 1240 310 r p-px-car2-waveform;
 #X obj 1410 310 r p-px-car3-waveform;
 #X obj 1580 310 r p-px-car4-waveform;
@@ -601,196 +442,96 @@ f 5;
 #X obj 1930 310 r p-px-car6-waveform;
 #X obj 2100 310 r p-px-car7-waveform;
 #X obj 2270 310 r p-px-car8-waveform;
-#X obj 2440 310 r p-px-car9-waveform;
-#X obj 2620 310 r p-px-car10-waveform;
-#X obj 2790 310 r p-px-car11-waveform;
-#X obj 2960 310 r p-px-car12-waveform;
-#X obj 3130 310 r p-px-car13-waveform;
-#X obj 3310 310 r p-px-car14-waveform;
-#X obj 3480 310 r p-px-car15-waveform;
-#X obj 3650 310 r p-px-car16-waveform;
 #X text 980 640 Volume;
-#X obj 970 840 cnv 15 1040 15 empty empty Modulator 4 6 0 12 #e0e0e0
+#X obj 1600 440 cnv 15 410 15 empty empty Modulator 4 6 0 12 #e0e0e0
 #404040 0;
-#X obj 1060 900 vsl 20 128 0 1 0 0 p-px-mod1-volume empty empty 0 -9
+#X obj 1610 500 vsl 20 128 0 1 0 0 p-px-mod1-volume empty empty 0 -9
 0 10 #f5f5be #969600 #000000 12700 1 0 1;
-#X msg 1060 1350 set \$1;
-#X floatatom 1060 1040 5 0 1 3 - - p-px-car1-volume 0 0 1, f 5;
-#X floatatom 1060 1070 5 -1 1 3 - - p-px-mod1-panorama 0 0 1, f 5
+#X msg 2490 130 set \$1;
+#X floatatom 1610 640 5 0 1 3 - - p-px-car1-volume 0 0 1, f 5;
+#X floatatom 1610 670 5 -1 1 3 - - p-px-mod1-panorama 0 0 1, f 5;
+#X floatatom 1610 700 5 0 32 3 - - p-px-mod1-frequency 0 0 1, f 5
 ;
-#X floatatom 1060 1100 5 0 32 3 - - p-px-mod1-frequency 0 0 1, f 5
-;
-#X obj 1060 870 tgl 20 0 p-px-mod1-enabled empty empty 0 27 0 12 #ffffff
+#X obj 1610 470 tgl 20 0 p-px-mod1-enabled empty empty 0 27 0 12 #ffffff
 #000000 #000000 1 1 1;
-#X text 980 900 Volume;
-#X text 980 1070 Panorama;
-#X text 980 1100 Frequency;
-#X text 980 870 Enabled;
-#X msg 1060 1420 set \$1;
-#X msg 1060 1490 set \$1;
-#X msg 1060 1280 set \$1;
-#X obj 1120 900 vsl 20 128 0 1 0 0 p-px-car2-volume empty empty 0 -9
+#X msg 2490 200 set \$1;
+#X msg 2490 270 set \$1;
+#X msg 2490 60 set \$1;
+#X obj 1670 500 vsl 20 128 0 1 0 0 p-px-car2-volume empty empty 0 -9
 0 10 #f5f5be #969600 #000000 0 1 0 1;
-#X msg 1240 1350 set \$1;
-#X floatatom 1121 1040 5 0 1 3 - - p-px-mod2-volume 0 0 1, f 5;
-#X floatatom 1120 1070 5 -1 1 3 - - p-px-mod2-panorama 0 0 1, f 5
+#X msg 2670 130 set \$1;
+#X floatatom 1671 640 5 0 1 3 - - p-px-mod2-volume 0 0 1, f 5;
+#X floatatom 1670 670 5 -1 1 3 - - p-px-mod2-panorama 0 0 1, f 5;
+#X floatatom 1670 700 5 0 32 3 - - p-px-mod2-frequency 0 0 1, f 5
 ;
-#X floatatom 1120 1100 5 0 32 3 - - p-px-mod2-frequency 0 0 1, f 5
-;
-#X obj 1120 870 tgl 20 0 p-px-mod2-enabled empty empty 0 27 0 12 #ffffff
+#X obj 1670 470 tgl 20 0 p-px-mod2-enabled empty empty 0 27 0 12 #ffffff
 #000000 #000000 0 1 1;
-#X msg 1240 1420 set \$1;
-#X msg 1240 1490 set \$1;
-#X msg 1240 1280 set \$1;
-#X obj 1180 900 vsl 20 128 0 1 0 0 p-px-car3-volume empty empty 0 -9
+#X msg 2670 200 set \$1;
+#X msg 2670 270 set \$1;
+#X msg 2670 60 set \$1;
+#X obj 1730 500 vsl 20 128 0 1 0 0 p-px-car3-volume empty empty 0 -9
 0 10 #f5f5be #969600 #000000 0 1 0 1;
-#X msg 1410 1350 set \$1;
-#X floatatom 1180 1040 5 0 1 3 - - p-px-mod3-volume 0 0 1, f 5;
-#X floatatom 1180 1070 5 -1 1 3 - - p-px-mod3-panorama 0 0 1, f 5
+#X msg 2840 130 set \$1;
+#X floatatom 1730 640 5 0 1 3 - - p-px-mod3-volume 0 0 1, f 5;
+#X floatatom 1730 670 5 -1 1 3 - - p-px-mod3-panorama 0 0 1, f 5;
+#X floatatom 1730 700 5 0 32 3 - - p-px-mod3-frequency 0 0 1, f 5
 ;
-#X floatatom 1180 1100 5 0 32 3 - - p-px-mod3-frequency 0 0 1, f 5
-;
-#X obj 1180 870 tgl 20 0 p-px-mod3-enabled empty empty 0 27 0 12 #ffffff
+#X obj 1730 470 tgl 20 0 p-px-mod3-enabled empty empty 0 27 0 12 #ffffff
 #000000 #000000 0 1 1;
-#X msg 1410 1420 set \$1;
-#X msg 1410 1490 set \$1;
-#X msg 1410 1280 set \$1;
-#X obj 1240 900 vsl 20 128 0 1 0 0 p-px-car4-volume empty empty 0 -9
+#X msg 2840 200 set \$1;
+#X msg 2840 270 set \$1;
+#X msg 2840 60 set \$1;
+#X obj 1790 500 vsl 20 128 0 1 0 0 p-px-car4-volume empty empty 0 -9
 0 10 #f5f5be #969600 #000000 0 1 0 1;
-#X msg 1580 1350 set \$1;
-#X floatatom 1240 1040 5 0 1 3 - - p-px-mod4-volume 0 0 1, f 5;
-#X floatatom 1240 1070 5 -1 1 3 - - p-px-mod4-panorama 0 0 1, f 5
+#X msg 3010 130 set \$1;
+#X floatatom 1790 640 5 0 1 3 - - p-px-mod4-volume 0 0 1, f 5;
+#X floatatom 1790 670 5 -1 1 3 - - p-px-mod4-panorama 0 0 1, f 5;
+#X floatatom 1790 700 5 0 32 3 - - p-px-mod4-frequency 0 0 1, f 5
 ;
-#X floatatom 1240 1100 5 0 32 3 - - p-px-mod4-frequency 0 0 1, f 5
-;
-#X obj 1240 870 tgl 20 0 p-px-mod4-enabled empty empty 0 27 0 12 #ffffff
+#X obj 1790 470 tgl 20 0 p-px-mod4-enabled empty empty 0 27 0 12 #ffffff
 #000000 #000000 0 1 1;
-#X msg 1580 1420 set \$1;
-#X msg 1580 1490 set \$1;
-#X msg 1580 1280 set \$1;
-#X obj 1300 900 vsl 20 128 0 1 0 0 p-px-car5-volume empty empty 0 -9
-0 10 #f5f5be #969600 #000000 0 1 0 1;
-#X msg 1750 1350 set \$1;
-#X floatatom 1300 1040 5 0 1 3 - - p-px-mod5-volume 0 0 1, f 5;
-#X floatatom 1300 1070 5 -1 1 3 - - p-px-mod5-panorama 0 0 1, f 5
-;
-#X floatatom 1300 1100 5 0 32 3 - - p-px-mod5-frequency 0 0 1, f 5
-;
-#X obj 1300 870 tgl 20 0 p-px-mod5-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 1750 1420 set \$1;
-#X msg 1750 1490 set \$1;
-#X msg 1750 1280 set \$1;
-#X obj 1360 900 vsl 20 128 0 1 0 0 p-px-car6-volume empty empty 0 -9
-0 10 #f5f5be #969600 #000000 0 1 0 1;
-#X msg 1930 1350 set \$1;
-#X floatatom 1360 1040 5 0 1 3 - - p-px-mod6-volume 0 0 1, f 5;
-#X floatatom 1360 1070 5 -1 1 3 - - p-px-mod6-panorama 0 0 1, f 5
-;
-#X floatatom 1360 1100 5 0 32 3 - - p-px-mod6-frequency 0 0 1, f 5
-;
-#X obj 1360 870 tgl 20 0 p-px-mod6-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 1930 1420 set \$1;
-#X msg 1930 1490 set \$1;
-#X msg 1930 1280 set \$1;
-#X obj 1420 900 vsl 20 128 0 1 0 0 p-px-car7-volume empty empty 0 -9
-0 10 #f5f5be #969600 #000000 0 1 0 1;
-#X msg 2100 1350 set \$1;
-#X floatatom 1420 1040 5 0 1 3 - - p-px-mod7-volume 0 0 1, f 5;
-#X floatatom 1420 1070 5 -1 1 3 - - p-px-mod7-panorama 0 0 1, f 5
-;
-#X floatatom 1420 1100 5 0 32 3 - - p-px-mod7-frequency 0 0 1, f 5
-;
-#X obj 1420 870 tgl 20 0 p-px-mod7-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 2100 1420 set \$1;
-#X msg 2100 1490 set \$1;
-#X msg 2100 1280 set \$1;
-#X obj 1480 900 vsl 20 128 0 1 0 0 p-px-car8-volume empty empty 0 -9
-0 10 #f5f5be #969600 #000000 0 1 0 1;
-#X msg 2270 1350 set \$1;
-#X floatatom 1480 1040 5 0 1 3 - - p-px-mod8-volume 0 0 1, f 5;
-#X floatatom 1480 1070 5 -1 1 3 - - p-px-mod8-panorama 0 0 1, f 5
-;
-#X floatatom 1480 1100 5 0 32 3 - - p-px-mod8-frequency 0 0 1, f 5
-;
-#X obj 1480 870 tgl 20 0 p-px-mod8-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
-#X msg 2270 1420 set \$1;
-#X msg 2270 1490 set \$1;
-#X msg 2270 1280 set \$1;
-#X obj 1930 1320 r p-px-car6-volume;
-#X obj 1930 1390 r p-px-car6-panorama;
-#X obj 1930 1460 r p-px-car6-frequency;
-#X obj 1930 1250 r p-px-car6-enabled;
-#X obj 2100 1320 r p-px-car7-volume;
-#X obj 2100 1390 r p-px-car7-panorama;
-#X obj 2100 1460 r p-px-car7-frequency;
-#X obj 2100 1250 r p-px-car7-enabled;
-#X obj 2270 1320 r p-px-car8-volume;
-#X obj 2270 1390 r p-px-car8-panorama;
-#X obj 2270 1460 r p-px-car8-frequency;
-#X obj 2270 1250 r p-px-car8-enabled;
-#X obj 1060 1130 vradio 20 0 0 4 p-px-mod1-waveform empty empty 0 -8
+#X msg 3010 200 set \$1;
+#X msg 3010 270 set \$1;
+#X msg 3010 60 set \$1;
+#X obj 1610 730 vradio 20 0 0 4 p-px-mod1-waveform empty empty 0 -8
 0 10 #ffffff #000000 #000000 0 1;
-#X text 980 1130 Sine;
-#X text 980 1150 Saw;
-#X text 980 1190 Noise;
-#X text 980 1170 Square;
-#X obj 1120 1130 vradio 20 0 0 4 p-px-mod2-waveform empty empty 0 -8
+#X obj 1670 730 vradio 20 0 0 4 p-px-mod2-waveform empty empty 0 -8
 0 10 #ffffff #000000 #000000 0 1;
-#X obj 1180 1130 vradio 20 0 0 4 p-px-mod3-waveform empty empty 0 -8
+#X obj 1730 730 vradio 20 0 0 4 p-px-mod3-waveform empty empty 0 -8
 0 10 #ffffff #000000 #000000 0 1;
-#X obj 1240 1130 vradio 20 0 0 4 p-px-mod4-waveform empty empty 0 -8
+#X obj 1790 730 vradio 20 0 0 4 p-px-mod4-waveform empty empty 0 -8
 0 10 #ffffff #000000 #000000 0 1;
-#X obj 1300 1130 vradio 20 0 0 4 p-px-mod5-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1360 1130 vradio 20 0 0 4 p-px-mod6-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1420 1130 vradio 20 0 0 4 p-px-mod7-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X obj 1480 1130 vradio 20 0 0 4 p-px-mod8-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
-#X msg 1060 1560 set \$1;
-#X msg 1240 1560 set \$1;
-#X msg 1410 1560 set \$1;
-#X msg 1580 1560 set \$1;
-#X msg 1750 1560 set \$1;
-#X msg 1930 1560 set \$1;
-#X msg 2100 1560 set \$1;
-#X msg 2270 1560 set \$1;
-#X obj 1930 1530 r p-px-car6-waveform;
-#X obj 2100 1530 r p-px-car7-waveform;
-#X obj 2270 1530 r p-px-car8-waveform;
-#X text 980 1040 Volume;
-#X obj 1060 1250 r p-px-mod1-enabled;
-#X obj 1240 1250 r p-px-mod2-enabled;
-#X obj 1410 1250 r p-px-mod3-enabled;
-#X obj 1580 1250 r p-px-mod4-enabled;
-#X obj 1752 1249 r p-px-mod5-enabled;
-#X obj 1752 1319 r p-px-mod5-volume;
-#X obj 1582 1319 r p-px-mod4-volume;
-#X obj 1412 1319 r p-px-mod3-volume;
-#X obj 1240 1320 r p-px-mod2-volume;
-#X obj 1062 1319 r p-px-mod1-volume;
-#X obj 1060 1390 r p-px-mod1-panorama;
-#X obj 1240 1390 r p-px-mod2-panorama;
-#X obj 1410 1390 r p-px-mod3-panorama;
-#X obj 1582 1389 r p-px-mod4-panorama;
-#X obj 1752 1389 r p-px-mod5-panorama;
-#X obj 1062 1459 r p-px-mod1-frequency;
-#X obj 1240 1460 r p-px-mod2-frequency;
-#X obj 1412 1459 r p-px-mod3-frequency;
-#X obj 1580 1460 r p-px-mod4-frequency;
-#X obj 1750 1460 r p-px-mod5-frequency;
-#X obj 1060 1530 r p-px-mod1-waveform;
-#X obj 1240 1530 r p-px-mod2-waveform;
-#X obj 1412 1529 r p-px-mod3-waveform;
-#X obj 1580 1530 r p-px-mod4-waveform;
-#X obj 1750 1530 r p-px-mod5-waveform;
+#X msg 2490 340 set \$1;
+#X msg 2670 340 set \$1;
+#X msg 2840 340 set \$1;
+#X msg 3010 340 set \$1;
+#X obj 2490 30 r p-px-mod1-enabled;
+#X obj 2670 30 r p-px-mod2-enabled;
+#X obj 2840 30 r p-px-mod3-enabled;
+#X obj 3010 30 r p-px-mod4-enabled;
+#X obj 3012 99 r p-px-mod4-volume;
+#X obj 2842 99 r p-px-mod3-volume;
+#X obj 2670 100 r p-px-mod2-volume;
+#X obj 2492 99 r p-px-mod1-volume;
+#X obj 2490 170 r p-px-mod1-panorama;
+#X obj 2670 170 r p-px-mod2-panorama;
+#X obj 2840 170 r p-px-mod3-panorama;
+#X obj 3012 169 r p-px-mod4-panorama;
+#X obj 2492 239 r p-px-mod1-frequency;
+#X obj 2670 240 r p-px-mod2-frequency;
+#X obj 2842 239 r p-px-mod3-frequency;
+#X obj 3010 240 r p-px-mod4-frequency;
+#X obj 2490 310 r p-px-mod1-waveform;
+#X obj 2670 310 r p-px-mod2-waveform;
+#X obj 2842 309 r p-px-mod3-waveform;
+#X obj 3010 310 r p-px-mod4-waveform;
 #X msg 130 550 symbol ui-partial-\$1;
 #X obj 580 500 r p-px-balance;
+#X msg 2070 460 set \$1;
+#X floatatom 1950 640 5 0 1 3 FM_Rate - p-px-fmrate 0 0 1, f 5;
+#X obj 2070 430 r p-px-fmrate;
+#X obj 1950 500 vsl 20 128 0 127 0 0 p-px-fmrate empty empty 0 -9 0
+10 #e0e0aa #ce9b55 #000000 0 1 0 1;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
 #X connect 5 0 4 0;
@@ -803,7 +544,7 @@ f 5;
 #X connect 13 0 19 0;
 #X connect 13 1 20 0;
 #X connect 15 0 12 0;
-#X connect 15 1 441 0;
+#X connect 15 1 240 0;
 #X connect 19 0 15 0;
 #X connect 19 1 18 0;
 #X connect 20 0 21 0;
@@ -859,227 +600,107 @@ f 5;
 #X connect 115 0 112 0;
 #X connect 116 0 113 0;
 #X connect 117 0 114 0;
-#X connect 119 0 118 0;
-#X connect 119 0 120 0;
-#X connect 124 0 121 0;
-#X connect 125 0 122 0;
-#X connect 126 0 123 0;
-#X connect 128 0 127 0;
-#X connect 128 0 129 0;
-#X connect 133 0 130 0;
-#X connect 134 0 131 0;
-#X connect 135 0 132 0;
-#X connect 137 0 138 0;
-#X connect 137 0 136 0;
-#X connect 142 0 139 0;
-#X connect 143 0 140 0;
-#X connect 144 0 141 0;
-#X connect 146 0 145 0;
-#X connect 146 0 147 0;
-#X connect 151 0 148 0;
-#X connect 152 0 149 0;
-#X connect 153 0 150 0;
-#X connect 155 0 154 0;
-#X connect 155 0 156 0;
-#X connect 160 0 157 0;
-#X connect 161 0 158 0;
-#X connect 162 0 159 0;
-#X connect 164 0 165 0;
-#X connect 164 0 163 0;
-#X connect 169 0 166 0;
-#X connect 170 0 167 0;
-#X connect 171 0 168 0;
-#X connect 173 0 172 0;
-#X connect 173 0 174 0;
-#X connect 178 0 175 0;
-#X connect 179 0 176 0;
-#X connect 180 0 177 0;
-#X connect 182 0 181 0;
-#X connect 182 0 183 0;
-#X connect 187 0 184 0;
-#X connect 188 0 185 0;
-#X connect 189 0 186 0;
-#X connect 190 0 56 0;
-#X connect 191 0 61 0;
-#X connect 192 0 62 0;
-#X connect 193 0 63 0;
-#X connect 194 0 65 0;
-#X connect 195 0 70 0;
-#X connect 196 0 71 0;
-#X connect 197 0 72 0;
-#X connect 198 0 74 0;
-#X connect 199 0 79 0;
-#X connect 200 0 80 0;
-#X connect 201 0 81 0;
-#X connect 202 0 83 0;
-#X connect 203 0 88 0;
-#X connect 204 0 89 0;
-#X connect 205 0 90 0;
-#X connect 206 0 92 0;
-#X connect 207 0 97 0;
-#X connect 208 0 98 0;
-#X connect 209 0 99 0;
-#X connect 210 0 101 0;
-#X connect 211 0 106 0;
-#X connect 212 0 107 0;
-#X connect 213 0 108 0;
-#X connect 214 0 110 0;
-#X connect 215 0 115 0;
-#X connect 216 0 116 0;
-#X connect 217 0 117 0;
-#X connect 218 0 119 0;
-#X connect 219 0 124 0;
-#X connect 220 0 125 0;
-#X connect 221 0 126 0;
-#X connect 222 0 128 0;
-#X connect 223 0 133 0;
-#X connect 224 0 134 0;
-#X connect 225 0 135 0;
-#X connect 226 0 137 0;
-#X connect 227 0 142 0;
-#X connect 228 0 143 0;
-#X connect 229 0 144 0;
-#X connect 230 0 146 0;
-#X connect 231 0 151 0;
-#X connect 232 0 152 0;
-#X connect 233 0 153 0;
-#X connect 234 0 155 0;
-#X connect 235 0 160 0;
-#X connect 236 0 161 0;
-#X connect 237 0 162 0;
-#X connect 238 0 164 0;
-#X connect 239 0 169 0;
-#X connect 240 0 170 0;
-#X connect 241 0 171 0;
-#X connect 242 0 173 0;
-#X connect 243 0 178 0;
-#X connect 244 0 179 0;
-#X connect 245 0 180 0;
-#X connect 246 0 182 0;
-#X connect 247 0 187 0;
-#X connect 248 0 188 0;
-#X connect 249 0 189 0;
-#X connect 270 0 250 0;
-#X connect 271 0 270 0;
-#X connect 272 0 255 0;
-#X connect 273 0 256 0;
-#X connect 274 0 257 0;
-#X connect 275 0 258 0;
-#X connect 276 0 259 0;
-#X connect 277 0 260 0;
-#X connect 278 0 261 0;
-#X connect 279 0 262 0;
-#X connect 280 0 263 0;
-#X connect 281 0 264 0;
-#X connect 282 0 265 0;
-#X connect 283 0 266 0;
-#X connect 284 0 267 0;
-#X connect 285 0 268 0;
-#X connect 286 0 269 0;
-#X connect 287 0 272 0;
-#X connect 288 0 273 0;
-#X connect 289 0 274 0;
-#X connect 290 0 275 0;
-#X connect 291 0 276 0;
-#X connect 292 0 277 0;
-#X connect 293 0 278 0;
-#X connect 294 0 279 0;
-#X connect 295 0 280 0;
-#X connect 296 0 281 0;
-#X connect 297 0 282 0;
-#X connect 298 0 283 0;
-#X connect 299 0 284 0;
-#X connect 300 0 285 0;
-#X connect 301 0 286 0;
-#X connect 305 0 304 0;
-#X connect 305 0 306 0;
-#X connect 314 0 307 0;
-#X connect 315 0 308 0;
-#X connect 316 0 309 0;
-#X connect 318 0 317 0;
-#X connect 318 0 319 0;
-#X connect 323 0 320 0;
-#X connect 324 0 321 0;
-#X connect 325 0 322 0;
-#X connect 327 0 326 0;
-#X connect 327 0 328 0;
-#X connect 332 0 329 0;
-#X connect 333 0 330 0;
-#X connect 334 0 331 0;
-#X connect 336 0 335 0;
-#X connect 336 0 337 0;
-#X connect 341 0 338 0;
-#X connect 342 0 339 0;
-#X connect 343 0 340 0;
-#X connect 345 0 344 0;
-#X connect 345 0 346 0;
-#X connect 350 0 347 0;
-#X connect 351 0 348 0;
-#X connect 352 0 349 0;
-#X connect 354 0 355 0;
-#X connect 354 0 353 0;
-#X connect 359 0 356 0;
-#X connect 360 0 357 0;
-#X connect 361 0 358 0;
-#X connect 363 0 362 0;
-#X connect 363 0 364 0;
-#X connect 368 0 365 0;
-#X connect 369 0 366 0;
-#X connect 370 0 367 0;
-#X connect 372 0 373 0;
-#X connect 372 0 371 0;
-#X connect 377 0 374 0;
-#X connect 378 0 375 0;
-#X connect 379 0 376 0;
-#X connect 380 0 354 0;
-#X connect 381 0 359 0;
-#X connect 382 0 360 0;
-#X connect 383 0 361 0;
-#X connect 384 0 363 0;
-#X connect 385 0 368 0;
-#X connect 386 0 369 0;
-#X connect 387 0 370 0;
-#X connect 388 0 372 0;
-#X connect 389 0 377 0;
-#X connect 390 0 378 0;
-#X connect 391 0 379 0;
-#X connect 404 0 392 0;
-#X connect 405 0 397 0;
-#X connect 406 0 398 0;
-#X connect 407 0 399 0;
-#X connect 408 0 400 0;
-#X connect 409 0 401 0;
-#X connect 410 0 402 0;
-#X connect 411 0 403 0;
-#X connect 412 0 409 0;
-#X connect 413 0 410 0;
-#X connect 414 0 411 0;
-#X connect 416 0 316 0;
-#X connect 417 0 325 0;
-#X connect 418 0 334 0;
-#X connect 419 0 343 0;
-#X connect 420 0 352 0;
-#X connect 421 0 345 0;
-#X connect 422 0 336 0;
-#X connect 423 0 327 0;
-#X connect 424 0 318 0;
-#X connect 425 0 305 0;
-#X connect 426 0 314 0;
-#X connect 427 0 323 0;
-#X connect 428 0 332 0;
-#X connect 429 0 341 0;
-#X connect 430 0 350 0;
-#X connect 431 0 315 0;
-#X connect 432 0 324 0;
-#X connect 433 0 333 0;
-#X connect 434 0 342 0;
-#X connect 435 0 351 0;
-#X connect 436 0 404 0;
-#X connect 437 0 405 0;
-#X connect 438 0 406 0;
-#X connect 439 0 407 0;
-#X connect 440 0 408 0;
-#X connect 441 0 14 1;
-#X connect 442 0 31 0;
-#X coords 0 -1 1 1 1320 820 2 700 400;
+#X connect 118 0 56 0;
+#X connect 119 0 61 0;
+#X connect 120 0 62 0;
+#X connect 121 0 63 0;
+#X connect 122 0 65 0;
+#X connect 123 0 70 0;
+#X connect 124 0 71 0;
+#X connect 125 0 72 0;
+#X connect 126 0 74 0;
+#X connect 127 0 79 0;
+#X connect 128 0 80 0;
+#X connect 129 0 81 0;
+#X connect 130 0 83 0;
+#X connect 131 0 88 0;
+#X connect 132 0 89 0;
+#X connect 133 0 90 0;
+#X connect 134 0 92 0;
+#X connect 135 0 97 0;
+#X connect 136 0 98 0;
+#X connect 137 0 99 0;
+#X connect 138 0 101 0;
+#X connect 139 0 106 0;
+#X connect 140 0 107 0;
+#X connect 141 0 108 0;
+#X connect 142 0 110 0;
+#X connect 143 0 115 0;
+#X connect 144 0 116 0;
+#X connect 145 0 117 0;
+#X connect 158 0 146 0;
+#X connect 159 0 158 0;
+#X connect 160 0 151 0;
+#X connect 161 0 152 0;
+#X connect 162 0 153 0;
+#X connect 163 0 154 0;
+#X connect 164 0 155 0;
+#X connect 165 0 156 0;
+#X connect 166 0 157 0;
+#X connect 167 0 160 0;
+#X connect 168 0 161 0;
+#X connect 169 0 162 0;
+#X connect 170 0 163 0;
+#X connect 171 0 164 0;
+#X connect 172 0 165 0;
+#X connect 173 0 166 0;
+#X connect 177 0 176 0;
+#X connect 177 0 178 0;
+#X connect 182 0 179 0;
+#X connect 183 0 180 0;
+#X connect 184 0 181 0;
+#X connect 186 0 185 0;
+#X connect 186 0 187 0;
+#X connect 191 0 188 0;
+#X connect 192 0 189 0;
+#X connect 193 0 190 0;
+#X connect 195 0 194 0;
+#X connect 195 0 196 0;
+#X connect 200 0 197 0;
+#X connect 201 0 198 0;
+#X connect 202 0 199 0;
+#X connect 204 0 203 0;
+#X connect 204 0 205 0;
+#X connect 209 0 206 0;
+#X connect 210 0 207 0;
+#X connect 211 0 208 0;
+#X connect 216 0 212 0;
+#X connect 217 0 213 0;
+#X connect 218 0 214 0;
+#X connect 219 0 215 0;
+#X connect 220 0 184 0;
+#X connect 221 0 193 0;
+#X connect 222 0 202 0;
+#X connect 223 0 211 0;
+#X connect 224 0 204 0;
+#X connect 225 0 195 0;
+#X connect 226 0 186 0;
+#X connect 227 0 177 0;
+#X connect 228 0 182 0;
+#X connect 229 0 191 0;
+#X connect 230 0 200 0;
+#X connect 231 0 209 0;
+#X connect 232 0 183 0;
+#X connect 233 0 192 0;
+#X connect 234 0 201 0;
+#X connect 235 0 210 0;
+#X connect 236 0 216 0;
+#X connect 237 0 217 0;
+#X connect 238 0 218 0;
+#X connect 239 0 219 0;
+#X connect 240 0 14 1;
+#X connect 241 0 31 0;
+#X connect 242 0 243 0;
+#X connect 242 0 245 0;
+#X connect 244 0 242 0;
+#X coords 0 -1 1 1 1320 420 2 700 400;
 #X restore 10 390 pd partial_parameters;
+#X text 1370 440 TODO: Pre-calculate car/mod with integer harmonics
+;
+#X text 1370 470 TODO: Partial detune \, carrier detune \, modulator
+detune;
+#X text 1370 500 TODO: Partial filter \, carrier filter \, modulator
+filter;
+#X text 1370 530 TODO: Carrier A.Env/F.Env \, modulator A.Env/F.Env
+;
+#X text 1370 560 TODO: LFOs;
