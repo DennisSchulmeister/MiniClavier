@@ -22,7 +22,7 @@ The wavetables are generated with a simple fourier synthesis, where a harmonic
 series is formed between the highest note of the target octave and the Nyquist
 frequency (PD's sample rate divided by two).
 
-The subdirectories contain pre-computed wavetables generated with program.
+The subdirectories contain pre-computed wavetables generated with the program.
 The wavetables span one octave each, starting from MIDI note 0, minus the last
 note that would start the next octave:
 
