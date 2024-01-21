@@ -1,32 +1,62 @@
 MiniClavier Synthesizer
 =======================
 
+![MiniClavier (PD), work in progress](puredata/screenshot.png?raw=true "MiniClavier (PD), work in progress")
+
+![Band-limited Waveform Generator](puredata/wavetables/screenshot.png?raw=true "Band-limited Waveform Generator")
+
 This is the MiniClavier software synthesizer, an additive, subtractive,
-frequency modulation synthesizer loosely inspired by the original SynClavier
-of the 1970s and 1980s. Therefore, this is no recreation of the SynClavier FM
+frequency modulation synthesizer loosely inspired by the original Synclavier
+of the 1970s and 1980s. Therefore, this is no recreation of the Synclavier FM
 synthesis, but rather its own unique design borrowing some interesting ideas
 from the original.
 
  * Additive synthesis for the carrier waveform
  * Additive synthesis for the modulator waveform
- * Waveform types: Sine, Saw, Square, Noise
+ * Waveform types: Sine, Saw, Square, Triangle, Noise
  * Selectable waveforms for each harmonic
- * Analogue filter for the harmonics, carrier, modulator and final output
- * Envelope generators for the harmonics, carrier, modulator final output
+ * Analogue filter for the carrier and modulator
+ * Envelope generators for the carrier and modulator
  * Two LFOs to modulate frequency, amplitude and filters
- * Four partials, just like the original SynClavier
+ * Four partials, just like the original Synclavier
  * Volume, expression, stereo panning (using equal power pan law)
  * Sustain pedal, sustenuto pedal, modulation wheel, pitch bend wheel
  * Built-in reverb, chorus/flanger
 
-Differences from the SynClavier are (as far as I can tell, I never played one):
+Differences from the Synclavier are (as far as I can tell, I never played one):
 
- * The SynClavier has 32 carrier harmonics, that can only be sine waves.
- * The SynClavier uses a single sine wave for the modulator.
- * The SynClavier has no programmable analogue filters.
- * The SynClavier can string together "timbre frames" to resynthesize complex waveforms.
- * The SynClavier has no built-in effects, except for a simple chorus (voice doubler).
- * The SynClavier FM synthesis was mono in the early versions.
+ * The Synclavier has 32 carrier harmonics, that can only be sine waves.
+ * The Synclavier uses a single sine wave for the modulator.
+ * The Synclavier has no programmable analogue filters.
+ * The Synclavier can string together "timbre frames" to resynthesize complex waveforms.
+ * The Synclavier has no built-in effects, except for a simple chorus (voice doubler).
+ * The Synclavier FM synthesis was mono in the early versions.
+
+Originaly I wanted to extend this much further, e.g. by allowing non-integer
+harmonics or filtering single harmonics. But at least in Puredata this soon
+prooved to be more than Puredata can handle even on a not too old Intel(R)
+Core(TM) i7-8550U. The plan **was**:
+
+ * 32 voices of polyphony
+ * 4 partials
+ * 16 detunable carrier harmonics
+ * 8 detunable modulator harmonics
+ * all harmonics stereo-pannable
+
+That would have been 32 * 4 * (16 + 8) * 2 = 6144 individual oscilators. :-)
+Since PD effectively runs on a single core, PD took three minutes just to load
+the patch, with the CPU core permanently at 100% even thereafter. What a pitty.
+Thus, at the end I settled with:
+
+ * 16 voices of polyphony
+ * 4 partials
+ * 8 strictly integer carrier harmonics
+ * 4 strictly integer modulator harmonics
+ * all harmonics stereo-pannable
+
+Since the integer harmonics can be folded into a single wavetable, this reduces
+the numbers to 16 * 4 * 2 * 2 = 256 individual oscilators. Now that should
+be possible even for PD.
 
 This project is mainly a playground for me to learn audio DSP programming and
 especially to implement synthesizers that can actually be used in a modern
@@ -34,7 +64,7 @@ music production or live set up of a typical keyboard player.
 
 Additionally it is a research project to evaluate the modern Android ecosystem
 (as of 2024) for real-time audio usage. Theoretically we can easily shrink the
-the custom hardware of the SynClavier into a hand-held device, using a purely
+the custom hardware of the Synclavier into a hand-held device, using a purely
 software implementation of all the DSP. Apple devices are very good at this.
 But how about the Android ecosystem? In theory the architectural problems have
 finally been solved since a few years (much too late, actually). But the Android

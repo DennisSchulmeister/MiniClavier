@@ -495,8 +495,15 @@ and sends the resulting values to everybody who wants to receive them.
 \; \; osc-square sinesum 512 1 0 0.3334 0 0.2 0 0.1429 0 0.1112 0 0.0909
 0 0.0769 0 0.0667 0 0.0588 0 0.0526 \; osc-square normalize \;, f
 75;
+#X obj 670 570 mtof;
+#X floatatom 670 540 5 0 0 0 - - - 0 0 1, f 5;
+#X msg 670 600 set \$1;
+#X msg 670 630 523.251;
 #X connect 3 0 4 0;
 #X connect 4 0 8 0;
+#X connect 9 0 11 0;
+#X connect 10 0 9 0;
+#X connect 11 0 12 0;
 #X restore 100 160 pd oscilator_tables;
 #X obj 100 240 ./voice_allocator/voice_allocator 16;
 #X obj 100 270 clone voice 16;

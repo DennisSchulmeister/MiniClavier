@@ -4,7 +4,6 @@
 #X text 10 50 \$2 must be the name of the oscilator \, e.g. car1.;
 #X text 10 10 UI preset value objects for a single oscilator;
 #X obj 100 100 ./ui-partial-value \$1 float \$2-enabled;
-#X obj 100 160 ./ui-partial-value \$1 float \$2-frequency;
-#X obj 100 190 ./ui-partial-value \$1 float \$2-volume;
-#X obj 100 220 ./ui-partial-value \$1 float \$2-panorama;
+#X obj 100 160 ./ui-partial-value \$1 float \$2-volume;
+#X obj 100 190 ./ui-partial-value \$1 float \$2-panorama;
 #X obj 100 130 ./ui-partial-value \$1 float \$2-waveform;

@@ -5,8 +5,6 @@
 ;
 #X text 10 50 \$2 must be the name of the oscilator \, e.g. car1.;
 #X obj 100 100 ./preset/preset-value pm float p-p\$1-\$2-enabled;
-#X obj 100 160 ./preset/preset-value pm float p-p\$1-\$2-frequency
-;
-#X obj 100 190 ./preset/preset-value pm float p-p\$1-\$2-volume;
-#X obj 100 220 ./preset/preset-value pm float p-p\$1-\$2-panorama;
+#X obj 100 160 ./preset/preset-value pm float p-p\$1-\$2-volume;
+#X obj 100 190 ./preset/preset-value pm float p-p\$1-\$2-panorama;
 #X obj 100 130 ./preset/preset-value pm float p-p\$1-\$2-waveform;
