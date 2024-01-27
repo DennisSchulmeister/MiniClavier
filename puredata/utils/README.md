@@ -26,6 +26,16 @@ copied into new projects.
     and duration, one after another. See the envelope generator for a working
     example.
 
+ * `for-loop`: Small helper for an often needed things: Generating a sequence
+   of ascending numbers. The arguments are the start and end numbers, which
+   will be sent to the outlet one after another, once a bang is received.
+
+ * `pan-mono` and `balance-stereo`: Stereo-paning of a mono/stereo signal as
+   implemented in most commercial mixers. The algorithm is the same, but since
+   for a stereo input, only the channel volumes will be adjusted, the stereo
+   version is called "balance". Equal-power law is applied, using a square-root
+   instead of the typical sine curve, as I think this a bit more musical.
+
  * `rms-peak`: Companion for PD's `[vu]` object. Takes an audio signal and
    calculates the current RMS and peak RMS for the VU meter. The peak RMS will
    remain constant for three seconds before slowly ramping down to -100db for

@@ -1,75 +1,75 @@
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable1 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable1 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 700 100 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable2 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable2 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 910 100 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable3 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable3 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 1120 100 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable4 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable4 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 1330 100 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable5 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable5 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 700 310 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable6 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable6 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 910 310 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable7 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable7 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 1120 310 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable8 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable8 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 1330 310 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable9 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable9 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 700 520 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable10 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable10 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 910 520 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable11 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable11 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 1120 520 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable12 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable12 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 1330 520 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable13 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable13 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 700 730 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable14 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable14 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 910 730 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable15 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable15 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 1120 730 graph;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array wavetable16 515 float 2 black black;
-#X coords 0 1 515 -1 200 200 1;
+#X array wavetable16 515 float 0 black black;
+#X coords 0 1 514 -1 200 200 1;
 #X restore 1330 730 graph;
 #N canvas 0 49 1920 1009 ui 0;
 #X floatatom 420 230 5 0 0 0 - - #0-octaves 0 0 1, f 5;
-#X obj 310 230 vradio 20 0 0 3 \$0-waveform empty empty 0 -8 0 10 #fcfcfc
-#000000 #000000 2 1;
-#X text 340 250 Square;
-#X text 340 270 Triangle;
+#X obj 310 230 vradio 20 0 0 4 \$0-waveform empty empty 0 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X text 340 270 Square;
+#X text 340 290 Triangle;
 #X text 310 210 Waveform;
 #X text 420 210 Octaves/Wavetable;
 #X obj 310 140 r \$0-waveform;
@@ -128,17 +128,17 @@
 ----;
 #X text 110 700 ---- Calculate harmonic amplitudes for the selected
 waveform ----, f 66;
-#X text 110 1490 ---- Synthesize waveform ----;
+#X text 110 1520 ---- Synthesize waveform ----;
 #X obj 130 1140 value _\$0_waveform;
 #X obj 160 1090 value _\$0_wtc_harmonic;
 #X obj 130 1060 trigger b f;
-#X text 1100 1070 Harmonic amplitudes, f 75;
-#X text 1100 1090 ===================, f 75;
-#X text 1100 1150 Square.....: Odd harmonics \, 1/n amplitude \, all
+#X text 1100 1200 Harmonic amplitudes, f 75;
+#X text 1100 1220 ===================, f 75;
+#X text 1100 1310 Square.....: Odd harmonics \, 1/n amplitude \, all
 harmonics in phase, f 75;
-#X text 1100 1180 Triangle...: Odd harmonics \, 1/n² amplitude \,
+#X text 1100 1340 Triangle...: Odd harmonics \, 1/n² amplitude \,
 every second 180° out of phase, f 75;
-#X obj 190 1200 expr (1 / _\$0_wtc_harmonic) * pow(-1 \, _\$0_wtc_harmonic)
+#X obj 190 1230 expr (1 / _\$0_wtc_harmonic) * pow(-1 \, _\$0_wtc_harmonic)
 * -1, f 97;
 #X obj 270 780 value _\$0_wavetable;
 #X obj 130 780 value _\$0_waveform;
@@ -150,35 +150,39 @@ every second 180° out of phase, f 75;
 #X obj 100 720 trigger b b;
 #X obj 130 840 print Calculate wavetable: waveform wavevable nyquist-f
 base-f n-harmonics, f 76;
-#X text 880 1200 Sawtooth;
-#X text 1100 1120 Sawtooth...: All harmonics \, 1/n amplitude \, even
+#X text 880 1230 Sawtooth;
+#X text 1100 1280 Sawtooth...: All harmonics \, 1/n amplitude \, even
 harmonics 180° out of phase, f 75;
-#X obj 160 1230 expr if(_\$0_wtc_harmonic % 2 != 0 \, 1 / _\$0_wtc_harmonic
+#X obj 160 1260 expr if(_\$0_wtc_harmonic % 2 != 0 \, 1 / _\$0_wtc_harmonic
 \, 0), f 101;
-#X text 880 1230 Square;
-#X text 880 1260 Triangle;
-#X obj 130 1170 select 2 1 0;
-#X obj 130 1260 expr if(_\$0_wtc_harmonic % 2 != 0 \, 1 / pow(_\$0_wtc_harmonic
+#X text 880 1260 Square;
+#X text 880 1290 Triangle;
+#X obj 130 1290 expr if(_\$0_wtc_harmonic % 2 != 0 \, 1 / pow(_\$0_wtc_harmonic
 \, 2) \, 0) * pow(-1 \, _\$0_wtc_harmonic % 4 == 3), f 105;
-#X obj 130 1330 list cat;
-#X msg 210 1300 clear;
-#X obj 100 1440 spigot;
-#X obj 100 1570 list prepend;
-#X msg 200 1570 sinesum \$1;
-#X obj 200 1540 value _\$0_samples;
+#X obj 130 1360 list cat;
+#X msg 210 1330 clear;
+#X obj 100 1470 spigot;
+#X obj 100 1600 list prepend;
+#X msg 200 1600 sinesum \$1;
+#X obj 200 1570 value _\$0_samples;
 #X obj 310 950 s \$0-wtc-init-loop;
-#X obj 260 1300 r \$0-wtc-init-loop;
+#X obj 260 1330 r \$0-wtc-init-loop;
 #X obj 220 1010 r \$0-wtc-init-loop;
-#X obj 200 1510 r \$0-wtc-init-loop;
-#X obj 130 1380 trigger a b;
-#X obj 160 1410 expr _\$0_wtc_harmonic == _\$0_wtc_n_harmonics;
-#X obj 100 1600 list trim 1;
-#X obj 410 1660 value _\$0_wavetable;
-#X obj 100 1720 send, f 42;
-#X msg 410 1689 symbol wavetable\$1;
-#X msg 100 1660 normalize;
-#X obj 100 1630 trigger b a b, f 42;
+#X obj 200 1540 r \$0-wtc-init-loop;
+#X obj 130 1410 trigger a b;
+#X obj 160 1440 expr _\$0_wtc_harmonic == _\$0_wtc_n_harmonics;
+#X obj 100 1630 list trim 1;
+#X obj 410 1690 value _\$0_wavetable;
+#X obj 100 1750 send, f 42;
+#X msg 410 1719 symbol wavetable\$1;
+#X msg 100 1690 normalize;
+#X obj 100 1660 trigger b a b, f 42;
 #X obj 130 370 expr (_\$0_wavetable * _\$0_octaves * 12) - 1;
+#X text 1100 1250 Sine.......: 1st harmonic only (obviously) \, in
+phase, f 75;
+#X obj 130 1170 select 3 2 1 0;
+#X text 880 1200 Sine;
+#X obj 210 1200 expr if(_\$0_wtc_harmonic == 1 \, 1 \, 0), f 94;
 #X connect 0 0 8 0;
 #X connect 1 0 13 0;
 #X connect 3 0 4 0;
@@ -187,7 +191,7 @@ harmonics 180° out of phase, f 75;
 #X connect 8 0 9 0;
 #X connect 8 1 3 0;
 #X connect 9 0 10 0;
-#X connect 9 1 68 0;
+#X connect 9 1 67 0;
 #X connect 10 0 41 0;
 #X connect 10 1 6 0;
 #X connect 11 0 5 0;
@@ -201,11 +205,11 @@ harmonics 180° out of phase, f 75;
 #X connect 18 0 17 1;
 #X connect 19 0 17 1;
 #X connect 20 0 15 0;
-#X connect 20 1 56 0;
-#X connect 26 0 48 0;
+#X connect 20 1 55 0;
+#X connect 26 0 69 0;
 #X connect 28 0 26 0;
 #X connect 28 1 27 0;
-#X connect 33 0 50 0;
+#X connect 33 0 49 0;
 #X connect 34 0 40 1;
 #X connect 35 0 40 0;
 #X connect 36 0 40 2;
@@ -219,31 +223,33 @@ harmonics 180° out of phase, f 75;
 #X connect 40 0 42 0;
 #X connect 41 0 20 0;
 #X connect 41 1 39 0;
-#X connect 45 0 50 0;
+#X connect 45 0 49 0;
 #X connect 48 0 49 0;
-#X connect 48 1 45 0;
-#X connect 48 2 33 0;
-#X connect 49 0 50 0;
-#X connect 50 0 60 0;
-#X connect 51 0 50 1;
-#X connect 52 0 53 0;
-#X connect 53 0 62 0;
-#X connect 54 0 53 1;
-#X connect 55 0 54 0;
-#X connect 57 0 51 0;
-#X connect 58 0 19 0;
-#X connect 59 0 55 0;
-#X connect 60 0 52 0;
-#X connect 60 1 61 0;
-#X connect 61 0 52 1;
-#X connect 62 0 67 0;
-#X connect 63 0 65 0;
-#X connect 65 0 64 1;
-#X connect 66 0 64 0;
-#X connect 67 0 66 0;
-#X connect 67 1 64 0;
-#X connect 67 2 63 0;
-#X connect 68 0 12 0;
+#X connect 49 0 59 0;
+#X connect 50 0 49 1;
+#X connect 51 0 52 0;
+#X connect 52 0 61 0;
+#X connect 53 0 52 1;
+#X connect 54 0 53 0;
+#X connect 56 0 50 0;
+#X connect 57 0 19 0;
+#X connect 58 0 54 0;
+#X connect 59 0 51 0;
+#X connect 59 1 60 0;
+#X connect 60 0 51 1;
+#X connect 61 0 66 0;
+#X connect 62 0 64 0;
+#X connect 64 0 63 1;
+#X connect 65 0 63 0;
+#X connect 66 0 65 0;
+#X connect 66 1 63 0;
+#X connect 66 2 62 0;
+#X connect 67 0 12 0;
+#X connect 69 0 48 0;
+#X connect 69 1 45 0;
+#X connect 69 2 33 0;
+#X connect 69 3 71 0;
+#X connect 71 0 49 0;
 #X restore 1300 451 pd calc-wavetable;
 #X obj 900 680 r \$0-wavetable;
 #X obj 900 740 value _\$0_wavetable;
@@ -373,10 +379,11 @@ harmonics 180° out of phase, f 75;
 #X connect 54 0 36 0;
 #X connect 54 1 55 0;
 #X restore 1300 481 pd other-buttons;
-#X text 340 230 Sawtooth;
+#X text 340 250 Sawtooth;
 #X obj 900 440 expr ceil(float(128) / 12 / _\$0_octaves);
 #X msg 1300 270 \; \$0-waveform 0 \; \$0-octaves 1 \; \$0-samples 512
 \; \$0-wavetable 1 \;;
+#X text 340 230 Sine;
 #X connect 6 0 7 0;
 #X connect 7 0 1 0;
 #X connect 8 0 9 0;
@@ -403,13 +410,15 @@ harmonics 180° out of phase, f 75;
 #X restore 100 100 pd ui;
 #X text 100 380 Harmonic amplitudes, f 75;
 #X text 100 400 ===================, f 75;
-#X text 100 460 Square.....: Odd harmonics \, 1/n amplitude \, all
+#X text 100 490 Square.....: Odd harmonics \, 1/n amplitude \, all
 harmonics in phase, f 75;
-#X text 100 490 Triangle...: Odd harmonics \, 1/n² amplitude \, every
+#X text 100 520 Triangle...: Odd harmonics \, 1/n² amplitude \, every
 second 180° out of phase, f 75;
-#X text 100 430 Sawtooth...: All harmonics \, 1/n amplitude \, even
+#X text 100 460 Sawtooth...: All harmonics \, 1/n amplitude \, even
 harmonics 180° out of phase, f 75;
-#X text 100 580 Each wavetable spans whole octaves minus one \, e.g.
+#X text 100 610 Each wavetable spans whole octaves minus one \, e.g.
 C0 - B0. Calculation uses the highest note of the octave whose harmonics
 are added up to the nyquist frequency based on PD's current sample
 rate., f 75;
+#X text 100 430 Sine.......: 1st harmonic only (obviously) \, in phase
+, f 75;

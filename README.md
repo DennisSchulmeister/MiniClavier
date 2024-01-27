@@ -32,16 +32,16 @@ Differences from the Synclavier are (as far as I can tell, I never played one):
  * The Synclavier has no built-in effects, except for a simple chorus (voice doubler).
  * The Synclavier FM synthesis was mono in the early versions.
 
-Originaly I wanted to extend this much further, e.g. by allowing non-integer
+Originally, I wanted to extend this much further, e.g. by allowing non-integer
 harmonics or filtering single harmonics. But at least in Puredata this soon
-prooved to be more than Puredata can handle even on a not too old Intel(R)
+proved to be more than Puredata can handle even on a not too old Intel(R)
 Core(TM) i7-8550U. The plan **was**:
 
  * 32 voices of polyphony
  * 4 partials
  * 16 detunable carrier harmonics
  * 8 detunable modulator harmonics
- * all harmonics stereo-pannable
+ * all harmonics stereo-panable
 
 That would have been 32 * 4 * (16 + 8) * 2 = 6144 individual oscilators. :-)
 Since PD effectively runs on a single core, PD took three minutes just to load
@@ -52,10 +52,10 @@ Thus, at the end I settled with:
  * 4 partials
  * 8 strictly integer carrier harmonics
  * 4 strictly integer modulator harmonics
- * all harmonics stereo-pannable
+ * all harmonics stereo-panable
 
 Since the integer harmonics can be folded into a single wavetable, this reduces
-the numbers to 16 * 4 * 2 * 2 = 256 individual oscilators. Now that should
+the numbers to 16 * 4 * 2 * 2 = 256 individual oscillators. Now that should
 be possible even for PD.
 
 This project is mainly a playground for me to learn audio DSP programming and

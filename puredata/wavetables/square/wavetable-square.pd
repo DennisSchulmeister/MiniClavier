@@ -46,11 +46,7 @@
 #X coords 0 1 514 -1 200 200 1;
 #X restore 1340 310 graph;
 #X text 10 10 Square wavetables;
-#X obj 100 102 loadbang;
-#X obj 100 370 soundfiler;
-#X obj 100 131 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000 1;
-#X msg 100 160 read -resize square1.wav wavetable-square1 \, read -resize
+#X msg 130 190 read -resize square1.wav wavetable-square1 \, read -resize
 square2.wav wavetable-square2 \, read -resize square3.wav wavetable-square3
 \, read -resize square4.wav wavetable-square4 \, read -resize square5.wav
 wavetable-square5 \, read -resize square6.wav wavetable-square6 \,
@@ -58,6 +54,14 @@ read -resize square7.wav wavetable-square7 \, read -resize square8.wav
 wavetable-square8 \, read -resize square9.wav wavetable-square9 \,
 read -resize square10.wav wavetable-square10 \, read -resize square11.wav
 wavetable-square11 \,, f 46;
-#X connect 13 0 15 0;
-#X connect 15 0 16 0;
-#X connect 16 0 14 0;
+#X obj 130 380 soundfiler;
+#X obj 100 131 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 100 100 inlet;
+#X obj 100 410 outlet;
+#X obj 100 160 trigger b b;
+#X connect 13 0 14 0;
+#X connect 15 0 18 0;
+#X connect 16 0 15 0;
+#X connect 18 0 17 0;
+#X connect 18 1 13 0;

@@ -290,66 +290,66 @@ f 5;
 #X msg 1060 130 set \$1;
 #X obj 1060 100 r p-px-car1-enabled;
 #X obj 1120 530 vsl 20 128 0 1 0 0 p-px-car2-volume empty empty 0 -9
-0 10 #dcbebe #825050 #000000 0 1 0 1;
+0 10 #dcbebe #825050 #000000 12700 1 0 1;
 #X msg 1240 200 set \$1;
 #X floatatom 1120 670 5 0 1 3 - - p-px-car2-volume 0 0 1, f 5;
 #X floatatom 1120 700 5 -1 1 3 - - p-px-car2-panorama 0 0 1, f 5;
 #X obj 1120 500 tgl 20 0 p-px-car2-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 1240 270 set \$1;
 #X msg 1240 130 set \$1;
 #X obj 1180 530 vsl 20 128 0 1 0 0 p-px-car3-volume empty empty 0 -9
-0 10 #dcbebe #825050 #000000 0 1 0 1;
+0 10 #dcbebe #825050 #000000 12700 1 0 1;
 #X msg 1410 200 set \$1;
 #X floatatom 1180 670 5 0 1 3 - - p-px-car3-volume 0 0 1, f 5;
 #X floatatom 1180 700 5 -1 1 3 - - p-px-car3-panorama 0 0 1, f 5;
 #X obj 1180 500 tgl 20 0 p-px-car3-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 1410 270 set \$1;
 #X msg 1410 130 set \$1;
 #X obj 1240 530 vsl 20 128 0 1 0 0 p-px-car4-volume empty empty 0 -9
-0 10 #dcbebe #825050 #000000 0 1 0 1;
+0 10 #dcbebe #825050 #000000 12700 1 0 1;
 #X msg 1580 200 set \$1;
 #X floatatom 1240 670 5 0 1 3 - - p-px-car4-volume 0 0 1, f 5;
 #X floatatom 1240 700 5 -1 1 3 - - p-px-car4-panorama 0 0 1, f 5;
 #X obj 1240 500 tgl 20 0 p-px-car4-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 1580 270 set \$1;
 #X msg 1580 130 set \$1;
 #X obj 1300 530 vsl 20 128 0 1 0 0 p-px-car5-volume empty empty 0 -9
-0 10 #dcbebe #825050 #000000 0 1 0 1;
+0 10 #dcbebe #825050 #000000 12700 1 0 1;
 #X msg 1750 200 set \$1;
 #X floatatom 1300 670 5 0 1 3 - - p-px-car5-volume 0 0 1, f 5;
 #X floatatom 1300 700 5 -1 1 3 - - p-px-car5-panorama 0 0 1, f 5;
 #X obj 1300 500 tgl 20 0 p-px-car5-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 1750 270 set \$1;
 #X msg 1750 130 set \$1;
 #X obj 1360 530 vsl 20 128 0 1 0 0 p-px-car6-volume empty empty 0 -9
-0 10 #dcbebe #825050 #000000 0 1 0 1;
+0 10 #dcbebe #825050 #000000 12700 1 0 1;
 #X msg 1930 200 set \$1;
 #X floatatom 1360 670 5 0 1 3 - - p-px-car6-volume 0 0 1, f 5;
 #X floatatom 1360 700 5 -1 1 3 - - p-px-car6-panorama 0 0 1, f 5;
 #X obj 1360 500 tgl 20 0 p-px-car6-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 1930 270 set \$1;
 #X msg 1930 130 set \$1;
 #X obj 1420 530 vsl 20 128 0 1 0 0 p-px-car7-volume empty empty 0 -9
-0 10 #dcbebe #825050 #000000 0 1 0 1;
+0 10 #dcbebe #825050 #000000 12700 1 0 1;
 #X msg 2100 200 set \$1;
 #X floatatom 1420 670 5 0 1 3 - - p-px-car7-volume 0 0 1, f 5;
 #X floatatom 1420 700 5 -1 1 3 - - p-px-car7-panorama 0 0 1, f 5;
 #X obj 1420 500 tgl 20 0 p-px-car7-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 2100 270 set \$1;
 #X msg 2100 130 set \$1;
 #X obj 1480 530 vsl 20 128 0 1 0 0 p-px-car8-volume empty empty 0 -9
-0 10 #dcbebe #825050 #000000 0 1 0 1;
+0 10 #dcbebe #825050 #000000 12700 1 0 1;
 #X msg 2270 200 set \$1;
 #X floatatom 1480 670 5 0 1 3 - - p-px-car8-volume 0 0 1, f 5;
 #X floatatom 1480 700 5 -1 1 3 - - p-px-car8-panorama 0 0 1, f 5;
 #X obj 1480 500 tgl 20 0 p-px-car8-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 2270 270 set \$1;
 #X msg 2270 130 set \$1;
 #X obj 1240 170 r p-px-car2-volume;
@@ -374,7 +374,7 @@ f 5;
 #X obj 2270 240 r p-px-car8-panorama;
 #X obj 2270 100 r p-px-car8-enabled;
 #X obj 1060 730 vradio 20 0 0 4 p-px-car1-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 2 1;
 #X text 980 730 Sine;
 #X text 980 750 Saw;
 #X text 980 790 Noise;
@@ -382,17 +382,17 @@ f 5;
 #X obj 1120 730 vradio 20 0 0 4 p-px-car2-waveform empty empty 0 -8
 0 10 #ffffff #000000 #000000 0 1;
 #X obj 1180 730 vradio 20 0 0 4 p-px-car3-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 2 1;
 #X obj 1240 730 vradio 20 0 0 4 p-px-car4-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 1 1;
 #X obj 1300 730 vradio 20 0 0 4 p-px-car5-waveform empty empty 0 -8
 0 10 #ffffff #000000 #000000 0 1;
 #X obj 1360 730 vradio 20 0 0 4 p-px-car6-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 1 1;
 #X obj 1420 730 vradio 20 0 0 4 p-px-car7-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 2 1;
 #X obj 1480 730 vradio 20 0 0 4 p-px-car8-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 1 1;
 #X msg 1060 340 set \$1;
 #X obj 1060 310 r p-px-car1-waveform;
 #X msg 1240 340 set \$1;
@@ -422,21 +422,21 @@ f 5;
 #X msg 2490 270 set \$1;
 #X msg 2490 130 set \$1;
 #X obj 1670 530 vsl 20 128 0 1 0 0 p-px-car2-volume empty empty 0 -9
-0 10 #f5f5be #969600 #000000 0 1 0 1;
+0 10 #f5f5be #969600 #000000 12700 1 0 1;
 #X msg 2670 200 set \$1;
 #X floatatom 1671 670 5 0 1 3 - - p-px-mod2-volume 0 0 1, f 5;
 #X floatatom 1670 700 5 -1 1 3 - - p-px-mod2-panorama 0 0 1, f 5;
 #X obj 1670 500 tgl 20 0 p-px-mod2-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 2670 270 set \$1;
 #X msg 2670 130 set \$1;
 #X obj 1730 530 vsl 20 128 0 1 0 0 p-px-car3-volume empty empty 0 -9
-0 10 #f5f5be #969600 #000000 0 1 0 1;
+0 10 #f5f5be #969600 #000000 12700 1 0 1;
 #X msg 2840 200 set \$1;
 #X floatatom 1730 670 5 0 1 3 - - p-px-mod3-volume 0 0 1, f 5;
 #X floatatom 1730 700 5 -1 1 3 - - p-px-mod3-panorama 0 0 1, f 5;
 #X obj 1730 500 tgl 20 0 p-px-mod3-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 2840 270 set \$1;
 #X msg 2840 130 set \$1;
 #X obj 1790 530 vsl 20 128 0 1 0 0 p-px-car4-volume empty empty 0 -9
@@ -445,17 +445,17 @@ f 5;
 #X floatatom 1790 670 5 0 1 3 - - p-px-mod4-volume 0 0 1, f 5;
 #X floatatom 1790 700 5 -1 1 3 - - p-px-mod4-panorama 0 0 1, f 5;
 #X obj 1790 500 tgl 20 0 p-px-mod4-enabled empty empty 0 27 0 12 #ffffff
-#000000 #000000 0 1 1;
+#000000 #000000 1 1 1;
 #X msg 3010 270 set \$1;
 #X msg 3010 130 set \$1;
 #X obj 1610 730 vradio 20 0 0 4 p-px-mod1-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 1 1;
 #X obj 1670 730 vradio 20 0 0 4 p-px-mod2-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 1 1;
 #X obj 1730 730 vradio 20 0 0 4 p-px-mod3-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 1 1;
 #X obj 1790 730 vradio 20 0 0 4 p-px-mod4-waveform empty empty 0 -8
-0 10 #ffffff #000000 #000000 0 1;
+0 10 #ffffff #000000 #000000 1 1;
 #X msg 2490 340 set \$1;
 #X msg 2670 340 set \$1;
 #X msg 2840 340 set \$1;
@@ -644,3 +644,4 @@ filter;
 #X text 1370 530 TODO: Carrier A.Env/F.Env \, modulator A.Env/F.Env
 ;
 #X text 1370 560 TODO: LFOs;
+#X text 1370 410 TODO: Separate noise oscilators for car/mod;

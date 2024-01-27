@@ -46,17 +46,21 @@
 #X coords 0 1 514 -1 200 200 1;
 #X restore 1340 310 graph;
 #X text 10 10 Sawtooth wavetables;
-#X obj 100 102 loadbang;
-#X obj 100 370 soundfiler;
-#X obj 100 131 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000 1;
-#X msg 100 160 read -resize saw1.wav wavetable-saw1 \, read -resize
+#X msg 130 190 read -resize saw1.wav wavetable-saw1 \, read -resize
 saw2.wav wavetable-saw2 \, read -resize saw3.wav wavetable-saw3 \,
 read -resize saw4.wav wavetable-saw4 \, read -resize saw5.wav wavetable-saw5
 \, read -resize saw6.wav wavetable-saw6 \, read -resize saw7.wav wavetable-saw7
 \, read -resize saw8.wav wavetable-saw8 \, read -resize saw9.wav wavetable-saw9
 \, read -resize saw10.wav wavetable-saw10 \, read -resize saw11.wav
 wavetable-saw11 \,, f 40;
-#X connect 13 0 15 0;
-#X connect 15 0 16 0;
-#X connect 16 0 14 0;
+#X obj 130 380 soundfiler;
+#X obj 100 131 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 100 100 inlet;
+#X obj 100 410 outlet;
+#X obj 100 160 trigger b b;
+#X connect 13 0 14 0;
+#X connect 15 0 18 0;
+#X connect 16 0 15 0;
+#X connect 18 0 17 0;
+#X connect 18 1 13 0;

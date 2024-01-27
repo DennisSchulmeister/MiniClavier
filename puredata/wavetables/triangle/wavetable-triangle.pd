@@ -46,11 +46,7 @@
 #X coords 0 1 514 -1 200 200 1;
 #X restore 1340 310 graph;
 #X text 10 10 Triangle wavetables;
-#X obj 100 102 loadbang;
-#X obj 100 370 soundfiler;
-#X obj 100 131 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000 1;
-#X msg 100 160 read -resize triangle1.wav wavetable-triangle1 \, read
+#X msg 130 190 read -resize triangle1.wav wavetable-triangle1 \, read
 -resize triangle2.wav wavetable-triangle2 \, read -resize triangle3.wav
 wavetable-triangle3 \, read -resize triangle4.wav wavetable-triangle4
 \, read -resize triangle5.wav wavetable-triangle5 \, read -resize triangle6.wav
@@ -58,6 +54,14 @@ wavetable-triangle6 \, read -resize triangle7.wav wavetable-triangle7
 \, read -resize triangle8.wav wavetable-triangle8 \, read -resize triangle9.wav
 wavetable-triangle9 \, read -resize triangle10.wav wavetable-triangle10
 \, read -resize triangle11.wav wavetable-triangle11 \,, f 50;
-#X connect 13 0 15 0;
-#X connect 15 0 16 0;
-#X connect 16 0 14 0;
+#X obj 130 380 soundfiler;
+#X obj 100 131 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 100 100 inlet;
+#X obj 100 410 outlet;
+#X obj 100 160 trigger b b;
+#X connect 13 0 14 0;
+#X connect 15 0 18 0;
+#X connect 16 0 15 0;
+#X connect 18 0 17 0;
+#X connect 18 1 13 0;

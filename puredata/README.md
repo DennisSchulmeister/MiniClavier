@@ -35,7 +35,7 @@ The root directory consists of the following files:
 The first is meant to be used stand-alone with Pure Data. Simply open this
 patch and connect a MIDI keyboard that sends on MIDI channel 1 to play the
 synthesizer. If the UI is too heavy on the CPU, you can try `main1.pd` instead
-and load one of the available presets. 
+and load one of the available presets.
 
 `main2.pd` implements the actual synthesizer. It is split from the user
 interface to be embedded into host applications that provide their own
@@ -69,12 +69,12 @@ has been done to make them as well-behaved and isolated as possible.
 
  * `envgen`: Envelope generator with unlimited breakpoints for attack and release
 
- * `preset`: Simple mechanism to save and load the synthesier parameters from
+ * `preset`: Simple mechanism to save and load the synthesizer parameters from
    preset files. Can also be used to save parameters in memory when the same
    user interface widgets are used to control different parts of the synthesizer,
    (e.g. the same controls are used to program partials 1, 2, 3, 4 and we need
    a mechanism to switch the currently edited partial).
- 
+
  * `voice_allocator`: What PD's `[poly]` should have been but never was. A proper
    voice allocator that is easy to use, easy to debug (look at the data sub-patch
    to see what's going on), and most importantly handles sustain and sustenuto pedals,
@@ -94,18 +94,18 @@ same directory.
 
 There are many ways to avoid aliasing in digital synthesizers, with a popular
 algorithm being the relatively light-weight PolyPLEP. Unfortunately PD doesn't
-include band-limited oscilators and evaluating expressions at audio rate seems
+include band-limited oscillators and evaluating expressions at audio rate seems
 to costly for this synthesizer, that is already stretching the limits of what
 performance PD can deliver (running on a single core etc.).
 
-Therefor we use the same trick as was used on the Korg DW-8000 in the mid-80s.
-We pre-calculate bandlimited waveforms with fourier synthesis, calculating
-one wavetable per octave, limiting the top harmonic to the nyquist frequency.
+Therefore, we use the same trick as was used on the Korg DW-8000 in the mid-80s.
+We pre-calculate band-limited waveforms with Fourier synthesis, calculating
+one wavetable per octave, limiting the top harmonic to the Nyquist frequency.
 This should eliminate aliasing completely with a trade-off in memory and sonic
 quality. The sonic quality trade-off is that the wavetables are only calculated
-per octave and not per semi-tone, therefor not utilysing the full harmonic
+per octave and not per semi-tone, therefore not utilising the full harmonic
 spectrum that would be possible for each note. In practice the difference should
-be almost unnoticable, though.
+be almost unnoticeable, though.
 
 More to come
 ------------
