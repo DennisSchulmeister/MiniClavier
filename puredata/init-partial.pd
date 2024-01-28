@@ -19,12 +19,12 @@
 #X obj 700 220 ./init-oscillator \$1 mod 3 0;
 #X obj 700 250 ./init-oscillator \$1 mod 4 0;
 #X obj 130 160 list append \$1 \$2;
-#X msg 130 190 \; p-p\$1-enabled \$2 \; p-p\$1-volume 1 \; p-p\$1-balance
+#X msg 130 190 \; p-p\$1-enabled \$2 \; p-p\$1-volume 1 \; p-p\$1-panorama
 0 \; p-p\$1-transpose 0 \; p-p\$1-detune 0 \; \; p-p\$1-car-noise-enabled
-0 \; p-p\$1-car-noise-volume 0 \; p-p\$1-car-noise-panorama 0 \; p-p\$1-car-frequency
-1 \; p-p\$1-car-detune 0 \; \; p-p\$1-mod-noise-enabled 0 \; p-p\$1-mod-noise-volume
-0 \; p-p\$1-mod-noise-panorama 0 \; p-p\$1-mod-volume 1 \; p-p\$1-mod-frequency
-1 \; p-p\$1-mod-detune 0;
+0 \; p-p\$1-car-noise-volume 0 \; p-p\$1-car-frequency 1 \; p-p\$1-car-detune
+0 \; \; p-p\$1-mod-noise-enabled 0 \; p-p\$1-mod-noise-volume 0 \;
+p-p\$1-mod-volume 1 \; p-p\$1-mod-frequency 1 \; p-p\$1-mod-detune
+0;
 #X connect 1 0 14 0;
 #X connect 2 0 3 0;
 #X connect 3 0 8 0;
