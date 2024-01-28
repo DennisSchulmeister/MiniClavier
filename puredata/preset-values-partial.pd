@@ -12,12 +12,32 @@
 #X obj 600 280 ./preset-values-oscillator \$1 car6;
 #X obj 600 310 ./preset-values-oscillator \$1 car7;
 #X obj 600 340 ./preset-values-oscillator \$1 car8;
-#X obj 1000 130 ./preset-values-oscillator \$1 mod1;
-#X obj 1000 160 ./preset-values-oscillator \$1 mod2;
-#X obj 1000 190 ./preset-values-oscillator \$1 mod3;
-#X obj 1000 220 ./preset-values-oscillator \$1 mod4;
+#X obj 1100 130 ./preset-values-oscillator \$1 mod1;
+#X obj 1100 160 ./preset-values-oscillator \$1 mod2;
+#X obj 1100 190 ./preset-values-oscillator \$1 mod3;
+#X obj 1100 220 ./preset-values-oscillator \$1 mod4;
 #X text 100 100 ---- General Parameters ----;
-#X text 1000 100 ---- Modulator Parameters ----;
+#X text 1100 100 ---- Modulator Parameters ----;
 #X text 600 100 ---- Carrier Parameters ----;
 #X obj 100 190 ./preset/preset-value pm float p-p\$1-balance;
-#X obj 100 220 ./preset/preset-value pm float p-p\$1-fmrate;
+#X obj 100 220 ./preset/preset-value pm float p-p\$1-transpose;
+#X obj 100 250 ./preset/preset-value pm float p-p\$1-detune;
+#X obj 600 390 ./preset/preset-value pm float p-p\$1-car-noise-enabled
+;
+#X obj 600 420 ./preset/preset-value pm float p-p\$1-car-noise-volume
+;
+#X obj 600 450 ./preset/preset-value pm float p-p\$1-car-noise-panorama
+;
+#X obj 1100 390 ./preset/preset-value pm float p-p\$1-mod-noise-enabled
+;
+#X obj 1100 420 ./preset/preset-value pm float p-p\$1-mod-noise-volume
+;
+#X obj 1100 450 ./preset/preset-value pm float p-p\$1-mod-noise-panorama
+;
+#X obj 600 500 ./preset/preset-value pm float p-p\$1-car-detune;
+#X obj 600 530 ./preset/preset-value pm float p-p\$1-car-frequency
+;
+#X obj 1100 530 ./preset/preset-value pm float p-p\$1-mod-detune;
+#X obj 1100 560 ./preset/preset-value pm float p-p\$1-mod-frequency
+;
+#X obj 1100 500 ./preset/preset-value pm float p-p\$1-mod-volume;
