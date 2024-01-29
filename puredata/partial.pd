@@ -54,6 +54,9 @@
 #X obj 230 700 r \$0-panorama;
 #X obj 1200 200 s \$0-panorama;
 #X obj 1200 110 r p-p\$1-panorama;
+#X obj 800 380 r in-modulation;
+#X floatatom 800 409 5 0 0 0 - - - 0 0 1, f 5;
+#X text 800 440 TODO: Mod Wheel;
 #X connect 2 0 23 0;
 #X connect 3 0 1 0;
 #X connect 4 0 43 0;
@@ -98,3 +101,4 @@
 #X connect 50 1 14 0;
 #X connect 51 0 50 1;
 #X connect 53 0 12 0;
+#X connect 54 0 55 0;
