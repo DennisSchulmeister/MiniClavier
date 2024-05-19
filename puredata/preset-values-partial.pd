@@ -37,3 +37,14 @@
 ;
 #X obj 1100 470 ./preset/preset-value pm float p-p\$1-mod-volume;
 #X obj 100 190 ./preset/preset-value pm float p-p\$1-panorama;
+#X text 100 310 ---- Filters ----;
+#X obj 100 340 ./preset/preset-value pm float p-p\$1-car-flt-type;
+#X obj 100 370 ./preset/preset-value pm float p-p\$1-car-flt-cutoff
+;
+#X obj 100 400 ./preset/preset-value pm float p-p\$1-car-flt-qfactor
+;
+#X obj 100 450 ./preset/preset-value pm float p-p\$1-mod-flt-type;
+#X obj 100 480 ./preset/preset-value pm float p-p\$1-mod-flt-cutoff
+;
+#X obj 100 510 ./preset/preset-value pm float p-p\$1-mod-flt-qfactor
+;

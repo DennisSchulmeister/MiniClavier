@@ -6,11 +6,6 @@
 #404040 0;
 #X text 10 170 \$1 - Name of the preset manager obejct, f 68;
 #X text 10 210 \$3 - Name of the preset parameter, f 68;
-#X text 10 250 The name of the preset manager is used to connect with
-the preset manager instance via same-named send/receive objects. Technically
-\, the names \$1-in and \$1-out will be used send and receive data
-between the preset manager and the present values. Make sure to chose
-a unique name here., f 68;
 #X text 10 350 The name of the preset parameter is used to "send" the
 preset value to the synthesizer or "receive" parameter changes from
 the UI / control layer. It is used varbatim with PD's [send] and [receive]
@@ -95,73 +90,78 @@ is loaded., f 68;
 #X obj 1310 520 list trim 1;
 #X obj 1150 490 list prepend symbol;
 #X obj 1150 519 list trim 1;
-#X text 10 40 This abstraction manages a single preset value that can
-be saved to and restored from a preset file. Use one instance for each
-parameter. Then add a manager instance to handle the actual preset
-loading and saving and built a small UI around it., f 68;
 #X obj 630 170 s \$0-type-f;
 #X obj 720 170 s \$0-type-s;
 #X obj 810 170 s \$0-type-l;
 #X msg 630 140 0;
-#X connect 9 0 58 0;
-#X connect 10 0 17 0;
-#X connect 11 0 10 0;
+#X text 10 40 This abstraction manages a single preset value that can
+be saved to and restored from a preset file. Use one instance for each
+parameter. Then add a manager instance to handle the actual preset
+loading and saving and build a small UI around it., f 68;
+#X text 10 250 The name of the preset manager is used to connect with
+the preset manager instance via same-named send/receive objects. Technically
+\, the names \$1-in and \$1-out will be used to send and receive data
+between the preset manager and the present values. Make sure to chose
+a unique name here., f 68;
+#X connect 8 0 57 0;
+#X connect 9 0 16 0;
+#X connect 10 0 9 0;
+#X connect 11 0 58 0;
 #X connect 12 0 59 0;
-#X connect 13 0 60 0;
-#X connect 14 0 26 0;
-#X connect 14 0 12 1;
-#X connect 15 0 73 0;
-#X connect 15 0 75 0;
-#X connect 16 0 28 0;
-#X connect 16 0 66 0;
-#X connect 17 0 9 0;
-#X connect 17 1 81 0;
+#X connect 13 0 25 0;
+#X connect 13 0 11 1;
+#X connect 14 0 72 0;
+#X connect 14 0 74 0;
+#X connect 15 0 27 0;
+#X connect 15 0 65 0;
+#X connect 16 0 8 0;
+#X connect 16 1 79 0;
+#X connect 17 0 43 0;
 #X connect 18 0 44 0;
 #X connect 19 0 45 0;
-#X connect 20 0 46 0;
+#X connect 22 0 13 0;
 #X connect 23 0 14 0;
 #X connect 24 0 15 0;
-#X connect 25 0 16 0;
+#X connect 27 0 28 0;
 #X connect 28 0 29 0;
-#X connect 29 0 30 0;
+#X connect 34 0 11 0;
 #X connect 35 0 12 0;
-#X connect 36 0 13 0;
-#X connect 37 0 35 1;
-#X connect 38 0 14 1;
-#X connect 39 0 36 1;
+#X connect 36 0 34 1;
+#X connect 37 0 13 1;
+#X connect 38 0 35 1;
+#X connect 39 0 14 1;
 #X connect 40 0 15 1;
-#X connect 41 0 16 1;
-#X connect 42 0 72 0;
-#X connect 43 0 42 1;
-#X connect 48 0 64 0;
-#X connect 49 0 55 0;
+#X connect 41 0 71 0;
+#X connect 42 0 41 1;
+#X connect 47 0 63 0;
+#X connect 48 0 54 0;
+#X connect 51 0 34 0;
 #X connect 52 0 35 0;
-#X connect 53 0 36 0;
-#X connect 54 0 42 0;
-#X connect 56 0 61 0;
-#X connect 58 0 18 0;
-#X connect 58 1 19 0;
-#X connect 58 2 20 0;
-#X connect 58 3 21 0;
+#X connect 53 0 41 0;
+#X connect 55 0 60 0;
+#X connect 57 0 17 0;
+#X connect 57 1 18 0;
+#X connect 57 2 19 0;
+#X connect 57 3 20 0;
+#X connect 58 0 49 0;
 #X connect 59 0 50 0;
-#X connect 60 0 51 0;
-#X connect 62 0 63 0;
-#X connect 63 0 56 0;
-#X connect 64 0 49 0;
-#X connect 65 0 67 1;
+#X connect 61 0 62 0;
+#X connect 62 0 55 0;
+#X connect 63 0 48 0;
+#X connect 64 0 66 1;
+#X connect 65 0 66 0;
+#X connect 65 1 64 0;
+#X connect 65 1 68 0;
 #X connect 66 0 67 0;
-#X connect 66 1 65 0;
-#X connect 66 1 69 0;
-#X connect 67 0 68 0;
-#X connect 68 0 71 0;
-#X connect 69 0 68 1;
-#X connect 70 0 68 1;
-#X connect 72 0 67 0;
-#X connect 72 1 70 0;
-#X connect 73 0 74 0;
-#X connect 74 0 27 0;
-#X connect 75 0 76 0;
-#X connect 76 0 13 1;
-#X connect 81 0 78 0;
-#X connect 81 0 79 0;
-#X connect 81 0 80 0;
+#X connect 67 0 70 0;
+#X connect 68 0 67 1;
+#X connect 69 0 67 1;
+#X connect 71 0 66 0;
+#X connect 71 1 69 0;
+#X connect 72 0 73 0;
+#X connect 73 0 26 0;
+#X connect 74 0 75 0;
+#X connect 75 0 12 1;
+#X connect 79 0 76 0;
+#X connect 79 0 77 0;
+#X connect 79 0 78 0;
