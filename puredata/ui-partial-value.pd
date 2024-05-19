@@ -1,6 +1,5 @@
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
-#X obj 600 110 ./preset/preset-value partial\$1 \$2 p-p\$1-\$3;
 #X obj 1200 210 r p-p\$1-\$3;
 #X obj 1200 370 spigot;
 #X obj 1230 720 s p-px-\$3;
@@ -60,10 +59,6 @@ engine \, the preset manager \, preset values and the UI widgets will
 be created. Therefor \, unlike most other parts of the synth \, respecting
 the naming scheme of the parameter send/receive objects in the synth.
 , f 68;
-#X text 8 350 For each partial a [preset-manager] object must be created
-in somewhere in the synth patch. Then for each partial and each parameter
-a [ui-partial-value] must be added \, that communicated with the UI
-widgets and the synth., f 68;
 #X text 10 160 \$1 - Partial number (e.g. 0), f 68;
 #X obj 630 500 expr \\$f1 == 0;
 #X obj 1230 500 expr \\$f1 == 0;
@@ -71,35 +66,40 @@ widgets and the synth., f 68;
 #X obj 1260 311 r ui-selected-partial;
 #X obj 600 780 value \$0-prevent-endless-loop;
 #X obj 1200 780 value \$0-prevent-endless-loop;
-#X connect 2 0 12 0;
-#X connect 3 0 8 0;
-#X connect 5 0 3 1;
-#X connect 6 0 14 0;
-#X connect 6 1 35 0;
-#X connect 8 0 10 0;
-#X connect 8 1 9 0;
-#X connect 9 0 47 0;
-#X connect 10 0 6 0;
-#X connect 12 0 3 0;
-#X connect 14 0 36 0;
-#X connect 14 1 4 0;
-#X connect 19 0 23 0;
-#X connect 20 0 19 1;
-#X connect 21 0 29 0;
-#X connect 21 1 33 0;
-#X connect 23 0 25 0;
-#X connect 23 1 24 0;
-#X connect 24 0 46 0;
-#X connect 25 0 21 0;
-#X connect 27 0 19 0;
-#X connect 29 0 34 0;
-#X connect 29 1 32 0;
-#X connect 31 0 27 0;
-#X connect 33 0 22 0;
-#X connect 34 0 50 0;
-#X connect 35 0 7 0;
-#X connect 36 0 51 0;
-#X connect 46 0 25 1;
-#X connect 47 0 10 1;
-#X connect 48 0 20 0;
-#X connect 49 0 5 0;
+#X text 8 350 For each partial a [preset-manager] object must be created
+somewhere in the synth patch. Then for each partial and each parameter
+a [ui-partial-value] must be added \, that communicates with the UI
+widgets and the synth., f 68;
+#X obj 600 110 ./preset/preset-value partial\$1 \$2 p-p\$1-\$3;
+#X connect 1 0 11 0;
+#X connect 2 0 7 0;
+#X connect 4 0 2 1;
+#X connect 5 0 13 0;
+#X connect 5 1 34 0;
+#X connect 7 0 9 0;
+#X connect 7 1 8 0;
+#X connect 8 0 45 0;
+#X connect 9 0 5 0;
+#X connect 11 0 2 0;
+#X connect 13 0 35 0;
+#X connect 13 1 3 0;
+#X connect 18 0 22 0;
+#X connect 19 0 18 1;
+#X connect 20 0 28 0;
+#X connect 20 1 32 0;
+#X connect 22 0 24 0;
+#X connect 22 1 23 0;
+#X connect 23 0 44 0;
+#X connect 24 0 20 0;
+#X connect 26 0 18 0;
+#X connect 28 0 33 0;
+#X connect 28 1 31 0;
+#X connect 30 0 26 0;
+#X connect 32 0 21 0;
+#X connect 33 0 48 0;
+#X connect 34 0 6 0;
+#X connect 35 0 49 0;
+#X connect 44 0 24 1;
+#X connect 45 0 9 1;
+#X connect 46 0 19 0;
+#X connect 47 0 4 0;
