@@ -26,7 +26,10 @@
 1 \; \; p-p\$1-mod-noise-enabled 0 \; p-p\$1-mod-noise-volume 0 \;
 p-p\$1-mod-volume 1 \; p-p\$1-mod-frequency 1 \; p-p\$1-mod-detune
 0 \; p-p\$1-mod-flt-type 0 \; p-p\$1-mod-flt-cutoff 10 \; p-p\$1-mod-flt-qfactor
-1 \;;
+1 \; \; p-p\$1-car-aenv1 attack 1 0.1 \; p-p\$1-car-aenv1 release 0
+0.3 \; p-p\$1-car-fenv1 attack 1 0 \; p-p\$1-car-fenv1 release 0 0.3
+\; p-p\$1-mod-aenv1 attack 1 0.1 \; p-p\$1-mod-aenv1 release 0 0.3
+\; p-p\$1-mod-fenv1 attack 1 0 \; p-p\$1-mod-fenv1 release 0 0.3;
 #X connect 1 0 14 0;
 #X connect 2 0 3 0;
 #X connect 3 0 8 0;

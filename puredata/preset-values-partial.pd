@@ -48,3 +48,7 @@
 ;
 #X obj 100 510 ./preset/preset-value pm float p-p\$1-mod-flt-qfactor
 ;
+#X obj 600 600 ./preset/preset-value pm list p-p\$1-car-aenv1;
+#X obj 600 630 ./preset/preset-value pm list p-p\$1-car-fenv1;
+#X obj 1100 600 ./preset/preset-value pm list p-p\$1-mod-aenv1;
+#X obj 1100 630 ./preset/preset-value pm list p-p\$1-mod-fenv1;

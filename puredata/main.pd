@@ -2,6 +2,11 @@
 float active float time float sustain float sustenuto float bg_color
 float sustain_color float sustenuto_color;
 #N struct vac__main float polyphony array voices vac__voice;
+#N struct egui__main float x2 float y2 float dx float dy float view
+array attack egui__breakpoint array release egui__breakpoint;
+#N struct egui__breakpoint float x float y float prev_x float prev_y
+float enabled float selected float value float duration float starttime
+;
 #N canvas 0 49 1920 1009 12;
 #X obj -30 -30 preset_hub k12 1 %hidden%;
 #N canvas 0 49 1920 1009 global_parameters 0;
@@ -236,30 +241,30 @@ f 5;
 #000000 #000000 1 1 1;
 #X msg 580 330 set \$1;
 #X obj 580 300 r p-px-enabled;
-#X obj 10 319 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#X obj 10 369 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 1;
-#X obj 10 380 s ui-partial;
-#X msg 10 350 0;
-#X obj 10 290 r reinit;
-#X obj 10 430 r ui-partial;
-#X msg 40 790 restore-values;
-#X obj 10 500 trigger f b;
-#X obj 40 820 send;
-#X text 20 480 ---- Save current values in preset manager memory ----
+#X obj 10 430 s ui-partial;
+#X msg 10 400 0;
+#X obj 10 340 r reinit;
+#X obj 10 480 r ui-partial;
+#X msg 70 840 restore-values;
+#X obj 10 550 trigger f b;
+#X obj 70 870 send;
+#X text 20 530 ---- Save current values in preset manager memory ----
 ;
-#X text 20 610 ---- Restore values from selected partial's preset manager
+#X text 20 660 ---- Restore values from selected partial's preset manager
 ----, f 64;
-#X obj 100 730 s ui-selected-partial;
-#X obj 10 730 trigger f f;
-#X msg 40 530 store-values;
-#X obj 40 560 s ui-partial-0;
-#X obj 400 560 s ui-partial-3;
-#X obj 280 560 s ui-partial-2;
-#X obj 160 560 s ui-partial-1;
-#X obj 10 10 ./ui-partial 0;
-#X obj 10 40 ./ui-partial 1;
-#X obj 10 70 ./ui-partial 2;
-#X obj 10 100 ./ui-partial 3;
+#X obj 100 780 s ui-selected-partial;
+#X obj 10 780 trigger f f;
+#X msg 40 580 store-values;
+#X obj 40 610 s ui-partial-0;
+#X obj 400 610 s ui-partial-3;
+#X obj 280 610 s ui-partial-2;
+#X obj 160 610 s ui-partial-1;
+#X obj 10 60 ./ui-partial 0;
+#X obj 10 90 ./ui-partial 1;
+#X obj 10 120 ./ui-partial 2;
+#X obj 10 150 ./ui-partial 3;
 #X msg 580 420 set \$1;
 #X obj 710 560 hsl 128 19 -1 1 0 0 p-px-panorama empty empty -2 -8
 0 10 #f0aa64 #a54141 #000000 6350 1 0 1;
@@ -437,7 +442,7 @@ f 5;
 #X obj 2850 310 r p-px-mod2-waveform;
 #X obj 3022 309 r p-px-mod3-waveform;
 #X obj 3190 310 r p-px-mod4-waveform;
-#X msg 160 790 symbol ui-partial-\$1;
+#X msg 190 840 symbol ui-partial-\$1;
 #X text 980 470 Harmonic;
 #X text 1060 470 1;
 #X text 1120 470 2;
@@ -553,17 +558,28 @@ f 5;
 #X text 710 850 Modulator;
 #X obj 710 920 hsl 128 20 0 1 0 0 p-px-mod-flt-qfactor empty empty
 -2 -8 0 10 #d7e6be #286024 #000000 0 1 0 1;
-#X obj 40 690 s ui-change-visible-partial;
-#X msg 40 660 1;
-#X obj 10 890 s ui-change-visible-partial;
-#X msg 10 860 0;
-#X obj 10 630 trigger f b;
-#X obj 10 760 trigger b b f;
-#X obj 10 150 r pre-init;
-#X obj 10 240 s ui-change-visible-partial;
-#X msg 10 210 0;
-#X obj 10 180 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#X obj 40 740 s ui-change-visible-partial;
+#X msg 40 710 1;
+#X obj 40 940 s ui-change-visible-partial;
+#X msg 40 910 0;
+#X obj 10 680 trigger f b;
+#X obj 10 200 r pre-init;
+#X obj 10 290 s ui-change-visible-partial;
+#X msg 10 260 0;
+#X obj 10 230 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 1;
+#X obj 1060 860 ./envgen/envgen-gui Volume p-px-car-aenv1 p-px-car-aenv2
+;
+#X obj 1060 1130 ./envgen/envgen-gui Filter_CutOff p-px-car-fenv1 p-px-car-fenv2
+;
+#X obj 1610 860 ./envgen/envgen-gui Volume p-px-mod-aenv1 p-px-mod-aenv2
+;
+#X obj 10 10 ./envgen/envgen-gui-structs;
+#X obj 10 1010 s egui-initialize;
+#X text 22 991 ---- Initialize envelope UIs ----;
+#X obj 10 810 trigger b b b f;
+#X obj 1610 1130 ./envgen/envgen-gui Filter_CutOff p-px-mod-fenv1 p-px-mod-fenv2
+;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
 #X connect 5 0 4 0;
@@ -575,7 +591,7 @@ f 5;
 #X connect 12 0 14 0;
 #X connect 13 0 259 0;
 #X connect 13 1 19 0;
-#X connect 18 0 260 0;
+#X connect 18 0 270 0;
 #X connect 18 1 17 0;
 #X connect 19 0 20 0;
 #X connect 19 0 23 0;
@@ -716,15 +732,18 @@ f 5;
 #X connect 258 0 257 0;
 #X connect 259 0 18 0;
 #X connect 259 1 256 0;
-#X connect 260 0 258 0;
-#X connect 260 1 12 0;
-#X connect 260 2 163 0;
-#X connect 261 0 264 0;
+#X connect 260 0 263 0;
+#X connect 262 0 261 0;
 #X connect 263 0 262 0;
-#X connect 264 0 263 0;
-#X coords 0 -1 1 1 1320 570 2 700 400;
+#X connect 270 0 268 0;
+#X connect 270 1 258 0;
+#X connect 270 2 12 0;
+#X connect 270 3 163 0;
+#X coords 0 -1 1 1 1320 990 2 700 400;
 #X restore 10 390 pd partial_parameters;
 #X text 1370 430 TODO: Carrier A.Env/F.Env \, modulator A.Env/F.Env
 ;
 #X text 1370 460 TODO: LFOs;
-#X text 1370 490 TODO: Tabread4 causes Aliasing!;
+#X text 1370 490 TODO: Debug aliasing issues!;
+#X text 1370 400 TODO: Debug env.gens. (100% CPU + not working yet)
+;
