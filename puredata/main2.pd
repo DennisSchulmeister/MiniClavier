@@ -481,6 +481,8 @@ and sends the resulting values to everybody who wants to receive them.
 #X obj 100 260 trigger b b;
 #X text 110 240 ---- Pre-Initialization ----;
 #X obj 130 290 s pre-init;
+#X text 990 190 <<<< 16;
+#X text 990 210 <<<< 16;
 #X obj 700 190 ./voice_allocator/voice_allocator 16;
 #X obj 700 220 clone voice 16;
 #X connect 1 0 2 0;
@@ -488,10 +490,10 @@ and sends the resulting values to everybody who wants to receive them.
 #X connect 2 0 4 0;
 #X connect 2 1 4 1;
 #X connect 5 0 12 0;
-#X connect 8 0 38 0;
-#X connect 9 0 38 1;
-#X connect 10 0 38 2;
-#X connect 11 0 38 3;
+#X connect 8 0 40 0;
+#X connect 9 0 40 1;
+#X connect 10 0 40 2;
+#X connect 11 0 40 3;
 #X connect 12 0 14 0;
 #X connect 13 0 14 0;
 #X connect 14 0 35 0;
@@ -512,6 +514,6 @@ and sends the resulting values to everybody who wants to receive them.
 #X connect 33 0 15 0;
 #X connect 35 0 25 0;
 #X connect 35 1 37 0;
-#X connect 38 0 39 0;
-#X connect 39 0 21 0;
-#X connect 39 1 21 1;
+#X connect 40 0 41 0;
+#X connect 41 0 21 0;
+#X connect 41 1 21 1;

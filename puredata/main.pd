@@ -241,26 +241,26 @@ f 5;
 #000000 #000000 1 1 1;
 #X msg 580 330 set \$1;
 #X obj 580 300 r p-px-enabled;
-#X obj 10 369 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#X obj 10 399 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 1;
-#X obj 10 430 s ui-partial;
-#X msg 10 400 0;
-#X obj 10 340 r reinit;
-#X obj 10 480 r ui-partial;
-#X msg 70 840 restore-values;
-#X obj 10 550 trigger f b;
-#X obj 70 870 send;
-#X text 20 530 ---- Save current values in preset manager memory ----
+#X obj 10 460 s ui-partial;
+#X msg 10 430 0;
+#X obj 10 370 r reinit;
+#X obj 10 510 r ui-partial;
+#X msg 70 870 restore-values;
+#X obj 10 580 trigger f b;
+#X obj 70 900 send;
+#X text 20 560 ---- Save current values in preset manager memory ----
 ;
-#X text 20 660 ---- Restore values from selected partial's preset manager
+#X text 20 690 ---- Restore values from selected partial's preset manager
 ----, f 64;
-#X obj 100 780 s ui-selected-partial;
-#X obj 10 780 trigger f f;
-#X msg 40 580 store-values;
-#X obj 40 610 s ui-partial-0;
-#X obj 400 610 s ui-partial-3;
-#X obj 280 610 s ui-partial-2;
-#X obj 160 610 s ui-partial-1;
+#X obj 100 810 s ui-selected-partial;
+#X obj 10 810 trigger f f;
+#X msg 40 610 store-values;
+#X obj 40 640 s ui-partial-0;
+#X obj 400 640 s ui-partial-3;
+#X obj 280 640 s ui-partial-2;
+#X obj 160 640 s ui-partial-1;
 #X obj 10 60 ./ui-partial 0;
 #X obj 10 90 ./ui-partial 1;
 #X obj 10 120 ./ui-partial 2;
@@ -442,7 +442,7 @@ f 5;
 #X obj 2850 310 r p-px-mod2-waveform;
 #X obj 3022 309 r p-px-mod3-waveform;
 #X obj 3190 310 r p-px-mod4-waveform;
-#X msg 190 840 symbol ui-partial-\$1;
+#X msg 190 870 symbol ui-partial-\$1;
 #X text 980 470 Harmonic;
 #X text 1060 470 1;
 #X text 1120 470 2;
@@ -558,14 +558,14 @@ f 5;
 #X text 710 850 Modulator;
 #X obj 710 920 hsl 128 20 0 1 0 0 p-px-mod-flt-qfactor empty empty
 -2 -8 0 10 #d7e6be #286024 #000000 0 1 0 1;
-#X obj 40 740 s ui-change-visible-partial;
-#X msg 40 710 1;
-#X obj 40 940 s ui-change-visible-partial;
-#X msg 40 910 0;
-#X obj 10 680 trigger f b;
+#X obj 40 770 s ui-change-visible-partial;
+#X msg 40 740 1;
+#X obj 40 970 s ui-change-visible-partial;
+#X msg 40 940 0;
+#X obj 10 710 trigger f b;
 #X obj 10 200 r pre-init;
-#X obj 10 290 s ui-change-visible-partial;
-#X msg 10 260 0;
+#X obj 10 320 s ui-change-visible-partial;
+#X msg 10 290 0;
 #X obj 10 230 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 1;
 #X obj 1060 860 ./envgen/envgen-gui Volume p-px-car-aenv1 p-px-car-aenv2
@@ -575,11 +575,11 @@ f 5;
 #X obj 1610 860 ./envgen/envgen-gui Volume p-px-mod-aenv1 p-px-mod-aenv2
 ;
 #X obj 10 10 ./envgen/envgen-gui-structs;
-#X obj 10 1010 s egui-initialize;
-#X text 22 991 ---- Initialize envelope UIs ----;
-#X obj 10 810 trigger b b b f;
+#X obj 220 320 s egui-initialize;
+#X obj 10 840 trigger b b b f;
 #X obj 1610 1130 ./envgen/envgen-gui Filter_CutOff p-px-mod-fenv1 p-px-mod-fenv2
 ;
+#X obj 10 259 trigger b b;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
 #X connect 5 0 4 0;
@@ -591,7 +591,7 @@ f 5;
 #X connect 12 0 14 0;
 #X connect 13 0 259 0;
 #X connect 13 1 19 0;
-#X connect 18 0 270 0;
+#X connect 18 0 269 0;
 #X connect 18 1 17 0;
 #X connect 19 0 20 0;
 #X connect 19 0 23 0;
@@ -734,11 +734,12 @@ f 5;
 #X connect 259 1 256 0;
 #X connect 260 0 263 0;
 #X connect 262 0 261 0;
-#X connect 263 0 262 0;
-#X connect 270 0 268 0;
-#X connect 270 1 258 0;
-#X connect 270 2 12 0;
-#X connect 270 3 163 0;
+#X connect 263 0 271 0;
+#X connect 269 1 258 0;
+#X connect 269 2 12 0;
+#X connect 269 3 163 0;
+#X connect 271 0 262 0;
+#X connect 271 1 268 0;
 #X coords 0 -1 1 1 1320 990 2 700 400;
 #X restore 10 390 pd partial_parameters;
 #X text 1370 430 TODO: Carrier A.Env/F.Env \, modulator A.Env/F.Env

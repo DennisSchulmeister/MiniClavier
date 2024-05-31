@@ -67,15 +67,15 @@
 #X obj 690 892 ./envgen/envgen~;
 #X obj 690 862 r p-p\$1-car-fenv1;
 #X obj 820 892 s p-p\$1-car-fenv2;
-#X obj 460 290 moses 1;
-#X msg 460 320 release;
-#X msg 530 320 attack;
+#X obj 460 320 moses 1;
+#X msg 460 350 release;
+#X msg 530 350 attack;
 #X obj 460 200 trigger f f;
-#X obj 460 350 trigger a a a a;
-#X obj 850 380 s p-p\$1-car-aenv1;
-#X obj 720 380 s p-p\$1-car-fenv1;
-#X obj 590 380 s p-p\$1-mod-aenv1;
-#X obj 460 380 s p-p\$1-mod-fenv1;
+#X obj 460 380 trigger a a a a;
+#X obj 850 410 s p-p\$1-car-aenv1;
+#X obj 720 410 s p-p\$1-car-fenv1;
+#X obj 590 410 s p-p\$1-mod-aenv1;
+#X obj 460 410 s p-p\$1-mod-fenv1;
 #X obj 690 642 ./envgen/envgen~;
 #X obj 690 612 r p-p\$1-mod-fenv1;
 #X obj 820 642 s p-p\$1-nod-fenv2;
@@ -94,6 +94,32 @@
 #X obj 660 552 r reinit;
 #X obj 690 700 trigger b f;
 #X obj 690 950 trigger b f;
+#X obj 460 290 expr if($f1 == 0 \, 0 \, 1);
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array \$0-array1 640 float 1 black black;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#X coords 0 1 639 -1 640 150 1;
+#X restore 900 1040 graph;
+#X obj 900 1010 tabsend~ \$0-array1;
+#X text 1040 1010 TODO: Debug envgen~ usage;
 #X connect 2 0 21 0;
 #X connect 3 0 1 0;
 #X connect 4 0 39 0;
@@ -156,7 +182,7 @@
 #X connect 67 1 69 0;
 #X connect 68 0 71 0;
 #X connect 69 0 71 0;
-#X connect 70 0 67 0;
+#X connect 70 0 94 0;
 #X connect 70 1 7 0;
 #X connect 71 0 75 0;
 #X connect 71 1 74 0;
@@ -166,6 +192,7 @@
 #X connect 76 2 78 0;
 #X connect 77 0 76 0;
 #X connect 79 0 58 0;
+#X connect 79 0 96 0;
 #X connect 80 0 58 1;
 #X connect 81 0 93 0;
 #X connect 82 0 81 0;
@@ -182,3 +209,4 @@
 #X connect 92 1 88 1;
 #X connect 93 0 80 0;
 #X connect 93 1 80 1;
+#X connect 94 0 67 0;
