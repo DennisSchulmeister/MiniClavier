@@ -1,9 +1,0 @@
-#N canvas 0 49 1920 1009 12;
-#X obj -30 -30 preset_hub k12 1 %hidden%;
-#X text 10 30 \$1 must be the partial number starting from zero.;
-#X text 10 50 \$2 must be the name of the oscillator \, e.g. car1.
-;
-#X text 10 10 UI preset value objects for a single oscillator;
-#X obj 100 100 ./ui-partial-value \$1 float \$2-enabled;
-#X obj 100 160 ./ui-partial-value \$1 float \$2-volume;
-#X obj 100 130 ./ui-partial-value \$1 float \$2-waveform;

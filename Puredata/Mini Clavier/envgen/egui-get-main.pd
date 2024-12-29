@@ -1,0 +1,18 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X obj 100 290 pointer;
+#X text 330 260 This gets the egui__main instance \, because it is
+the only scalar in the egui__ui canvas., f 35;
+#X text 10 10 Get the main struct pointer from the envelope generator
+UI., f 69;
+#X text 10 70 Send a bang to the inlet to get the pointer., f 69;
+#X obj 100 200 inlet;
+#X obj 100 320 outlet;
+#X text 10 40 Argument \$1 must be \$0 of the calling [envgen-gui]
+instance., f 69;
+#X msg 100 260 traverse pd-\$1_egui__ui \, next;
+#X obj 100 230 f \$1;
+#X connect 1 0 6 0;
+#X connect 5 0 9 0;
+#X connect 8 0 1 0;
+#X connect 9 0 8 0;

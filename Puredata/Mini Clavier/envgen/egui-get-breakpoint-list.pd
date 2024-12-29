@@ -1,0 +1,43 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X text 10 10 Internal abstraction to convert the internal breakpoint
+scalar array into a plain list \, that can e.g. be sent to an [envgen~]
+object \, or can be used to mutate the underlying data., f 69;
+#X text 10 130 A bang on the inlet starts the iteration., f 69;
+#X text 10 80 Argument \$1 must be \$0 of the calling [envgen-gui]
+instance., f 69;
+#X text 10 100 \$2 must be the name of the array (attack or release).
+, f 69;
+#X obj 130 530 get egui__breakpoint value duration;
+#X obj 130 590 list cat;
+#X obj 130 620 spigot;
+#X obj 200 590 r \$0-list-clear;
+#X text 430 480 Last iteration;
+#X obj 200 620 r \$0-send-data;
+#X msg 420 500 \; \$0-send-data 1;
+#X obj 130 560 pack f f;
+#X obj 130 500 spigot;
+#X text 190 500 Skip dummy;
+#X obj 100 650 list trim;
+#X obj 100 300 inlet;
+#X obj 100 700 outlet;
+#X obj 100 350 trigger b b;
+#X msg 130 380 \; \$0-list-clear clear \; \$0-send-data 0;
+#X text 10 150 The list of [value \, duration \, ...] pairs will appear
+at the outlet., f 69;
+#X obj 100 470 ./egui-foreach-breakpoint \$1 \$2;
+#X connect 5 0 12 0;
+#X connect 5 1 12 1;
+#X connect 6 0 7 0;
+#X connect 7 0 15 0;
+#X connect 8 0 6 1;
+#X connect 10 0 7 1;
+#X connect 12 0 6 0;
+#X connect 13 0 5 0;
+#X connect 15 0 17 0;
+#X connect 16 0 18 0;
+#X connect 18 0 21 0;
+#X connect 18 1 19 0;
+#X connect 21 0 13 0;
+#X connect 21 1 13 1;
+#X connect 21 2 11 0;
