@@ -26,13 +26,13 @@
     ; Operator 1
     groupbox $GROUPBOX, bounds(10, 10, 690, 145), text("Operator 1") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP1_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP1_Frequency_LFO"),   text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP1_Frequency_LFO"),   text("LFO"),           range(0,   1, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  85, 120, 20), channel("OP1_FM_Enable"),       text("Modulate OP2")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP1_Out_Enable"),      text("Direct Output")
         
         rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP1_FM_Level"),        text("Modulate OP2"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP1_Out_Level"),       text("Direct Output"), range(0, 1, 0,   1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 1, 0,   1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP1_Out_Level"),       text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP1_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP1_Out_LFO"),         text("LFO"),           range(0, 1, 0, 1, 0.01)
@@ -57,8 +57,8 @@
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP2_Out_Enable"),      text("Direct Output")
         
         rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP2_FM_Level"),        text("Modulate OP3"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP2_Out_Level"),       text("Direct Output"), range(0, 1, 0,   1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 1, 0,   1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP2_Out_Level"),       text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP2_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP2_Out_LFO"),         text("LFO"),           range(0, 1, 0, 1, 0.01)
@@ -83,8 +83,8 @@
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP3_Out_Enable"),      text("Direct Output")
         
         rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP3_FM_Level"),        text("Modulate OP4"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP3_Out_Level"),       text("Direct Output"), range(0, 1, 0,   1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 1, 0,   1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP3_Out_Level"),       text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP3_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP3_Out_LFO"),         text("LFO"),           range(0, 1, 0, 1, 0.01)
