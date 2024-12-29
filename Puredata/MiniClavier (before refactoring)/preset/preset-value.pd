@@ -1,0 +1,167 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X obj 0 0 cnv 15 500 30 empty empty Preset\ Value 10 12 0 14 #e0e0e0
+#404040 0;
+#X obj 0 140 cnv 15 500 15 empty empty Arguments 10 5 0 12 #e0e0e0
+#404040 0;
+#X text 10 170 \$1 - Name of the preset manager obejct, f 68;
+#X text 10 210 \$3 - Name of the preset parameter, f 68;
+#X text 10 350 The name of the preset parameter is used to "send" the
+preset value to the synthesizer or "receive" parameter changes from
+the UI / control layer. It is used varbatim with PD's [send] and [receive]
+objects. This limits the preset mechanism to patches \, where parameters
+are distributed with [send] and [receive]. But even if a patch doesn't
+\, it should be easy to simulate this., f 68;
+#X obj 0 460 cnv 15 500 15 empty empty Usage 10 5 0 12 #e0e0e0 #404040
+0;
+#X text 10 480 Add a single preset manager to your patch and as many
+preset values as you wish. Use a dedicated send/receive name for each
+parameter. The preset manager and preset value objects will listen
+on these to get the current value and send to them \, when a preset
+is loaded., f 68;
+#X obj 600 240 symbol \$2;
+#X obj 600 80 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 1;
+#X obj 600 50 loadbang;
+#X obj 750 490 float;
+#X obj 1110 550 symbol;
+#X obj 750 450 spigot;
+#X obj 1150 450 spigot;
+#X obj 1660 450 spigot;
+#X obj 600 110 trigger b b;
+#X msg 600 310 1;
+#X msg 700 310 1;
+#X msg 800 310 1;
+#X obj 820 270 print unknown preset value type;
+#X text 600 30 ---- Determine value type ----;
+#X obj 750 420 r \$3;
+#X obj 1150 420 r \$3;
+#X obj 1660 420 r \$3;
+#X floatatom 800 490 5 0 0 0 - - - 0 0 1, f 5;
+#X msg 1310 550 goodbye;
+#X obj 1810 490 list prepend set;
+#X obj 1810 520 list trim 1;
+#X msg 1810 550 a b c d e;
+#X text 800 510 Stored value;
+#X text 1310 571 Stored value;
+#X text 1810 570 Stored value;
+#X text 600 400 ---- Store current value ----;
+#X obj 600 450 spigot;
+#X obj 1000 450 spigot;
+#X obj 650 450 r \$0-type-f;
+#X obj 800 450 r \$0-type-f;
+#X obj 1050 450 r \$0-type-s;
+#X obj 1200 450 r \$0-type-s;
+#X obj 1710 450 r \$0-type-l;
+#X obj 1500 450 spigot;
+#X obj 1550 450 r \$0-type-l;
+#X obj 600 339 s \$0-type-f;
+#X obj 700 339 s \$0-type-s;
+#X obj 800 339 s \$0-type-l;
+#X text 600 680 ---- Send current value to preset manager to be saved
+----;
+#X obj 600 700 r \$1-out;
+#X obj 600 760 select get-current-value;
+#X obj 750 630 s \$0-value;
+#X obj 1110 630 s \$0-value;
+#X obj 600 420 r \$0-get-value;
+#X obj 1000 420 r \$0-get-value;
+#X obj 1500 420 r \$0-get-value;
+#X obj 600 791 s \$0-get-value;
+#X obj 600 901 list trim 1;
+#X text 10 190 \$2 - Type of the preset value: float \, symbol \, list
+, f 68;
+#X obj 600 270 select float symbol list;
+#X obj 750 600 pack f;
+#X obj 1110 600 pack s;
+#X obj 600 930 s \$1-in;
+#X obj 600 841 r \$0-value;
+#X obj 600 871 list prepend value \$3;
+#X obj 600 730 symbol;
+#X msg 1690 520 clear;
+#X obj 1660 490 trigger l b;
+#X obj 1660 550 list cat;
+#X obj 1660 580 spigot, f 14;
+#X msg 1750 520 0;
+#X msg 1760 550 1;
+#X obj 1660 640 s \$0-value;
+#X obj 1500 490 trigger b b;
+#X obj 1310 490 list prepend set;
+#X obj 1310 520 list trim 1;
+#X obj 1150 490 list prepend symbol;
+#X obj 1150 519 list trim 1;
+#X obj 630 170 s \$0-type-f;
+#X obj 720 170 s \$0-type-s;
+#X obj 810 170 s \$0-type-l;
+#X msg 630 140 0;
+#X text 10 40 This abstraction manages a single preset value that can
+be saved to and restored from a preset file. Use one instance for each
+parameter. Then add a manager instance to handle the actual preset
+loading and saving and build a small UI around it., f 68;
+#X text 10 250 The name of the preset manager is used to connect with
+the preset manager instance via same-named send/receive objects. Technically
+\, the names \$1-in and \$1-out will be used to send and receive data
+between the preset manager and the present values. Make sure to chose
+a unique name here., f 68;
+#X connect 8 0 57 0;
+#X connect 9 0 16 0;
+#X connect 10 0 9 0;
+#X connect 11 0 58 0;
+#X connect 12 0 59 0;
+#X connect 13 0 25 0;
+#X connect 13 0 11 1;
+#X connect 14 0 72 0;
+#X connect 14 0 74 0;
+#X connect 15 0 27 0;
+#X connect 15 0 65 0;
+#X connect 16 0 8 0;
+#X connect 16 1 79 0;
+#X connect 17 0 43 0;
+#X connect 18 0 44 0;
+#X connect 19 0 45 0;
+#X connect 22 0 13 0;
+#X connect 23 0 14 0;
+#X connect 24 0 15 0;
+#X connect 27 0 28 0;
+#X connect 28 0 29 0;
+#X connect 34 0 11 0;
+#X connect 35 0 12 0;
+#X connect 36 0 34 1;
+#X connect 37 0 13 1;
+#X connect 38 0 35 1;
+#X connect 39 0 14 1;
+#X connect 40 0 15 1;
+#X connect 41 0 71 0;
+#X connect 42 0 41 1;
+#X connect 47 0 63 0;
+#X connect 48 0 54 0;
+#X connect 51 0 34 0;
+#X connect 52 0 35 0;
+#X connect 53 0 41 0;
+#X connect 55 0 60 0;
+#X connect 57 0 17 0;
+#X connect 57 1 18 0;
+#X connect 57 2 19 0;
+#X connect 57 3 20 0;
+#X connect 58 0 49 0;
+#X connect 59 0 50 0;
+#X connect 61 0 62 0;
+#X connect 62 0 55 0;
+#X connect 63 0 48 0;
+#X connect 64 0 66 1;
+#X connect 65 0 66 0;
+#X connect 65 1 64 0;
+#X connect 65 1 68 0;
+#X connect 66 0 67 0;
+#X connect 67 0 70 0;
+#X connect 68 0 67 1;
+#X connect 69 0 67 1;
+#X connect 71 0 66 0;
+#X connect 71 1 69 0;
+#X connect 72 0 73 0;
+#X connect 73 0 26 0;
+#X connect 74 0 75 0;
+#X connect 75 0 12 1;
+#X connect 79 0 76 0;
+#X connect 79 0 77 0;
+#X connect 79 0 78 0;

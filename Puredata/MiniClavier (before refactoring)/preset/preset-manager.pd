@@ -1,0 +1,294 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X obj 0 0 cnv 15 500 30 empty empty Preset\ Manager 10 12 0 14 #e0e0e0
+#404040 0;
+#X obj 0 240 cnv 15 500 15 empty empty Arguments 10 5 0 12 #e0e0e0
+#404040 0;
+#X text 10 260 \$1 - Name of the preset manager obejct, f 68;
+#X obj 0 390 cnv 15 500 15 empty empty Usage 10 5 0 12 #e0e0e0 #404040
+0;
+#X text 10 210 Both use cases are equally supported by this object.
+, f 68;
+#X text 10 290 The name is used to communicate with the preset value
+objects that actually take care of the individual parameters (see below).
+Technically the names \$1-in and \$1-out will be used to exchange messages
+via PD's [send] and [receive] \, so make sure to chose a unique name
+here., f 68;
+#X text 10 410 To save parameters to preset files \, add a single preset
+manager to your patch and give it an arbitrary name. Then for each
+parameter add a preset value object with the same name. [send] and
+[receive] is also used to communicate with the user interface (or whatever
+usually controls the parameters of your patch) and the patch., f 68
+;
+#X text 10 500 For this \, it must be possible to [receive ...] with
+a unique name to receive the value of a parameter \, when it is changed
+externaly. And it must be possible to [send ...] with the same name
+to set a new value when a preset is loaded., f 68;
+#X text 10 580 Send [load-file( and [save-file( to the preset managers
+inlet to show a load file or save file dialog., f 68;
+#X text 10 630 For the second use case (multiplexing UI elements) \,
+create multiple preset managers with unique names and create one value
+object per parameter and manager. Then use [store-values( and [restore-values(
+messages instead of [load-file( and [save-file( to save and restore
+values to/from memory., f 68;
+#X obj 600 70 inlet;
+#N canvas 0 49 1920 1009 load-file 0;
+#X text 10 10 Load preset values from file;
+#X obj 100 100 inlet;
+#X obj 100 170 openpanel;
+#X obj 130 410 textfile;
+#X msg 220 380 read \$1 cr \, rewind;
+#X obj 130 380 until;
+#X obj 130 439 list prepend value;
+#X obj 130 500 s \$1-in;
+#X obj 100 350 trigger b b s;
+#X obj 130 470 route list;
+#X text 110 150 ---- Ask user for filename ----;
+#X text 110 220 ---- Read file into internal memory ----;
+#X text 110 550 ---- Set parameter values ----;
+#X obj 100 600 s \$0-command;
+#X msg 100 570 restore-values;
+#X obj 100 240 trigger s b;
+#X msg 130 270 clear;
+#X obj 130 299 s \$0-command;
+#X connect 1 0 2 0;
+#X connect 2 0 15 0;
+#X connect 3 0 6 0;
+#X connect 3 1 5 1;
+#X connect 4 0 3 0;
+#X connect 5 0 3 0;
+#X connect 6 0 9 0;
+#X connect 8 0 14 0;
+#X connect 8 1 5 0;
+#X connect 8 2 4 0;
+#X connect 9 0 7 0;
+#X connect 14 0 13 0;
+#X connect 15 0 8 0;
+#X connect 15 1 16 0;
+#X connect 16 0 17 0;
+#X restore 600 190 pd load-file;
+#N canvas 0 49 1920 1009 save-file 0;
+#X obj 100 100 inlet;
+#X obj 100 850 outlet;
+#X obj 100 170 savepanel;
+#X text 110 150 ---- Ask user for file name ----;
+#X obj 130 590 s \$0-stored-values-in;
+#X obj 640 521 r \$0-stored-values-out;
+#X obj 640 551 spigot;
+#X obj 700 551 r \$0-save-preset-active;
+#X text 110 830 ---- Finish ----;
+#X obj 100 370 trigger s b;
+#X obj 100 240 trigger s b;
+#X obj 100 560 trigger s b;
+#X obj 100 640 trigger b s;
+#X obj 640 610 route list;
+#X text 10 10 Save preset values to file;
+#X text 100 70 ==== Message handling ====;
+#X text 640 491 ==== Receive stored values and write file ====;
+#X obj 640 700 textfile;
+#X text 110 350 ---- Write values to text file ----;
+#X msg 130 670 write \$1 cr;
+#X obj 100 480 trigger s b;
+#X msg 130 510 clear;
+#X obj 100 720 trigger b b;
+#X msg 130 750 0;
+#X obj 130 779 s \$0-save-preset-active;
+#X msg 130 400 1;
+#X obj 130 430 s \$0-save-preset-active;
+#X msg 130 270 store-values;
+#X obj 130 300 s \$0-command;
+#X text 110 220 ---- Get values to be saved ----;
+#X obj 640 581 list prepend add;
+#X connect 0 0 2 0;
+#X connect 2 0 10 0;
+#X connect 5 0 6 0;
+#X connect 6 0 30 0;
+#X connect 7 0 6 1;
+#X connect 9 0 20 0;
+#X connect 9 1 25 0;
+#X connect 10 0 9 0;
+#X connect 10 1 27 0;
+#X connect 11 0 12 0;
+#X connect 11 1 4 0;
+#X connect 12 0 22 0;
+#X connect 12 1 19 0;
+#X connect 13 0 17 0;
+#X connect 19 0 17 0;
+#X connect 20 0 11 0;
+#X connect 20 1 21 0;
+#X connect 21 0 17 0;
+#X connect 22 0 1 0;
+#X connect 22 1 23 0;
+#X connect 23 0 24 0;
+#X connect 25 0 26 0;
+#X connect 27 0 28 0;
+#X connect 30 0 13 0;
+#X restore 710 190 pd save-file;
+#N canvas 0 49 1920 1009 store-values 0;
+#X text 10 10 Store preset values in memory;
+#X obj 100 100 inlet;
+#X obj 100 430 outlet;
+#X obj 130 360 s \$1-out;
+#X msg 130 330 get-current-value;
+#X msg 130 200 set;
+#X obj 100 170 trigger b b;
+#X text 110 150 ---- Clear previously stored values ----;
+#X obj 130 229 s \$0-stored-values-in;
+#X obj 100 300 trigger b b;
+#X text 110 410 ---- Confirm execution ----;
+#X text 110 280 ---- Request value objects to send their values ----
+;
+#X connect 1 0 6 0;
+#X connect 4 0 3 0;
+#X connect 5 0 8 0;
+#X connect 6 0 9 0;
+#X connect 6 1 5 0;
+#X connect 9 0 2 0;
+#X connect 9 1 4 0;
+#X restore 820 190 pd store-values;
+#N canvas 0 49 1920 1009 restore-values 0;
+#X text 10 10 Restore preset values from memory;
+#X obj 100 100 inlet;
+#X obj 100 470 outlet;
+#X obj 130 310 s \$0-stored-values-in;
+#X obj 100 360 trigger b b;
+#X msg 130 390 0;
+#X msg 130 200 1;
+#X obj 130 230 s \$0-restore-values-active;
+#X obj 130 419 s \$0-restore-values-active;
+#X obj 100 170 trigger b b;
+#X obj 100 280 trigger b b;
+#X text 110 150 ---- Read values from internal memory ----;
+#X text 100 70 ==== Message handling ====;
+#X obj 600 130 spigot;
+#X text 600 70 ==== Receive stored values and set parameters ====;
+#X obj 660 130 r \$0-restore-values-active;
+#X obj 600 240 send, f 16;
+#X obj 600 100 r \$0-stored-values-out;
+#X obj 710 210 list split 1;
+#X obj 600 180 trigger l l;
+#X obj 600 210 list split 1;
+#X connect 1 0 9 0;
+#X connect 4 0 2 0;
+#X connect 4 1 5 0;
+#X connect 5 0 8 0;
+#X connect 6 0 7 0;
+#X connect 9 0 10 0;
+#X connect 9 1 6 0;
+#X connect 10 0 4 0;
+#X connect 10 1 3 0;
+#X connect 13 0 19 0;
+#X connect 15 0 13 1;
+#X connect 17 0 13 0;
+#X connect 18 0 16 1;
+#X connect 19 0 20 0;
+#X connect 19 1 18 0;
+#X connect 20 1 16 0;
+#X restore 950 190 pd restore-values;
+#X obj 600 260 outlet;
+#X obj 1210 190 trigger b b;
+#X obj 1300 190 print preset manager - unknown command;
+#X text 10 770 Everytime the preset manager is called \, a bang on
+its outlet will signal the end of processing. There is one caveat \,
+though. PD's [savepanel] and [loadpanel] don't tell when the user cancels
+the dialog. In this case \, processing simply stops with no way to
+detect the situation., f 68;
+#X obj 0 870 cnv 15 500 15 empty empty Important\ Note 10 5 0 12 #e0e0e0
+#404040 0;
+#X text 10 890 When using [loadbang] to initialize the parameters of
+your patch \, introduce a small delay \, e.g. with [delay 100]. Otherwise
+the preset value objects \, which use [loadbang] themselves \, might
+not yet be initialized and not be ready to accept the values., f 68
+;
+#X obj 600 100 symbol;
+#X msg 1370 360 p-rev-enabled 1 \, p-rev-drywet 0 \, p-rev-hfdamping
+20 \, p-rev-crossover 3000 \, p-rev-length 33 \, p-cho-enabled 1 \,
+p-cho-drywet 0.75 \, p-cho-feedback 0 \, p-cho-width 1.8 \, p-cho-delay
+30 \, p-cho-frequency 1.5 \, p-glb-pbrange 2 \, p-glb-panorama 0 \,
+p-glb-volume 1 \,;
+#X obj 1370 330 r \$0-stored-values-in;
+#X obj 1200 360 s \$0-stored-values-out;
+#X text 1200 300 ==== Currently stored values ====;
+#X text 600 40 ==== Message handling ====;
+#X obj 600 330 r \$1-in;
+#X obj 600 360 route value;
+#X obj 700 360 print preset manager - unknown message from value object
+;
+#X obj 600 419 list trim 1;
+#X obj 600 510 s \$0-stored-values-in;
+#X text 600 300 ==== Receive values from preset value objects ====
+;
+#X obj 600 160 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 710 160 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 820 160 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 950 160 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X obj 700 70 r \$0-command;
+#X obj 600 230 bng 20 250 50 0 empty empty Finished 26 8 0 10 #fcfcfc
+#000000 #000000 0;
+#X obj 600 390 list prepend add2;
+#X obj 600 450 trigger b a;
+#X msg 600 480 addcomma;
+#N canvas 0 49 1920 1009 clear 0;
+#X text 10 10 Clear stored values from memory;
+#X obj 100 80 inlet;
+#X msg 130 160 set;
+#X obj 130 190 s \$0-stored-values-in;
+#X obj 100 130 trigger b b;
+#X obj 100 240 outlet;
+#X connect 1 0 4 0;
+#X connect 2 0 3 0;
+#X connect 4 0 5 0;
+#X connect 4 1 2 0;
+#X restore 1090 190 pd clear;
+#X obj 600 130 select load-file save-file store-values restore-values
+clear, f 65;
+#X text 10 720 [clear( clears the stored values from the preset manager's
+memory. This doesn't affact the preset value objects \, though., f
+68;
+#X obj 1090 160 bng 20 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000 1;
+#X text 10 40 This abstraction can be used to save the parameters of
+a synthesizer or effect to a preset file and to restore the values
+from a file. As the name suggests this is meant to manage presets.
+, f 68;
+#X text 10 100 An additional advanced usage is to not save the parameters
+to a file but in memory. This can be used in a user interface to switch
+between different parts that are controlled by some of the UI. Here
+the preset manager is just a temporary storage for the UI to save some
+values while they are not visible on screen \, and to get the values
+back when needed., f 68;
+#X connect 11 0 22 0;
+#X connect 13 0 39 0;
+#X connect 14 0 39 0;
+#X connect 15 0 39 0;
+#X connect 17 0 39 0;
+#X connect 17 1 18 0;
+#X connect 22 0 44 0;
+#X connect 23 0 25 0;
+#X connect 24 0 23 0;
+#X connect 28 0 29 0;
+#X connect 29 0 40 0;
+#X connect 29 1 30 0;
+#X connect 31 0 41 0;
+#X connect 34 0 12 0;
+#X connect 35 0 13 0;
+#X connect 36 0 14 0;
+#X connect 37 0 15 0;
+#X connect 38 0 22 0;
+#X connect 39 0 16 0;
+#X connect 40 0 31 0;
+#X connect 41 0 42 0;
+#X connect 41 1 32 0;
+#X connect 42 0 32 0;
+#X connect 43 0 39 0;
+#X connect 44 0 34 0;
+#X connect 44 1 35 0;
+#X connect 44 2 36 0;
+#X connect 44 3 37 0;
+#X connect 44 4 46 0;
+#X connect 44 5 17 0;
+#X connect 46 0 43 0;

@@ -1,0 +1,16 @@
+#N canvas 0 49 1920 1009 12;
+#X obj -30 -30 preset_hub k12 1 %hidden%;
+#X obj 100 200 inlet;
+#X obj 100 339 outlet;
+#X obj 100 230 trigger b b;
+#X text 10 10 Send a bang to the inlet to update the timer and receive
+the current value in the outlet. The current value will additionaly
+be saved in the [value va-timer-value] \, in case it is needed again
+later., f 69;
+#X text 10 80 \$1 must be \$0 of the voice allocator.;
+#X obj 100 310 value _\$1_va_timer_value;
+#X obj 120 260 s \$1-timer-query;
+#X connect 1 0 3 0;
+#X connect 3 0 6 0;
+#X connect 3 1 7 0;
+#X connect 6 0 2 0;
