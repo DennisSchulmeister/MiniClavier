@@ -28,14 +28,14 @@
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP1_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP1_Frequency_LFO"),   text("LFO"),           range(0,   1, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  85, 120, 20), channel("OP1_FM_Enable"),       text("Modulate OP2")
-        checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP1_Out_Enable"),      text("Direct Output")
+        checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP1_Output_Enable"),   text("Direct Output")
         
         rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP1_FM_Level"),        text("Modulate OP2"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP1_Out_Level"),       text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP1_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
         rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP1_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP1_Out_LFO"),         text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP1_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP1_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP1_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
@@ -54,14 +54,14 @@
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP2_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP2_Frequency_LFO"),   text("LFO"),           range(0, 1, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  85, 120, 20), channel("OP2_FM_Enable"),       text("Modulate OP3")
-        checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP2_Out_Enable"),      text("Direct Output")
+        checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP2_Output_Enable"),   text("Direct Output")
         
         rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP2_FM_Level"),        text("Modulate OP3"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP2_Out_Level"),       text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP2_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
         rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP2_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP2_Out_LFO"),         text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP2_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP2_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP2_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
@@ -80,14 +80,14 @@
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP3_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP3_Frequency_LFO"),   text("LFO"),           range(0, 1, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  85, 120, 20), channel("OP3_FM_Enable"),       text("Modulate OP4"),  value(1)
-        checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP3_Out_Enable"),      text("Direct Output")
+        checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP3_Output_Enable"),   text("Direct Output")
         
         rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP3_FM_Level"),        text("Modulate OP4"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP3_Out_Level"),       text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP3_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
         rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP3_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP3_Out_LFO"),         text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP3_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP3_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP3_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
@@ -105,12 +105,12 @@
     groupbox $GROUPBOX, bounds(10, 475, 690, 145), text("Operator 4") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP4_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP4_Frequency_LFO"),   text("LFO"),           range(0, 1, 0, 1, 0.01)
-        checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP4_Out_Enable"),      text("Direct Output"), value(1)
+        checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP4_Output_Enable"),   text("Direct Output"), value(1)
         
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP4_Out_Level"),       text("Direct Output"), range(0, 1, 1, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP4_Output_Level"),    text("Direct Output"), range(0, 1, 1, 1, 0.01)
         rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP4_Feedback_Level"),  text("Feedback"),      range(0, 1, 0, 1, 0.01)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP4_Out_LFO"),         text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP4_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP4_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP4_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
@@ -131,8 +131,18 @@
         checkbox $WIDGET, $CHECKBOX, bounds(10, 95, 140, 20), channel("LFO_Mod_Wheel"), text("Modulation Wheel"), value(0)
     }
     
+    ; Output
+    groupbox $GROUPBOX, bounds(710, 165, 225, 145), text("Output") {
+        rslider $WIDGET, $RSLIDER, bounds(10,  30, 75, 75), channel("Output_Volume_Level"),   text("Volume"),   range(-24, 12, -6, 1, .1), valuePostfix(" dB")
+        rslider $WIDGET, $RSLIDER, bounds(75,  30, 75, 75), channel("Output_Panorama_Level"), text("Panorama"), range(-1,   1,  0, 1, .01)
+        
+        nslider $WIDGET, $NSLIDER, bounds(10, 110, 75, 25), channel("Output_Volume_LFO"),     text("LFO"),      range(0, 1, 0, 1, 0.01)
+        nslider $WIDGET, $NSLIDER, bounds(75, 110, 75, 25), channel("Output_Panorama_LFO"),   text("LFO"),      range(0, 1, 0, 1, 0.01)
+    }
+
+    
     ; Chorus
-    groupbox $GROUPBOX, bounds(710, 165, 225, 145), text("Chorus") {
+    groupbox $GROUPBOX, bounds(710, 320, 225, 145), text("Chorus") {
         rslider $WIDGET, $RSLIDER, bounds( 10, 40, 75, 75), channel("Chorus_DryWet"),    text("Dry/Wet"),   range(0, 1, .3, 1, .01)
         
         nslider $WIDGET, $NSLIDER, bounds( 80, 40, 75, 30), channel("Chorus_Frequency"), text("Frequency [Hz]"), range(0, 25,   1.5, 1, 0.01)
@@ -142,22 +152,13 @@
     }
     
     ; Reverb
-    groupbox $GROUPBOX, bounds(710, 320, 225, 145), text("Reverb") {
+    groupbox $GROUPBOX, bounds(710, 475, 225, 145), text("Reverb") {
         rslider $WIDGET, $RSLIDER, bounds( 10, 40, 75, 75), channel("Reverb_DryWet"), text("Dry/Wet"), range(0,     1,   .3,  1, .01)
         rslider $WIDGET, $RSLIDER, bounds( 75, 40, 75, 75), channel("Reverb_Size"),   text("Size"),    range(0,     1,   .6,  1, .01)
         rslider $WIDGET, $RSLIDER, bounds(140, 40, 75, 75), channel("Reverb_CutOff"), text("Cut-Off"), range(0, 20000, 7000, .5, 100), valuePostfix(" Hz")
     }
     
-    ; Output
-    groupbox $GROUPBOX, bounds(710, 475, 225, 145), text("Output") {
-        rslider $WIDGET, $RSLIDER, bounds(10,  30, 75, 75), channel("Output_Volume_Level"),   text("Volume"),   range(-24, 12, -6, 1, .1), valuePostfix(" dB")
-        rslider $WIDGET, $RSLIDER, bounds(75,  30, 75, 75), channel("Output_Panorama_Level"), text("Panorama"), range(-1,   1,  0, 1, .01)
-        
-        nslider $WIDGET, $NSLIDER, bounds(10, 110, 75, 25), channel("Output_Level_LFO"),      text("LFO"),      range(0, 1, 0, 1, 0.01)
-        nslider $WIDGET, $NSLIDER, bounds(75, 110, 75, 25), channel("Output_Panorama_LFO"),   text("LFO"),      range(0, 1, 0, 1, 0.01)
-    }
-
-    ;; VU Meters
+    ; VU Meters
     vmeter $WIDGET, bounds(945, 10, 10, 610) channel("VU_L") value(0) outlineColour(0, 0, 0), overlayColour(0, 0, 0) meterColour:0(255, 0, 0) meterColour:1(255, 255, 0) meterColour:2(0, 255, 0) outlineThickness(1) 
     vmeter $WIDGET, bounds(960, 10, 10, 610) channel("VU_R") value(0) outlineColour(0, 0, 0), overlayColour(0, 0, 0) meterColour:0(255, 0, 0) meterColour:1(255, 255, 0) meterColour:2(0, 255, 0) outlineThickness(1) 
        
@@ -183,23 +184,43 @@
         ; Connect instruments
         gk_LFO = 0
         
-        connect "ToneGen", "Out_L",  "Reverb", "In_L"
-        connect "ToneGen", "Out_R",  "Reverb", "In_R"
+        connect "ToneGen", "Out",    "Output", "In"
         
-        connect "Reverb",  "Out_L",  "Output", "In_L"
-        connect "Reverb",  "Out_R",  "Output", "In_R"
+        connect "Output",  "Out_L",  "Chorus", "In_L"
+        connect "Output",  "Out_R",  "Chorus", "In_R"
+        
+        connect "Chorus",  "Out_L",  "Reverb", "In_L"
+        connect "Chorus",  "Out_R",  "Reverb", "In_R"
+        
+        connect "Reverb",  "Out_L",  "ToSpeakers", "In_L"
+        connect "Reverb",  "Out_R",  "ToSpeakers", "In_R"
         
         alwayson "ReadChannels"
         alwayson "LFO"
-        alwayson "Reverb"
         alwayson "Output"
+        alwayson "Chorus"
+        alwayson "Reverb"
+        alwayson "ToSpeakers"
         
         ;====================================================================
         ; FM Operator
         ;====================================================================
-        opcode Operator, a, kk
+        opcode Operator, a, kkakkkkiiiiiiii
             k_Frequency,
-            k_Amplitude xin
+            k_Amplitude,
+            a_Modulator,
+            k_Frequency_Level,
+            k_Frequency_LFO,
+            k_Feedback_Level,
+            k_Feedback_LFO,
+            i_Attack_Level,
+            i_Attack_Time,
+            i_Decay_Level,
+            i_Decay_Time,
+            i_Sustain_Level,
+            i_Sustain_Time,
+            i_Release_Level,
+            i_Release_Time xin
             
             ; TODO
             a_Out = 0
@@ -213,39 +234,110 @@
         ;====================================================================
         instr ReadChannels
             i_Declick_ms            = 0.15
+        
+            gk_OP1_Frequency_Level   = lag(      chnget:k("OP1_Frequency_Level"),   i_Declick_ms)
+            gk_OP1_Frequency_LFO     = lag(      chnget:k("OP1_Frequency_LFO"),     i_Declick_ms)
+            gk_OP1_FM_Enable         = lag(      chnget:k("OP1_FM_Enable"),         i_Declick_ms)
+            gk_OP1_FM_Level          = lag(      chnget:k("OP1_FM_Level"),          i_Declick_ms)
+            gk_OP1_FM_LFO            = lag(      chnget:k("OP1_FM_LFO"),            i_Declick_ms)
+            gk_OP1_Output_Enable     = lag(      chnget:k("OP1_Output_Enable"),     i_Declick_ms)
+            gk_OP1_Output_Level      = lag(      chnget:k("OP1_Output_Level"),      i_Declick_ms)
+            gk_OP1_Output_LFO        = lag(      chnget:k("OP1_Output_LFO"),        i_Declick_ms)
+            gk_OP1_Feedback_Level    = lag(      chnget:k("OP1_Feedback_Level"),    i_Declick_ms)
+            gk_OP1_Feedback_LFO      = lag(      chnget:k("OP1_Feedback_LFO"),      i_Declick_ms)
+            gk_OP1_Attack_Level      = lag(      chnget:k("OP1_Attack_Level"),      i_Declick_ms)
+            gk_OP1_Attack_Time       = lag(      chnget:k("OP1_Attack_Time"),       i_Declick_ms)
+            gk_OP1_Decay_Level       = lag(      chnget:k("OP1_Decay_Level"),       i_Declick_ms)
+            gk_OP1_Decay_Time        = lag(      chnget:k("OP1_Decay_Time"),        i_Declick_ms)
+            gk_OP1_Sustain_Level     = lag(      chnget:k("OP1_Sustain_Level"),     i_Declick_ms)
+            gk_OP1_Sustain_Time      = lag(      chnget:k("OP1_Sustain_Time"),      i_Declick_ms)
+            gk_OP1_Release_Level     = lag(      chnget:k("OP1_Release_Level"),     i_Declick_ms)
+            gk_OP1_Release_Time      = lag(      chnget:k("OP1_Release_Time"),      i_Declick_ms)
             
-            ; TODO
+            gk_OP2_Frequency_Level   = lag(      chnget:k("OP2_Frequency_Level"),   i_Declick_ms)
+            gk_OP2_Frequency_LFO     = lag(      chnget:k("OP2_Frequency_LFO"),     i_Declick_ms)
+            gk_OP2_FM_Enable         = lag(      chnget:k("OP2_FM_Enable"),         i_Declick_ms)
+            gk_OP2_FM_Level          = lag(      chnget:k("OP2_FM_Level"),          i_Declick_ms)
+            gk_OP2_FM_LFO            = lag(      chnget:k("OP2_FM_LFO"),            i_Declick_ms)
+            gk_OP2_Output_Enable     = lag(      chnget:k("OP2_Output_Enable"),     i_Declick_ms)
+            gk_OP2_Output_Level      = lag(      chnget:k("OP2_Output_Level"),      i_Declick_ms)
+            gk_OP2_Output_LFO        = lag(      chnget:k("OP2_Output_LFO"),        i_Declick_ms)
+            gk_OP2_Feedback_Level    = lag(      chnget:k("OP2_Feedback_Level"),    i_Declick_ms)
+            gk_OP2_Feedback_LFO      = lag(      chnget:k("OP2_Feedback_LFO"),      i_Declick_ms)
+            gk_OP2_Attack_Level      = lag(      chnget:k("OP2_Attack_Level"),      i_Declick_ms)
+            gk_OP2_Attack_Time       = lag(      chnget:k("OP2_Attack_Time"),       i_Declick_ms)
+            gk_OP2_Decay_Level       = lag(      chnget:k("OP2_Decay_Level"),       i_Declick_ms)
+            gk_OP2_Decay_Time        = lag(      chnget:k("OP2_Decay_Time"),        i_Declick_ms)
+            gk_OP2_Sustain_Level     = lag(      chnget:k("OP2_Sustain_Level"),     i_Declick_ms)
+            gk_OP2_Sustain_Time      = lag(      chnget:k("OP2_Sustain_Time"),      i_Declick_ms)
+            gk_OP2_Release_Level     = lag(      chnget:k("OP2_Release_Level"),     i_Declick_ms)
+            gk_OP2_Release_Time      = lag(      chnget:k("OP2_Release_Time"),      i_Declick_ms)
             
-            ;gk_Osc1_Type            =           chnget:k("Osc1_Type")
-            ;gk_Osc1_Width           = lag(      chnget:k("Osc1_Width"),                                       i_Declick_ms)
-            ;gk_Osc1_Transpose       = lag(      chnget:k("Osc1_Transpose"),                                   i_Declick_ms)
-            ;gk_Osc1_Panorama        = lag(      chnget:k("Osc1_Panorama"),                                    i_Declick_ms)
-            ;gk_Osc1_Volume          = lag(ampdb(chnget:k("Osc1_Volume")       * chnget:k("Osc1_Volume_X")),   i_Declick_ms)
-            ;gk_Osc1_Detune          = lag(      chnget:k("Osc1_Detune")       * chnget:k("Osc1_Detune_X"),    i_Declick_ms)
-            ;gk_Osc1_Attack          = lag(      chnget:k("Osc1_Attack")       * chnget:k("Osc1_Attack_X"),    i_Declick_ms)
-            ;gk_Osc1_Decay           = lag(      chnget:k("Osc1_Decay")        * chnget:k("Osc1_Decay_X"),     i_Declick_ms)
-            ;gk_Osc1_Sustain         = lag(      chnget:k("Osc1_Sustain")      * chnget:k("Osc1_Sustain_X"),   i_Declick_ms)
-            ;gk_Osc1_Release         = lag(      chnget:k("Osc1_Release")      * chnget:k("Osc1_Release_X"),   i_Declick_ms)
-            ;gk_Osc1_Filter_F        = lag(      chnget:k("Osc1_Filter_F")     * chnget:k("Osc1_Filter_F_X"),  i_Declick_ms)
-            ;gk_Osc1_Filter_R        = lag(      chnget:k("Osc1_Filter_R")     * chnget:k("Osc1_Filter_R_X"),  i_Declick_ms)
-            ;gk_Osc1_Filter_Order    =           chnget:k("Osc1_Filter_Order")
-            ;gk_Osc1_Filter_Envelope = lag(      chnget:k("Osc1_Filter_Envelope"),                             i_Declick_ms)
+            gk_OP3_Frequency_Level   = lag(      chnget:k("OP3_Frequency_Level"),   i_Declick_ms)
+            gk_OP3_Frequency_LFO     = lag(      chnget:k("OP3_Frequency_LFO"),     i_Declick_ms)
+            gk_OP3_FM_Enable         = lag(      chnget:k("OP3_FM_Enable"),         i_Declick_ms)
+            gk_OP3_FM_Level          = lag(      chnget:k("OP3_FM_Level"),          i_Declick_ms)
+            gk_OP3_FM_LFO            = lag(      chnget:k("OP3_FM_LFO"),            i_Declick_ms)
+            gk_OP3_Output_Enable     = lag(      chnget:k("OP3_Output_Enable"),     i_Declick_ms)
+            gk_OP3_Output_Level      = lag(      chnget:k("OP3_Output_Level"),      i_Declick_ms)
+            gk_OP3_Output_LFO        = lag(      chnget:k("OP3_Output_LFO"),        i_Declick_ms)
+            gk_OP3_Feedback_Level    = lag(      chnget:k("OP3_Feedback_Level"),    i_Declick_ms)
+            gk_OP3_Feedback_LFO      = lag(      chnget:k("OP3_Feedback_LFO"),      i_Declick_ms)
+            gk_OP3_Attack_Level      = lag(      chnget:k("OP3_Attack_Level"),      i_Declick_ms)
+            gk_OP3_Attack_Time       = lag(      chnget:k("OP3_Attack_Time"),       i_Declick_ms)
+            gk_OP3_Decay_Level       = lag(      chnget:k("OP3_Decay_Level"),       i_Declick_ms)
+            gk_OP3_Decay_Time        = lag(      chnget:k("OP3_Decay_Time"),        i_Declick_ms)
+            gk_OP3_Sustain_Level     = lag(      chnget:k("OP3_Sustain_Level"),     i_Declick_ms)
+            gk_OP3_Sustain_Time      = lag(      chnget:k("OP3_Sustain_Time"),      i_Declick_ms)
+            gk_OP3_Release_Level     = lag(      chnget:k("OP3_Release_Level"),     i_Declick_ms)
+            gk_OP3_Release_Time      = lag(      chnget:k("OP3_Release_Time"),      i_Declick_ms)
             
-            gk_LFO_Type             = lag(      chnget:k("LFO_Type"),                                         i_Declick_ms)
-            gk_LFO_Frequency        = lag(      chnget:k("LFO_Frequency"),                                    i_Declick_ms)
-            ;gk_LFO_Osc_Width        = lag(      chnget:k("LFO_Osc_Width"),                                    i_Declick_ms)
-            ;gk_LFO_Osc_Volume       = lag(      chnget:k("LFO_Osc_Volume")    * chnget:k("LFO_Osc_Volume_X"), i_Declick_ms)
-            ;gk_LFO_Osc_Panorama     = lag(      chnget:k("LFO_Osc_Panorama"),                                 i_Declick_ms)
-            ;gk_LFO_Osc_Detune       = lag(      chnget:k("LFO_Osc_Detune")    * chnget:k("LFO_Osc_Detune_X"), i_Declick_ms)
-            ;gk_LFO_Osc_Filter       = lag(      chnget:k("LFO_Osc_Filter")    * chnget:k("LFO_Osc_Filter_X"), i_Declick_ms)
+            gk_OP4_Frequency_Level   = lag(      chnget:k("OP4_Frequency_Level"),   i_Declick_ms)
+            gk_OP4_Frequency_LFO     = lag(      chnget:k("OP4_Frequency_LFO"),     i_Declick_ms)
+            gk_OP4_Output_Enable     = lag(      chnget:k("OP4_Output_Enable"),     i_Declick_ms)
+            gk_OP4_Output_Level      = lag(      chnget:k("OP4_Output_Level"),      i_Declick_ms)
+            gk_OP4_Output_LFO        = lag(      chnget:k("OP4_Output_LFO"),        i_Declick_ms)
+            gk_OP4_Feedback_Level    = lag(      chnget:k("OP4_Feedback_Level"),    i_Declick_ms)
+            gk_OP4_Feedback_LFO      = lag(      chnget:k("OP4_Feedback_LFO"),      i_Declick_ms)
+            gk_OP4_Attack_Level      = lag(      chnget:k("OP4_Attack_Level"),      i_Declick_ms)
+            gk_OP4_Attack_Time       = lag(      chnget:k("OP4_Attack_Time"),       i_Declick_ms)
+            gk_OP4_Decay_Level       = lag(      chnget:k("OP4_Decay_Level"),       i_Declick_ms)
+            gk_OP4_Decay_Time        = lag(      chnget:k("OP4_Decay_Time"),        i_Declick_ms)
+            gk_OP4_Sustain_Level     = lag(      chnget:k("OP4_Sustain_Level"),     i_Declick_ms)
+            gk_OP4_Sustain_Time      = lag(      chnget:k("OP4_Sustain_Time"),      i_Declick_ms)
+            gk_OP4_Release_Level     = lag(      chnget:k("OP4_Release_Level"),     i_Declick_ms)
+            gk_OP4_Release_Time      = lag(      chnget:k("OP4_Release_Time"),      i_Declick_ms)
             
-            gk_Reverb_DryWet        = lag(      chnget:k("Reverb_DryWet"),                                    i_Declick_ms)
-            gk_Reverb_Size          = lag(      chnget:k("Reverb_Size"),                                      i_Declick_ms)
-            gk_Reverb_CutOff        = lag(      chnget:k("Reverb_CutOff"),                                    i_Declick_ms)
-             
-            gk_Global_Volume        = lag(ampdb(chnget:k("Global_Volume")),                                   i_Declick_ms)
+            gk_LFO_Frequency         = lag(      chnget:k("LFO_Frequency"),         i_Declick_ms)
+            gk_LFO_Mod_Wheel         = lag(      chnget:k("LFO_Mod_Wheel"),         i_Declick_ms)
+            
+            gk_Output_Volume_Level   = lag(ampdb(chnget:k("Output_Volume_Level")),  i_Declick_ms)
+            gk_Output_Volume_LFO     = lag(      chnget:k("Output_Volume_LFO"),     i_Declick_ms)
+            gk_Output_Panorama_Level = lag(      chnget:k("Output_Panorama_Level"), i_Declick_ms)
+            gk_Output_Panorama_LFO   = lag(      chnget:k("Output_Panorama_LFO"),   i_Declick_ms)
+            
+            gk_Chorus_DryWet         = lag(      chnget:k("Chorus_DryWet"),         i_Declick_ms)
+            gk_Chorus_Frequency      = lag(      chnget:k("Chorus_Frequency"),      i_Declick_ms)
+            gk_Chorus_Delay          = lag(      chnget:k("Chorus_Delay"),          i_Declick_ms)
+            gk_Chorus_Width          = lag(      chnget:k("Chorus_Width"),          i_Declick_ms)
+            gk_Chorus_Feedback       = lag(      chnget:k("Chorus_Feedback"),       i_Declick_ms)
+            
+            gk_Reverb_DryWet         = lag(      chnget:k("Reverb_DryWet"),         i_Declick_ms)
+            gk_Reverb_Size           = lag(      chnget:k("Reverb_Size"),           i_Declick_ms)
+            gk_Reverb_CutOff         = lag(      chnget:k("Reverb_CutOff"),         i_Declick_ms)
         endin
 
+        ;====================================================================
+        ; Low Frequency Oscilator
+        ;
+        ; Generates an oscilating signal between [-1 … 1] and stores it in
+        ; the global variable gk_LFO.
+        ;====================================================================
+        instr LFO            
+            a_LFO  = lfo(1, gk_LFO_Frequency, 0)                        
+            gk_LFO = (k(a_LFO) * 2) - 1
+        endin
+        
         ;====================================================================
         ; Tone generator triggered by MIDI input
         ;
@@ -254,44 +346,58 @@
         ;   p5 = Amplitude
         ;
         ; Outputs:
-        ;   Out_L = Left audio output
-        ;   Out_R = Right audio output
+        ;   Out = Audio output
         ;====================================================================
         instr ToneGen, 1
             ; TODO
-            a_Out_L = 0
-            a_Out_R = 0
+            a_Out = 0
             
-            outleta("Out_L", a_Out_L)
-            outleta("Out_R", a_Out_R)
+            outleta("Out", a_Out)
+        endin
+                
+        ;====================================================================
+        ; Output stage to apply volume and panorama
+        ;
+        ; Inputs:
+        ;   In = Audio input
+        ;
+        ; Outputs:
+        ;   Out_L = Left audio output
+        ;   Out_R = Right audio output
+        ;====================================================================
+        instr Output
+            ; Apply volume and panorame then output sound
+            a_In = inleta("In")
+            
+            k_Output_Volume_Level = gk_Output_Volume_Level
+            
+            a_Out_L = dcblock(a_In * k_Output_Volume_Level)
+            a_Out_R = dcblock(a_In * k_Output_Volume_Level)
+            
+            outs(a_Out_L, a_Out_R)
         endin
         
         ;====================================================================
-        ; Low Frequency Oscilator
+        ; Global chorus effect
         ;
-        ; Generates an oscilating signal between [-1 … 1] and stores it in
-        ; the global variable gk_LFO.
+        ; Inputs:
+        ;   In_L = Left audio input
+        ;   In_R = Right audio input
+        ;
+        ; Outputs:
+        ;   Out_L = Left audio output
+        ;   Out_R = Right audio output
         ;====================================================================
-        instr LFO            
-            a_LFO_Sine     = lfo(1, gk_LFO_Frequency, 0)
-            a_LFO_Triangle = lfo(1, gk_LFO_Frequency, 1)
-            a_LFO_Square   = lfo(1, gk_LFO_Frequency, 2)
-            a_LFO_Saw_Up   = lfo(1, gk_LFO_Frequency, 4)
-            a_LFO_Saw_Down = lfo(1, gk_LFO_Frequency, 5)
+        instr Chorus
+            a_In_L = inleta("In_L")
+            a_In_R = inleta("In_R")
             
-            if gk_LFO_Type == 1 then        ; Sine
-                a_Out = (a_LFO_Sine + 1) * .5
-            elseif gk_LFO_Type == 2 then    ; Triangle
-                a_Out = (a_LFO_Triangle + 1) * .5
-            elseif gk_LFO_Type == 3 then    ; Square
-                a_Out = (a_LFO_Square + 1) * .5
-            elseif gk_LFO_Type == 4 then    ; Saw Up
-                a_Out = a_LFO_Saw_Up
-            elseif gk_LFO_Type == 5 then    ; Saw Down
-                a_Out = a_LFO_Saw_Down
-            endif
+            ; TODO
+            a_Out_L = a_In_L
+            a_Out_R = a_In_R
             
-            gk_LFO = (k(a_Out) * 2) - 1
+            outleta("Out_L", a_Out_L)
+            outleta("Out_R", a_Out_R)
         endin
         
         ;====================================================================
@@ -320,22 +426,18 @@
             outleta("Out_L", a_Out_L)
             outleta("Out_R", a_Out_R)
         endin
-        
+                
         ;====================================================================
-        ; Output stage
+        ; Send audio output to speakrs and VU meters
         ;
         ; Inputs:
         ;   In_L = Left audio input
         ;   In_R = Right audio input
         ;====================================================================
-        instr Output
-            ; Apply volume and output sound
-            a_Out_L     = dcblock(inleta("In_L") * gk_Global_Volume)
-            a_Out_R     = dcblock(inleta("In_R") * gk_Global_Volume)
+        instr ToSpeakers
+            a_Out_L = dcblock(inleta("In_L"))
+            a_Out_R = dcblock(inleta("In_R"))
             
-            outs(a_Out_L, a_Out_R)
-            
-            ; Update VU meters with the current RMS
             k_RMS_L = rms(a_Out_L, 20)
             k_RMS_R = rms(a_Out_R, 20)
             
