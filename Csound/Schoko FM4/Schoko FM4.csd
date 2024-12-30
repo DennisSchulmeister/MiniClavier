@@ -4,6 +4,26 @@
  *
  * Dec 28 2024: Dennis Schulmeister-Zimolong
  * This is the synthesizer with which Android will be tested.
+ *
+ * Csound Caveats
+ * --------------
+ *
+ * https://github.com/csound/csound/issues/1557 - Some opcodes do not run at k-rate with functional syntax
+ * chnget() doesn't run at k-rate, but chnget does. So does chnget:k().
+ * And I wondered why playing notes would not pick up new values from the UI. :-)
+ *
+ * Csound handles the sustain pedal but not the sustenuto pedal. If this is wanted, one needs to manually
+ * trigger the tone generator instrument from MIDI messages.
+ *
+ * Some MIDI opcodes like aftouch only handle the "current channel", whatever that is. In that case it
+ * is better to manually interpret the MIDI messages.
+ *
+ * When lag() is used to interpolate values (to avoid clicks), an On/Off value might never reach zero,
+ * after it is switched off. So check for "value < 0.01", instead, to detect when it is turned off.
+ *
+ * Many opcodes don't perform range checking. So always make sure to never exceed their expected number
+ * ranges. Otherwise Csound might crash and not generate any audio unless restarted. The Xadrs opcodes
+ * are especially picky and sometimes crash even with valid (very small) numbers. 
  */
 <Cabbage>
     ; HERE BE DRAGONS: Don't edit with the graphical GUI editor in Cabbage! It will garble the code (at least in version 2.8.162)
@@ -125,10 +145,12 @@
     }
     
 
-    ; LFO
-    groupbox $GROUPBOX, bounds(710, 10, 225, 145), text("LFO") {
-        nslider  $WIDGET, $NSLIDER,  bounds(10, 40,  75, 35), channel("LFO_Frequency"), text("Frequency"), range(0, 50, 2.5, 1, .01), valuePostfix(" Hz")
-        checkbox $WIDGET, $CHECKBOX, bounds(10, 95, 140, 20), channel("LFO_Mod_Wheel"), text("Modulation Wheel"), value(0)
+    ; LFO & Pitch Bend
+    groupbox $GROUPBOX, bounds(710, 10, 225, 145), text("LFO & Pitch Bend") {
+        nslider  $WIDGET, $NSLIDER,  bounds(10,  30,  75, 35), channel("LFO_Frequency"),    text("Frequency"),           range(0, 50, 2.5, 1, .01), valuePostfix(" Hz")
+        nslider  $WIDGET, $NSLIDER,  bounds(110, 30, 100, 35), channel("Pitch_Bend_Range"), text("Pitch Bend Range"),    range(0, 48, 2,   1, 1)
+        checkbox $WIDGET, $CHECKBOX, bounds(10,  85, 150, 20), channel("LFO_Mod_Wheel"),    text("Modulation Wheel"),    value(0)
+        checkbox $WIDGET, $CHECKBOX, bounds(10, 115, 150, 20), channel("LFO_After_Touch"),  text("Channel After Touch"), value(0)
     }
     
     ; Output
@@ -172,20 +194,32 @@
         ; --midi-key-cps=4          Set p4 to the frequency from the MIDI input
         ; --midi-key=4              Set p4 to the note number from the MIDI input
         ; --midi-velocity-amp=5     Set p5 to the amplitude from the MIDI input
-        -n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5
+        ; --asciidisplay            Suppress graphics, use ASCII displays instead => Cabbage!
+        ; --postscriptdisplay       Suppress graphics, use PostScript displays instead
+        -n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5 --asciidisplay
     </CsOptions>
 
     <CsInstruments>
-        ; Initialize the global variables. 
+        ; Global variables
         ksmps  = 32
         nchnls = 2
         0dbfs  = 1
-                
-        ; Connect instruments
-        gk_LFO1 = 0
-        gk_LFO2 = 0
+
+        gk_LFO1 = 0.5
+        gk_LFO2 = 0.0
+
+        ; MIDI Controlers mapped to [0 … 1], except pitch bend [-1 … 1]
+        gi_MIDI_Channel = 1
+        massign gi_MIDI_Channel, "Tone_Generator"
         
-        connect "ToneGen", "Out",    "Output", "In"
+        gk_MIDI_Mod_Wheel   = 0.0
+        gk_MIDI_After_Touch = 0.0
+        gk_MIDI_Pitch_Bend  = 0.0
+        gk_MIDI_Volume      = 1.0
+        gk_MIDI_Expression  = 1.0
+        
+        ; Connect instruments
+        connect "Tone_Generator", "Out",    "Output", "In"
         
         connect "Output",  "Out_L",  "Chorus", "In_L"
         connect "Output",  "Out_R",  "Chorus", "In_R"
@@ -193,47 +227,22 @@
         connect "Chorus",  "Out_L",  "Reverb", "In_L"
         connect "Chorus",  "Out_R",  "Reverb", "In_R"
         
-        connect "Reverb",  "Out_L",  "ToSpeakers", "In_L"
-        connect "Reverb",  "Out_R",  "ToSpeakers", "In_R"
+        connect "Reverb",  "Out_L",  "To_Speakers", "In_L"
+        connect "Reverb",  "Out_R",  "To_Speakers", "In_R"
         
-        alwayson "ReadChannels"
+        alwayson "Read_Channels"
+        alwayson "Read_MIDI_Controlers"
         alwayson "LFO"
         alwayson "Output"
         alwayson "Chorus"
         alwayson "Reverb"
-        alwayson "ToSpeakers"
-        
-        ;====================================================================
-        ; FM Operator
-        ;====================================================================
-        opcode Operator, a, kkakkkkiiiiiiii
-            k_Frequency,
-            k_Amplitude,
-            a_Modulator,
-            k_Frequency_Level,
-            k_Frequency_LFO,
-            k_Feedback_Level,
-            k_Feedback_LFO,
-            i_Attack_Level,
-            i_Attack_Time,
-            i_Decay_Level,
-            i_Decay_Time,
-            i_Sustain_Level,
-            i_Sustain_Time,
-            i_Release_Level,
-            i_Release_Time xin
-            
-            ; TODO
-            a_Out = 0
-             
-            xout(a_Out)
-        endop
-                
+        alwayson "To_Speakers"
+                       
         ;====================================================================
         ; Read channels into global variables (as this should be cheaper
         ; than repeatedly calling chnget for each played note)
         ;====================================================================
-        instr ReadChannels
+        instr Read_Channels
             i_Declick_ms             = 0.15
         
             gk_OP1_Frequency_Level   = lag(chnget:k("OP1_Frequency_Level"),   i_Declick_ms)
@@ -311,6 +320,8 @@
             
             gk_LFO_Frequency         = lag(chnget:k("LFO_Frequency"),         i_Declick_ms)
             gk_LFO_Mod_Wheel         = lag(chnget:k("LFO_Mod_Wheel"),         i_Declick_ms)
+            gk_LFO_After_Touch       = lag(chnget:k("LFO_After_Touch"),       i_Declick_ms)
+            gk_Pitch_Bend_Range      = lag(chnget:k("Pitch_Bend_Range"),      i_Declick_ms)
             
             gk_Output_Volume_Level   = lag(chnget:k("Output_Volume_Level"),   i_Declick_ms)
             gk_Output_Volume_LFO     = lag(chnget:k("Output_Volume_LFO"),     i_Declick_ms)
@@ -327,6 +338,35 @@
             gk_Reverb_Size           = lag(chnget:k("Reverb_Size"),           i_Declick_ms)
             gk_Reverb_CutOff         = lag(chnget:k("Reverb_CutOff"),         i_Declick_ms)
         endin
+        
+        ;====================================================================
+        ; Read MIDI controllers, that are not automatically handled by Csound
+        ; like mod wheel, after touch, pitch bend, …
+        ;====================================================================
+        instr Read_MIDI_Controlers
+            k_MIDI_Status, k_MIDI_Channel, k_MIDI_Data1, k_MIDI_Data2 midiin
+            
+            if k_MIDI_Channel == gi_MIDI_Channel then
+                if (k_MIDI_Status == 176) then      ; Control Change
+                    ; Mod Wheel (CC 1 + 33)
+                    initc14 gi_MIDI_Channel, 1, 33, 0.0
+                    gk_MIDI_Mod_Wheel = ctrl14:k(gi_MIDI_Channel, 1, 33, 0.0, 1.0)
+                    
+                    ; Volume (CC 7 + 39)
+                    initc14 gi_MIDI_Channel, 7, 39, 1.0
+                    gk_MIDI_Volume = ctrl14:k(gi_MIDI_Channel, 7, 39, 0.0, 1.0)
+                    
+                    ; Expression (CC 11 + 43)
+                    initc14 gi_MIDI_Channel, 11, 43, 1.0
+                    gk_MIDI_Expression = ctrl14:k(gi_MIDI_Channel, 11, 43, 0.0, 1.0)
+                elseif (k_MIDI_Status == 208) then  ; After Touch
+                    gk_After_Touch = k_MIDI_Data1 / 127
+                elseif (k_MIDI_Status == 224) then  ; Pitch Bend
+                    k_Pitch_Bend = (k_MIDI_Data2 << 7) | k_MIDI_Data1
+                    gk_MIDI_Pitch_Bend = (k_Pitch_Bend - 8192) / 8192
+                endif
+            endif
+        endin
 
         ;====================================================================
         ; Low Frequency Oscilator
@@ -338,10 +378,46 @@
         ;   gk_LFO2 = [-1 … 1]
         ;====================================================================
         instr LFO            
+            ; Generate base waveform with range [-1 … 1]
             a_LFO   = lfo(1, gk_LFO_Frequency, 0)                        
             gk_LFO2 = k(a_LFO)
-            gk_LFO1 = (gk_LFO2 / 2) + .5
+            
+            ; MIDI Support: If at least one of the MIDI checkboxes is activated, the LFO values are
+            ; multiplited with the sum of the selected controller values mapped to 0…1 and limited to 1.            
+            if gk_LFO_Mod_Wheel > 0.01 || gk_LFO_After_Touch > 0.01 then                                
+                k_Factor = min((gk_MIDI_Mod_Wheel * gk_LFO_Mod_Wheel) + (gk_MIDI_After_Touch * gk_LFO_After_Touch), 1)
+                gk_LFO2  = gk_LFO2 * k_Factor
+            endif
+            
+            ; Scale waveform to range [0 … 1]
+            gk_LFO1 = (gk_LFO2 / 2) + .5 
         endin
+        
+        ;====================================================================
+        ; FM Operator
+        ;====================================================================
+        opcode Operator, a, kkakkkkiiiiiiii
+            k_Frequency,
+            k_Amplitude,
+            a_Modulator,
+            k_Frequency_Level,
+            k_Frequency_LFO,
+            k_Feedback_Level,
+            k_Feedback_LFO,
+            i_Attack_Level,
+            i_Attack_Time,
+            i_Decay_Level,
+            i_Decay_Time,
+            i_Sustain_Level,
+            i_Sustain_Time,
+            i_Release_Level,
+            i_Release_Time xin
+            
+            ; TODO
+            a_Out = 0
+             
+            xout(a_Out)
+        endop
         
         ;====================================================================
         ; Tone generator triggered by MIDI input
@@ -353,9 +429,10 @@
         ; Outputs:
         ;   Out = Audio output
         ;====================================================================
-        instr ToneGen, 1
+        instr Tone_Generator, 1
             ; TODO
-            a_Out = oscili(p5, cpsmidinn(p4))
+            k_Pitch_Bend = gk_MIDI_Pitch_Bend * gk_Pitch_Bend_Range
+            a_Out = oscili(p5, cpsmidinn(p4 + k_Pitch_Bend))
             outleta("Out", a_Out)
         endin
                 
@@ -384,6 +461,25 @@
             outleta("Out_L", a_Out_L)
             outleta("Out_R", a_Out_R)
         endin
+        
+        ;====================================================================
+        ; Chorus voice
+        ;====================================================================
+        opcode ChorusVoice, aa, aakkkkk
+            a_In_L,
+            a_In_R,
+            k_Delay_ms,
+            k_LFO_Frequency,
+            k_LFO_Width_ms,
+            k_Feedback,
+            k_Phase_Offset xin
+            
+            ; TODO
+            a_Out_L = a_In_L
+            a_Out_R = a_In_R
+            
+            xout(a_Out_L, a_Out_R)
+        endop
         
         ;====================================================================
         ; Global chorus effect
@@ -442,7 +538,7 @@
         ;   In_L = Left audio input
         ;   In_R = Right audio input
         ;====================================================================
-        instr ToSpeakers
+        instr To_Speakers
             a_Out_L = dcblock(inleta("In_L"))
             a_Out_R = dcblock(inleta("In_R"))
             

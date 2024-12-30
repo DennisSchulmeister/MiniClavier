@@ -6,12 +6,25 @@
  * First test to learn building software synthesizers with Cabbage + Csound.
  * Based on prior experiments from the past two years. :-)
  *
- * Csound Caveat
- * -------------
+ * Csound Caveats
+ * --------------
  *
  * https://github.com/csound/csound/issues/1557 - Some opcodes do not run at k-rate with functional syntax
  * chnget() doesn't run at k-rate, but chnget does. So does chnget:k().
  * And I wondered why playing notes would not pick up new values from the UI. :-)
+ *
+ * Csound handles the sustain pedal but not the sustenuto pedal. If this is wanted, one needs to manually
+ * trigger the tone generator instrument from MIDI messages.
+ *
+ * Some MIDI opcodes like aftouch only handle the "current channel", whatever that is. In that case it
+ * is better to manually interpret the MIDI messages.
+ *
+ * When lag() is used to interpolate values (to avoid clicks), an On/Off value might never reach zero,
+ * after it is switched off. So check for "value < 0.01", instead, to detect when it is turned off.
+ *
+ * Many opcodes don't perform range checking. So always make sure to never exceed their expected number
+ * ranges. Otherwise Csound might crash and not generate any audio unless restarted. The Xadrs opcodes
+ * are especially picky and sometimes crash even with valid (very small) numbers.
  */
 <Cabbage>
     ; HERE BE DRAGONS: Don't edit with the graphical GUI editor in Cabbage! It will garble the code (at least in version 2.8.162)
@@ -78,17 +91,20 @@
     
     ; Voice Mode
     groupbox bounds(10, 320, 195, 145), text("Voice Mode"), $GROUPBOX {
-        combobox bounds(10, 30,  75, 25), channel("Mode_Type"),       items("Single", "Double", "Tripple"), value(1)
-        nslider  bounds(20, 60,  75, 30), channel("Mode_1st_Detune"),   text("1st Detune"),   range(-100, 100,   .1, 1, .01), colour("(0,0,0,0)")
-        nslider  bounds(85, 60,  75, 30), channel("Mode_1st_Panorama"), text("1st Panorama"), range(-1,   1,     .5, 1, .01), colour("(0,0,0,0)")
-        nslider  bounds(20, 100, 75, 30), channel("Mode_2nd_Detune"),   text("2nd Detune"),   range(-100, 100, -0.1, 1, .01), colour("(0,0,0,0)")
-        nslider  bounds(85, 100, 75, 30), channel("Mode_2nd_Panorama"), text("2nd Panorama"), range(-1,   1,   -0.5, 1, .01), colour("(0,0,0,0)")
+        combobox bounds( 10,  30, 75, 25), channel("Mode_Type"),         items("Single", "Double", "Tripple"), value(1)
+        nslider  bounds(110,  30, 80, 30), channel("Pitch_Bend_Range"),  text("Pitch Bend Range"), range( 0,   48,   2,   1,  1),  colour("(0,0,0,0)")
+        nslider  bounds(  0,  65, 75, 30), channel("Mode_1st_Detune"),   text("1st Detune"),       range(-100, 100,   .1, 1, .01), colour("(0,0,0,0)")
+        nslider  bounds( 70,  65, 75, 30), channel("Mode_1st_Panorama"), text("1st Panorama"),     range(-1,   1,     .5, 1, .01), colour("(0,0,0,0)")
+        nslider  bounds(  0, 105, 75, 30), channel("Mode_2nd_Detune"),   text("2nd Detune"),       range(-100, 100, -0.1, 1, .01), colour("(0,0,0,0)")
+        nslider  bounds( 70, 105, 75, 30), channel("Mode_2nd_Panorama"), text("2nd Panorama"),     range(-1,   1,   -0.5, 1, .01), colour("(0,0,0,0)")
     }
     
     ; LFO
     groupbox bounds(215, 320, 460, 145), text("LFO"), $GROUPBOX {
-        combobox bounds(10,  30, 85, 25), channel("LFO_Type"), items("Sin", "Tri", "Square", "Saw Up", "Saw Down"), value(1)
-        nslider  bounds(10,  60, 75, 25), channel("LFO_Frequency"), range(0, 50, 2.5, 1, .01), text("Frequency"), valuePostfix(" Hz"), colour("(0,0,0,0)")
+        combobox bounds(10,  30, 85, 25),  channel("LFO_Type"), items("Sin", "Tri", "Square", "Saw Up", "Saw Down"), value(1)
+        nslider  bounds(10,  60, 75, 25),  channel("LFO_Frequency"),   text("Frequency"), range(0, 50, 2.5, 1, .01), valuePostfix(" Hz"), colour("(0,0,0,0)")
+        checkbox bounds(10,  95, 150, 15), channel("LFO_Mod_Wheel"),   text("Mod. Wheel"),    value(0)
+        checkbox bounds(10, 115, 150, 15), channel("LFO_After_Touch"), text("C. After Touch"), value(0)
         
         rslider  bounds(105, 30, 75, 75),  channel("LFO_Osc_Width"),    range(0, 1, 0, 1, .01), valueTextBox(1), text("Width")
         rslider  bounds(170, 30, 75, 75),  channel("LFO_Osc_Volume"),   range(0, 1, 0, 1, .01), valueTextBox(1), text("Volume")
@@ -124,29 +140,174 @@
         ; --midi-key-cps=4          Set p4 to the frequency from the MIDI input
         ; --midi-key=4              Set p4 to the note number from the MIDI input
         ; --midi-velocity-amp=5     Set p5 to the amplitude from the MIDI input
-        -n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5
+        ; --asciidisplay            Suppress graphics, use ASCII displays instead => Cabbage!
+        ; --postscriptdisplay       Suppress graphics, use PostScript displays instead
+        -n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5 --asciidisplay
     </CsOptions>
 
     <CsInstruments>
-        ; Initialize the global variables. 
+        ; Global variables
         ksmps  = 32
         nchnls = 2
         0dbfs  = 1
-                
-        ; Connect instruments
+        
         gk_LFO1 = 0
         gk_LFO2 = 0
+
+        ; MIDI Controlers mapped to [0 … 1], except pitch bend [-1 … 1]
+        gi_MIDI_Channel = 1
+        massign gi_MIDI_Channel, "Tone_Generator"
         
-        connect "ToneGen", "Out_L",  "Reverb", "In_L"
-        connect "ToneGen", "Out_R",  "Reverb", "In_R"
+        gk_MIDI_Mod_Wheel   = 0.0
+        gk_MIDI_After_Touch = 0.0
+        gk_MIDI_Pitch_Bend  = 0.0
+        gk_MIDI_Volume      = 1.0
+        gk_MIDI_Expression  = 1.0
         
-        connect "Reverb",  "Out_L",  "Output", "In_L"
-        connect "Reverb",  "Out_R",  "Output", "In_R"
+        ; Connect instruments        
+        connect "Tone_Generator", "Out_L",  "Reverb", "In_L"
+        connect "Tone_Generator", "Out_R",  "Reverb", "In_R"
         
-        alwayson "ReadChannels"
+        connect "Reverb", "Out_L",  "To_Speakers", "In_L"
+        connect "Reverb", "Out_R",  "To_Speakers", "In_R"
+        
+        alwayson "Read_Channels"
+        alwayson "Read_MIDI_Controlers"
         alwayson "LFO"
         alwayson "Reverb"
-        alwayson "Output"
+        alwayson "To_Speakers"
+                        
+        ;====================================================================
+        ; Read channels into global variables (as this should be cheaper
+        ; than repeatedly calling chnget for each played note)
+        ;====================================================================
+        instr Read_Channels
+            i_Declick_ms            = 0.15
+            
+            gk_Osc1_Type            =           chnget:k("Osc1_Type")
+            gk_Osc1_Width           = lag(      chnget:k("Osc1_Width"),                                       i_Declick_ms)
+            gk_Osc1_Transpose       = lag(      chnget:k("Osc1_Transpose"),                                   i_Declick_ms)
+            gk_Osc1_Panorama        = lag(      chnget:k("Osc1_Panorama"),                                    i_Declick_ms)
+            gk_Osc1_Volume          = lag(ampdb(chnget:k("Osc1_Volume")       * chnget:k("Osc1_Volume_X")),   i_Declick_ms)
+            gk_Osc1_Detune          = lag(      chnget:k("Osc1_Detune")       * chnget:k("Osc1_Detune_X"),    i_Declick_ms)
+            gk_Osc1_Attack          = lag(      chnget:k("Osc1_Attack")       * chnget:k("Osc1_Attack_X"),    i_Declick_ms)
+            gk_Osc1_Decay           = lag(      chnget:k("Osc1_Decay")        * chnget:k("Osc1_Decay_X"),     i_Declick_ms)
+            gk_Osc1_Sustain         = lag(      chnget:k("Osc1_Sustain")      * chnget:k("Osc1_Sustain_X"),   i_Declick_ms)
+            gk_Osc1_Release         = lag(      chnget:k("Osc1_Release")      * chnget:k("Osc1_Release_X"),   i_Declick_ms)
+            gk_Osc1_Filter_F        = lag(      chnget:k("Osc1_Filter_F")     * chnget:k("Osc1_Filter_F_X"),  i_Declick_ms)
+            gk_Osc1_Filter_R        = lag(      chnget:k("Osc1_Filter_R")     * chnget:k("Osc1_Filter_R_X"),  i_Declick_ms)
+            gk_Osc1_Filter_Order    =           chnget:k("Osc1_Filter_Order")
+            gk_Osc1_Filter_Envelope = lag(      chnget:k("Osc1_Filter_Envelope"),                             i_Declick_ms)
+            
+            gk_Osc2_Type            =           chnget:k("Osc2_Type")
+            gk_Osc2_Width           = lag(      chnget:k("Osc2_Width"),                                       i_Declick_ms)
+            gk_Osc2_Transpose       = lag(      chnget:k("Osc2_Transpose"),                                   i_Declick_ms)
+            gk_Osc2_Panorama        = lag(      chnget:k("Osc2_Panorama"),                                    i_Declick_ms)
+            gk_Osc2_Volume          = lag(ampdb(chnget:k("Osc2_Volume")       * chnget:k("Osc2_Volume_X")),   i_Declick_ms)
+            gk_Osc2_Detune          = lag(      chnget:k("Osc2_Detune")       * chnget:k("Osc2_Detune_X"),    i_Declick_ms)
+            gk_Osc2_Attack          = lag(      chnget:k("Osc2_Attack")       * chnget:k("Osc2_Attack_X"),    i_Declick_ms)
+            gk_Osc2_Decay           = lag(      chnget:k("Osc2_Decay")        * chnget:k("Osc2_Decay_X"),     i_Declick_ms)
+            gk_Osc2_Sustain         = lag(      chnget:k("Osc2_Sustain")      * chnget:k("Osc2_Sustain_X"),   i_Declick_ms)
+            gk_Osc2_Release         = lag(      chnget:k("Osc2_Release")      * chnget:k("Osc2_Release_X"),   i_Declick_ms)
+            gk_Osc2_Filter_F        = lag(      chnget:k("Osc2_Filter_F")     * chnget:k("Osc2_Filter_F_X"),  i_Declick_ms)
+            gk_Osc2_Filter_R        = lag(      chnget:k("Osc2_Filter_R")     * chnget:k("Osc2_Filter_R_X"),  i_Declick_ms)
+            gk_Osc2_Filter_Order    =           chnget:k("Osc2_Filter_Order")
+            gk_Osc2_Filter_Envelope = lag(      chnget:k("Osc2_Filter_Envelope"),                             i_Declick_ms)
+            
+            gk_Mode_Type            =           chnget:k("Mode_Type")
+            gk_Mode_1st_Detune      = lag(      chnget:k("Mode_1st_Detune"),                                  i_Declick_ms)
+            gk_Mode_1st_Panorama    = lag(      chnget:k("Mode_1st_Panorama"),                                i_Declick_ms)
+            gk_Mode_2nd_Detune      = lag(      chnget:k("Mode_2nd_Detune"),                                  i_Declick_ms)
+            gk_Mode_2nd_Panorama    = lag(      chnget:k("Mode_2nd_Panorama"),                                i_Declick_ms)
+            gk_Pitch_Bend_Range     = lag(      chnget:k("Pitch_Bend_Range"),                                 i_Declick_ms)
+            
+            gk_LFO_Type             =           chnget:k("LFO_Type")
+            gk_LFO_Frequency        = lag(      chnget:k("LFO_Frequency"),                                    i_Declick_ms)
+            gk_LFO_Mod_Wheel        = lag(      chnget:k("LFO_Mod_Wheel"),                                    i_Declick_ms)
+            gk_LFO_After_Touch      = lag(      chnget:k("LFO_After_Touch"),                                  i_Declick_ms)
+            gk_LFO_Osc_Width        = lag(      chnget:k("LFO_Osc_Width"),                                    i_Declick_ms)
+            gk_LFO_Osc_Volume       = lag(      chnget:k("LFO_Osc_Volume")    * chnget:k("LFO_Osc_Volume_X"), i_Declick_ms)
+            gk_LFO_Osc_Panorama     = lag(      chnget:k("LFO_Osc_Panorama"),                                 i_Declick_ms)
+            gk_LFO_Osc_Detune       = lag(      chnget:k("LFO_Osc_Detune")    * chnget:k("LFO_Osc_Detune_X"), i_Declick_ms)
+            gk_LFO_Osc_Filter       = lag(      chnget:k("LFO_Osc_Filter")    * chnget:k("LFO_Osc_Filter_X"), i_Declick_ms)
+            
+            gk_Reverb_DryWet        = lag(      chnget:k("Reverb_DryWet"),                                    i_Declick_ms)
+            gk_Reverb_Size          = lag(      chnget:k("Reverb_Size"),                                      i_Declick_ms)
+            gk_Reverb_CutOff        = lag(      chnget:k("Reverb_CutOff"),                                    i_Declick_ms)
+             
+            gk_Global_Volume        = lag(ampdb(chnget:k("Global_Volume")),                                   i_Declick_ms)
+        endin
+
+        ;====================================================================
+        ; Read MIDI controllers, that are not automatically handled by Csound
+        ; like mod wheel, after touch, pitch bend, …
+        ;====================================================================
+        instr Read_MIDI_Controlers
+            k_MIDI_Status, k_MIDI_Channel, k_MIDI_Data1, k_MIDI_Data2 midiin
+            
+            if k_MIDI_Channel == gi_MIDI_Channel then
+                if (k_MIDI_Status == 176) then      ; Control Change
+                    ; Mod Wheel (CC 1 + 33)
+                    initc14 gi_MIDI_Channel, 1, 33, 0.0
+                    gk_MIDI_Mod_Wheel = ctrl14:k(gi_MIDI_Channel, 1, 33, 0.0, 1.0)
+                    
+                    ; Volume (CC 7 + 39)
+                    initc14 gi_MIDI_Channel, 7, 39, 1.0
+                    gk_MIDI_Volume = ctrl14:k(gi_MIDI_Channel, 7, 39, 0.0, 1.0)
+                    
+                    ; Expression (CC 11 + 43)
+                    initc14 gi_MIDI_Channel, 11, 43, 1.0
+                    gk_MIDI_Expression = ctrl14:k(gi_MIDI_Channel, 11, 43, 0.0, 1.0)
+                elseif (k_MIDI_Status == 208) then  ; After Touch
+                    gk_After_Touch = k_MIDI_Data1 / 127
+                elseif (k_MIDI_Status == 224) then  ; Pitch Bend
+                    k_Pitch_Bend = (k_MIDI_Data2 << 7) | k_MIDI_Data1
+                    gk_MIDI_Pitch_Bend = (k_Pitch_Bend - 8192) / 8192
+                endif
+            endif
+        endin
+
+        ;====================================================================
+        ; Low Frequency Oscilator
+        ;
+        ; Generates an oscilating signal between and stores it in the global
+        ; variables gk_LFO1 and gk_LFO2.
+        ;
+        ;   gk_LFO1 = [ 0 … 1] 
+        ;   gk_LFO2 = [-1 … 1]
+        ;====================================================================
+        instr LFO
+            ; Generate base waveform with range [-1 … 1]
+            a_LFO_Sine     = lfo(1, gk_LFO_Frequency, 0)
+            a_LFO_Triangle = lfo(1, gk_LFO_Frequency, 1)
+            a_LFO_Square   = lfo(1, gk_LFO_Frequency, 2)
+            a_LFO_Saw_Up   = lfo(1, gk_LFO_Frequency, 4)
+            a_LFO_Saw_Down = lfo(1, gk_LFO_Frequency, 5)
+            
+            if gk_LFO_Type == 1 then        ; Sine
+                a_LFO = a_LFO_Sine
+            elseif gk_LFO_Type == 2 then    ; Triangle
+                a_LFO = a_LFO_Triangle
+            elseif gk_LFO_Type == 3 then    ; Square
+                a_LFO = a_LFO_Square
+            elseif gk_LFO_Type == 4 then    ; Saw Up
+                a_LFO = (a_LFO_Saw_Up * 2) - 1
+            elseif gk_LFO_Type == 5 then    ; Saw Down
+                a_LFO = (a_LFO_Saw_Down * 2) - 1
+            endif
+            
+            gk_LFO2 = k(a_LFO)
+            
+            ; MIDI Support: If at least one of the MIDI checkboxes is activated, the LFO values are
+            ; multiplited with the sum of the selected controller values mapped to 0…1 and limited to 1.            
+            if gk_LFO_Mod_Wheel > 0.01 || gk_LFO_After_Touch > 0.01 then                                
+                k_Factor = min((gk_MIDI_Mod_Wheel * gk_LFO_Mod_Wheel) + (gk_MIDI_After_Touch * gk_LFO_After_Touch), 1)
+                gk_LFO2  = gk_LFO2 * k_Factor
+            endif
+            
+            ; Scale waveform to range [0 … 1]
+            gk_LFO1 = (gk_LFO2 / 2) + .5 
+        endin
         
         ;====================================================================
         ; Variable order low-pass filter
@@ -252,96 +413,6 @@
             a_Out_L, a_Out_R pan2 a_Out, k_Panorama, 1                                      ; Mode 0 = Equal Power, 1 = Square-Root, 2 = Linear, 3 = Alternative Equal Power      
             xout(a_Out_L, a_Out_R)
         endop
-                
-        ;====================================================================
-        ; Read channels into global variables (as this should be cheaper
-        ; than repeatedly calling chnget for each played note)
-        ;====================================================================
-        instr ReadChannels
-            i_Declick_ms            = 0.15
-            
-            gk_Osc1_Type            =           chnget:k("Osc1_Type")
-            gk_Osc1_Width           = lag(      chnget:k("Osc1_Width"),                                       i_Declick_ms)
-            gk_Osc1_Transpose       = lag(      chnget:k("Osc1_Transpose"),                                   i_Declick_ms)
-            gk_Osc1_Panorama        = lag(      chnget:k("Osc1_Panorama"),                                    i_Declick_ms)
-            gk_Osc1_Volume          = lag(ampdb(chnget:k("Osc1_Volume")       * chnget:k("Osc1_Volume_X")),   i_Declick_ms)
-            gk_Osc1_Detune          = lag(      chnget:k("Osc1_Detune")       * chnget:k("Osc1_Detune_X"),    i_Declick_ms)
-            gk_Osc1_Attack          = lag(      chnget:k("Osc1_Attack")       * chnget:k("Osc1_Attack_X"),    i_Declick_ms)
-            gk_Osc1_Decay           = lag(      chnget:k("Osc1_Decay")        * chnget:k("Osc1_Decay_X"),     i_Declick_ms)
-            gk_Osc1_Sustain         = lag(      chnget:k("Osc1_Sustain")      * chnget:k("Osc1_Sustain_X"),   i_Declick_ms)
-            gk_Osc1_Release         = lag(      chnget:k("Osc1_Release")      * chnget:k("Osc1_Release_X"),   i_Declick_ms)
-            gk_Osc1_Filter_F        = lag(      chnget:k("Osc1_Filter_F")     * chnget:k("Osc1_Filter_F_X"),  i_Declick_ms)
-            gk_Osc1_Filter_R        = lag(      chnget:k("Osc1_Filter_R")     * chnget:k("Osc1_Filter_R_X"),  i_Declick_ms)
-            gk_Osc1_Filter_Order    =           chnget:k("Osc1_Filter_Order")
-            gk_Osc1_Filter_Envelope = lag(      chnget:k("Osc1_Filter_Envelope"),                             i_Declick_ms)
-            
-            gk_Osc2_Type            =           chnget:k("Osc2_Type")
-            gk_Osc2_Width           = lag(      chnget:k("Osc2_Width"),                                       i_Declick_ms)
-            gk_Osc2_Transpose       = lag(      chnget:k("Osc2_Transpose"),                                   i_Declick_ms)
-            gk_Osc2_Panorama        = lag(      chnget:k("Osc2_Panorama"),                                    i_Declick_ms)
-            gk_Osc2_Volume          = lag(ampdb(chnget:k("Osc2_Volume")       * chnget:k("Osc2_Volume_X")),   i_Declick_ms)
-            gk_Osc2_Detune          = lag(      chnget:k("Osc2_Detune")       * chnget:k("Osc2_Detune_X"),    i_Declick_ms)
-            gk_Osc2_Attack          = lag(      chnget:k("Osc2_Attack")       * chnget:k("Osc2_Attack_X"),    i_Declick_ms)
-            gk_Osc2_Decay           = lag(      chnget:k("Osc2_Decay")        * chnget:k("Osc2_Decay_X"),     i_Declick_ms)
-            gk_Osc2_Sustain         = lag(      chnget:k("Osc2_Sustain")      * chnget:k("Osc2_Sustain_X"),   i_Declick_ms)
-            gk_Osc2_Release         = lag(      chnget:k("Osc2_Release")      * chnget:k("Osc2_Release_X"),   i_Declick_ms)
-            gk_Osc2_Filter_F        = lag(      chnget:k("Osc2_Filter_F")     * chnget:k("Osc2_Filter_F_X"),  i_Declick_ms)
-            gk_Osc2_Filter_R        = lag(      chnget:k("Osc2_Filter_R")     * chnget:k("Osc2_Filter_R_X"),  i_Declick_ms)
-            gk_Osc2_Filter_Order    =           chnget:k("Osc2_Filter_Order")
-            gk_Osc2_Filter_Envelope = lag(      chnget:k("Osc2_Filter_Envelope"),                             i_Declick_ms)
-            
-            gk_Mode_Type            =           chnget:k("Mode_Type")
-            gk_Mode_1st_Detune      = lag(      chnget:k("Mode_1st_Detune"),                                  i_Declick_ms)
-            gk_Mode_1st_Panorama    = lag(      chnget:k("Mode_1st_Panorama"),                                i_Declick_ms)
-            gk_Mode_2nd_Detune      = lag(      chnget:k("Mode_2nd_Detune"),                                  i_Declick_ms)
-            gk_Mode_2nd_Panorama    = lag(      chnget:k("Mode_2nd_Panorama"),                                i_Declick_ms)
-            
-            gk_LFO_Type             =           chnget:k("LFO_Type")
-            gk_LFO_Frequency        = lag(      chnget:k("LFO_Frequency"),                                    i_Declick_ms)
-            gk_LFO_Osc_Width        = lag(      chnget:k("LFO_Osc_Width"),                                    i_Declick_ms)
-            gk_LFO_Osc_Volume       = lag(      chnget:k("LFO_Osc_Volume")    * chnget:k("LFO_Osc_Volume_X"), i_Declick_ms)
-            gk_LFO_Osc_Panorama     = lag(      chnget:k("LFO_Osc_Panorama"),                                 i_Declick_ms)
-            gk_LFO_Osc_Detune       = lag(      chnget:k("LFO_Osc_Detune")    * chnget:k("LFO_Osc_Detune_X"), i_Declick_ms)
-            gk_LFO_Osc_Filter       = lag(      chnget:k("LFO_Osc_Filter")    * chnget:k("LFO_Osc_Filter_X"), i_Declick_ms)
-            
-            gk_Reverb_DryWet        = lag(      chnget:k("Reverb_DryWet"),                                    i_Declick_ms)
-            gk_Reverb_Size          = lag(      chnget:k("Reverb_Size"),                                      i_Declick_ms)
-            gk_Reverb_CutOff        = lag(      chnget:k("Reverb_CutOff"),                                    i_Declick_ms)
-             
-            gk_Global_Volume        = lag(ampdb(chnget:k("Global_Volume")),                                   i_Declick_ms)
-        endin
-
-        ;====================================================================
-        ; Low Frequency Oscilator
-        ;
-        ; Generates an oscilating signal between and stores it in the global
-        ; variables gk_LFO1 and gk_LFO2.
-        ;
-        ;   gk_LFO1 = [ 0 … 1] 
-        ;   gk_LFO2 = [-1 … 1]
-        ;====================================================================
-        instr LFO            
-            a_LFO_Sine     = lfo(1, gk_LFO_Frequency, 0)
-            a_LFO_Triangle = lfo(1, gk_LFO_Frequency, 1)
-            a_LFO_Square   = lfo(1, gk_LFO_Frequency, 2)
-            a_LFO_Saw_Up   = lfo(1, gk_LFO_Frequency, 4)
-            a_LFO_Saw_Down = lfo(1, gk_LFO_Frequency, 5)
-            
-            if gk_LFO_Type == 1 then        ; Sine
-                a_LFO = a_LFO_Sine
-            elseif gk_LFO_Type == 2 then    ; Triangle
-                a_LFO = a_LFO_Triangle
-            elseif gk_LFO_Type == 3 then    ; Square
-                a_LFO = a_LFO_Square
-            elseif gk_LFO_Type == 4 then    ; Saw Up
-                a_LFO = (a_LFO_Saw_Up * 2) - 1
-            elseif gk_LFO_Type == 5 then    ; Saw Down
-                a_LFO = (a_LFO_Saw_Down * 2) - 1
-            endif
-            
-            gk_LFO2 = k(a_LFO)
-            gk_LFO1 = (gk_LFO2 / 2) + .5
-        endin
         
         ;====================================================================
         ; Tone generator triggered by MIDI input
@@ -354,11 +425,12 @@
         ;   Out_L = Left audio output
         ;   Out_R = Right audio output
         ;====================================================================
-        instr ToneGen, 1
-            k_Osc1_Frequency = cpsmidinn(p4 + gk_Osc1_Detune + gk_Osc1_Transpose)
+        instr Tone_Generator, 1
+            k_Pitch_Bend     = gk_MIDI_Pitch_Bend * gk_Pitch_Bend_Range
+            k_Osc1_Frequency = cpsmidinn(p4 + gk_Osc1_Detune + gk_Osc1_Transpose + k_Pitch_Bend)
             k_Osc1_Volume    = gk_Osc1_Volume * p5
             k_Osc1_Panorama  = gk_Osc1_Panorama
-            k_Osc2_Frequency = cpsmidinn(p4 + gk_Osc2_Detune + gk_Osc2_Transpose)
+            k_Osc2_Frequency = cpsmidinn(p4 + gk_Osc2_Detune + gk_Osc2_Transpose + k_Pitch_Bend)
             k_Osc2_Volume    = gk_Osc2_Volume * p5
             k_Osc2_Panorama  = gk_Osc2_Panorama
             
@@ -463,7 +535,7 @@
         ;   In_L = Left audio input
         ;   In_R = Right audio input
         ;====================================================================
-        instr Output
+        instr To_Speakers
             ; Apply volume and output sound
             a_Out_L     = dcblock(inleta("In_L") * gk_Global_Volume)
             a_Out_R     = dcblock(inleta("In_R") * gk_Global_Volume)
