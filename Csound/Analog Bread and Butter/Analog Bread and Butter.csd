@@ -134,7 +134,8 @@
         0dbfs  = 1
                 
         ; Connect instruments
-        gk_LFO = 0
+        gk_LFO1 = 0
+        gk_LFO2 = 0
         
         connect "ToneGen", "Out_L",  "Reverb", "In_L"
         connect "ToneGen", "Out_R",  "Reverb", "In_R"
@@ -188,7 +189,7 @@
         ;====================================================================
         ; Custom oscilator with panning and envelope
         ;====================================================================
-        opcode Oscilator, aa, kkkkkiiiikkkkkkkkkk
+        opcode Oscilator, aa, kkkkkiiiikkkkkkkkk
             k_Frequency,
             k_Amplitude,
             k_Panorama,
@@ -202,15 +203,14 @@
             k_Filter_R,
             k_Filter_Order,
             k_Filter_Envelope,
-            k_LFO,
             k_LFO_Width,
             k_LFO_Volume,
             k_LFO_Panorama,
             k_LFO_Detune,
             k_LFO_Filter xin
             
-            k_Amplitude = max(k_Amplitude + (k_Amplitude * k_LFO * k_LFO_Volume), 0)        ; Amplitude LFO
-            k_Frequency = max(k_Frequency + (k_Frequency * k_LFO * k_LFO_Detune), 0)        ; Frequency LFO
+            k_Amplitude = max(k_Amplitude + (k_Amplitude * gk_LFO2 * k_LFO_Volume), 0)      ; Amplitude LFO
+            k_Frequency = max(k_Frequency + (k_Frequency * gk_LFO2 * k_LFO_Detune), 0)      ; Frequency LFO
             
             if i_Type == 1 then            ; ---
             elseif i_Type == 2 then        ; Sin
@@ -228,7 +228,7 @@
                     i_Type = 2
                 endif
                 
-                k_Width = k_Width + (k_Width * k_LFO * k_LFO_Width)                         ; Width LFO
+                k_Width = k_Width + (k_Width * gk_LFO1 * k_LFO_Width)                       ; Width LFO
                 k_Width = min(max(k_Width, 0.01), 0.99)
                 
                 a_Out = vco2(k_Amplitude, k_Frequency, i_Type, k_Width)
@@ -236,7 +236,7 @@
 
             k_Envelope = madsr(i_Attack, i_Decay, i_Sustain, i_Release)
             
-            k_Filter_F = max(k_Filter_F + (k_Filter_F * k_LFO * k_LFO_Filter), 0)           ; Filter LFO
+            k_Filter_F = max(k_Filter_F + (k_Filter_F * gk_LFO2 * k_LFO_Filter), 0)         ; Filter LFO
             k_Filter_F = k_Frequency * sqrt(k_Filter_F) * 10
             
             k_Filter_E = k_Filter_F * k_Envelope * k_Filter_Envelope                        ; Filter Envelope
@@ -245,11 +245,11 @@
             a_Out      = LowPassFilter(a_Out, k_Filter_F, k_Filter_R, k_Filter_Order)       ; Filter
             a_Out      = a_Out * k_Envelope                                                 ; Amplitude ADSR
             
+            k_Panorama = k_Panorama + (gk_LFO2 * k_LFO_Panorama)                            ; Panorama LFO
             k_Panorama = (k_Panorama / 2) + .5
-            k_Panorama = k_Panorama + (k_Panorama * k_LFO * k_LFO_Panorama)                 ; Panorama LFO
             k_Panorama = max(min(k_Panorama, 1), 0)
-            a_Out_L, a_Out_R pan2 a_Out, k_Panorama, 1                                      ; Mode 0 = Equal Power, 1 = Square-Root, 2 = Linear, 3 = Alternative Equal Power
-                        
+            
+            a_Out_L, a_Out_R pan2 a_Out, k_Panorama, 1                                      ; Mode 0 = Equal Power, 1 = Square-Root, 2 = Linear, 3 = Alternative Equal Power      
             xout(a_Out_L, a_Out_R)
         endop
                 
@@ -296,7 +296,7 @@
             gk_Mode_2nd_Detune      = lag(      chnget:k("Mode_2nd_Detune"),                                  i_Declick_ms)
             gk_Mode_2nd_Panorama    = lag(      chnget:k("Mode_2nd_Panorama"),                                i_Declick_ms)
             
-            gk_LFO_Type             = lag(      chnget:k("LFO_Type"),                                         i_Declick_ms)
+            gk_LFO_Type             =           chnget:k("LFO_Type")
             gk_LFO_Frequency        = lag(      chnget:k("LFO_Frequency"),                                    i_Declick_ms)
             gk_LFO_Osc_Width        = lag(      chnget:k("LFO_Osc_Width"),                                    i_Declick_ms)
             gk_LFO_Osc_Volume       = lag(      chnget:k("LFO_Osc_Volume")    * chnget:k("LFO_Osc_Volume_X"), i_Declick_ms)
@@ -311,6 +311,38 @@
             gk_Global_Volume        = lag(ampdb(chnget:k("Global_Volume")),                                   i_Declick_ms)
         endin
 
+        ;====================================================================
+        ; Low Frequency Oscilator
+        ;
+        ; Generates an oscilating signal between and stores it in the global
+        ; variables gk_LFO1 and gk_LFO2.
+        ;
+        ;   gk_LFO1 = [ 0 … 1] 
+        ;   gk_LFO2 = [-1 … 1]
+        ;====================================================================
+        instr LFO            
+            a_LFO_Sine     = lfo(1, gk_LFO_Frequency, 0)
+            a_LFO_Triangle = lfo(1, gk_LFO_Frequency, 1)
+            a_LFO_Square   = lfo(1, gk_LFO_Frequency, 2)
+            a_LFO_Saw_Up   = lfo(1, gk_LFO_Frequency, 4)
+            a_LFO_Saw_Down = lfo(1, gk_LFO_Frequency, 5)
+            
+            if gk_LFO_Type == 1 then        ; Sine
+                a_LFO = a_LFO_Sine
+            elseif gk_LFO_Type == 2 then    ; Triangle
+                a_LFO = a_LFO_Triangle
+            elseif gk_LFO_Type == 3 then    ; Square
+                a_LFO = a_LFO_Square
+            elseif gk_LFO_Type == 4 then    ; Saw Up
+                a_LFO = (a_LFO_Saw_Up * 2) - 1
+            elseif gk_LFO_Type == 5 then    ; Saw Down
+                a_LFO = (a_LFO_Saw_Down * 2) - 1
+            endif
+            
+            gk_LFO2 = k(a_LFO)
+            gk_LFO1 = (gk_LFO2 / 2) + .5
+        endin
+        
         ;====================================================================
         ; Tone generator triggered by MIDI input
         ;
@@ -334,12 +366,12 @@
             a_Osc1_L, a_Osc1_R    Oscilator    k_Osc1_Frequency, k_Osc1_Volume, k_Osc1_Panorama, i(gk_Osc1_Type), gk_Osc1_Width, \
                                                i(gk_Osc1_Attack), i(gk_Osc1_Decay), i(gk_Osc1_Sustain), i(gk_Osc1_Release), \
                                                gk_Osc1_Filter_F, gk_Osc1_Filter_R, gk_Osc1_Filter_Order, gk_Osc1_Filter_Envelope, \
-                                               gk_LFO, gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
+                                               gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
                                                
             a_Osc2_L, a_Osc2_R    Oscilator    k_Osc2_Frequency, k_Osc2_Volume, k_Osc2_Panorama, i(gk_Osc2_Type), gk_Osc2_Width, \
                                                i(gk_Osc2_Attack), i(gk_Osc2_Decay), i(gk_Osc2_Sustain), i(gk_Osc2_Release), \
                                                gk_Osc2_Filter_F, gk_Osc2_Filter_R, gk_Osc2_Filter_Order, gk_Osc2_Filter_Envelope, \
-                                               gk_LFO, gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
+                                               gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
 
             a_Out_L     = a_Osc1_L + a_Osc2_L
             a_Out_R     = a_Osc1_R + a_Osc2_R
@@ -356,12 +388,12 @@
                 a_Osc1_L, a_Osc1_R    Oscilator    k_Osc1_Frequency, k_Osc1_Volume, k_Osc1_Panorama, i(gk_Osc1_Type), gk_Osc1_Width, \
                                                    i(gk_Osc1_Attack), i(gk_Osc1_Decay), i(gk_Osc1_Sustain), i(gk_Osc1_Release), \
                                                    gk_Osc1_Filter_F, gk_Osc1_Filter_R, gk_Osc1_Filter_Order, gk_Osc1_Filter_Envelope, \
-                                                   gk_LFO, gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
+                                                   gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
                                                
                 a_Osc2_L, a_Osc2_R    Oscilator    k_Osc2_Frequency, k_Osc2_Volume, k_Osc2_Panorama, i(gk_Osc2_Type), gk_Osc2_Width, \
                                                    i(gk_Osc2_Attack), i(gk_Osc2_Decay), i(gk_Osc2_Sustain), i(gk_Osc2_Release), \
                                                    gk_Osc2_Filter_F, gk_Osc2_Filter_R, gk_Osc2_Filter_Order, gk_Osc2_Filter_Envelope, \
-                                                   gk_LFO, gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
+                                                   gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
             
                 a_Out_L = a_Out_L + a_Osc1_L + a_Osc2_L
                 a_Out_R = a_Out_R + a_Osc1_R + a_Osc2_R
@@ -378,12 +410,12 @@
                 a_Osc1_L, a_Osc1_R    Oscilator    k_Osc1_Frequency, k_Osc1_Volume, k_Osc1_Panorama, i(gk_Osc1_Type), gk_Osc1_Width, \
                                                    i(gk_Osc1_Attack), i(gk_Osc1_Decay), i(gk_Osc1_Sustain), i(gk_Osc1_Release), \
                                                    gk_Osc1_Filter_F, gk_Osc1_Filter_R, gk_Osc1_Filter_Order, gk_Osc1_Filter_Envelope, \
-                                                   gk_LFO, gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
+                                                   gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
                                                
                 a_Osc2_L, a_Osc2_R    Oscilator    k_Osc2_Frequency, k_Osc2_Volume, k_Osc2_Panorama, i(gk_Osc2_Type), gk_Osc2_Width, \
                                                    i(gk_Osc2_Attack), i(gk_Osc2_Decay), i(gk_Osc2_Sustain), i(gk_Osc2_Release), \
                                                    gk_Osc2_Filter_F, gk_Osc2_Filter_R, gk_Osc2_Filter_Order, gk_Osc2_Filter_Envelope, \
-                                                   gk_LFO, gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
+                                                   gk_LFO_Osc_Width, gk_LFO_Osc_Volume, gk_LFO_Osc_Panorama, gk_LFO_Osc_Detune, gk_LFO_Osc_Filter
             
                 a_Out_L = a_Out_L + a_Osc1_L + a_Osc2_L
                 a_Out_R = a_Out_R + a_Osc1_R + a_Osc2_R
@@ -396,35 +428,7 @@
             outleta("Out_L", a_Out_L)
             outleta("Out_R", a_Out_R)
         endin
-        
-        ;====================================================================
-        ; Low Frequency Oscilator
-        ;
-        ; Generates an oscilating signal between [-1 … 1] and stores it in
-        ; the global variable gk_LFO.
-        ;====================================================================
-        instr LFO            
-            a_LFO_Sine     = lfo(1, gk_LFO_Frequency, 0)
-            a_LFO_Triangle = lfo(1, gk_LFO_Frequency, 1)
-            a_LFO_Square   = lfo(1, gk_LFO_Frequency, 2)
-            a_LFO_Saw_Up   = lfo(1, gk_LFO_Frequency, 4)
-            a_LFO_Saw_Down = lfo(1, gk_LFO_Frequency, 5)
-            
-            if gk_LFO_Type == 1 then        ; Sine
-                a_Out = (a_LFO_Sine + 1) * .5
-            elseif gk_LFO_Type == 2 then    ; Triangle
-                a_Out = (a_LFO_Triangle + 1) * .5
-            elseif gk_LFO_Type == 3 then    ; Square
-                a_Out = (a_LFO_Square + 1) * .5
-            elseif gk_LFO_Type == 4 then    ; Saw Up
-                a_Out = a_LFO_Saw_Up
-            elseif gk_LFO_Type == 5 then    ; Saw Down
-                a_Out = a_LFO_Saw_Down
-            endif
-            
-            gk_LFO = (k(a_Out) * 2) - 1
-        endin
-        
+               
         ;====================================================================
         ; Global reverb effect
         ;

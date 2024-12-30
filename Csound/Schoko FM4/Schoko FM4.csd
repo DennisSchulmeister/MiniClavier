@@ -182,7 +182,8 @@
         0dbfs  = 1
                 
         ; Connect instruments
-        gk_LFO = 0
+        gk_LFO1 = 0
+        gk_LFO2 = 0
         
         connect "ToneGen", "Out",    "Output", "In"
         
@@ -233,109 +234,113 @@
         ; than repeatedly calling chnget for each played note)
         ;====================================================================
         instr ReadChannels
-            i_Declick_ms            = 0.15
+            i_Declick_ms             = 0.15
         
-            gk_OP1_Frequency_Level   = lag(      chnget:k("OP1_Frequency_Level"),   i_Declick_ms)
-            gk_OP1_Frequency_LFO     = lag(      chnget:k("OP1_Frequency_LFO"),     i_Declick_ms)
-            gk_OP1_FM_Enable         = lag(      chnget:k("OP1_FM_Enable"),         i_Declick_ms)
-            gk_OP1_FM_Level          = lag(      chnget:k("OP1_FM_Level"),          i_Declick_ms)
-            gk_OP1_FM_LFO            = lag(      chnget:k("OP1_FM_LFO"),            i_Declick_ms)
-            gk_OP1_Output_Enable     = lag(      chnget:k("OP1_Output_Enable"),     i_Declick_ms)
-            gk_OP1_Output_Level      = lag(      chnget:k("OP1_Output_Level"),      i_Declick_ms)
-            gk_OP1_Output_LFO        = lag(      chnget:k("OP1_Output_LFO"),        i_Declick_ms)
-            gk_OP1_Feedback_Level    = lag(      chnget:k("OP1_Feedback_Level"),    i_Declick_ms)
-            gk_OP1_Feedback_LFO      = lag(      chnget:k("OP1_Feedback_LFO"),      i_Declick_ms)
-            gk_OP1_Attack_Level      = lag(      chnget:k("OP1_Attack_Level"),      i_Declick_ms)
-            gk_OP1_Attack_Time       = lag(      chnget:k("OP1_Attack_Time"),       i_Declick_ms)
-            gk_OP1_Decay_Level       = lag(      chnget:k("OP1_Decay_Level"),       i_Declick_ms)
-            gk_OP1_Decay_Time        = lag(      chnget:k("OP1_Decay_Time"),        i_Declick_ms)
-            gk_OP1_Sustain_Level     = lag(      chnget:k("OP1_Sustain_Level"),     i_Declick_ms)
-            gk_OP1_Sustain_Time      = lag(      chnget:k("OP1_Sustain_Time"),      i_Declick_ms)
-            gk_OP1_Release_Level     = lag(      chnget:k("OP1_Release_Level"),     i_Declick_ms)
-            gk_OP1_Release_Time      = lag(      chnget:k("OP1_Release_Time"),      i_Declick_ms)
+            gk_OP1_Frequency_Level   = lag(chnget:k("OP1_Frequency_Level"),   i_Declick_ms)
+            gk_OP1_Frequency_LFO     = lag(chnget:k("OP1_Frequency_LFO"),     i_Declick_ms)
+            gk_OP1_FM_Enable         = lag(chnget:k("OP1_FM_Enable"),         i_Declick_ms)
+            gk_OP1_FM_Level          = lag(chnget:k("OP1_FM_Level"),          i_Declick_ms)
+            gk_OP1_FM_LFO            = lag(chnget:k("OP1_FM_LFO"),            i_Declick_ms)
+            gk_OP1_Output_Enable     = lag(chnget:k("OP1_Output_Enable"),     i_Declick_ms)
+            gk_OP1_Output_Level      = lag(chnget:k("OP1_Output_Level"),      i_Declick_ms)
+            gk_OP1_Output_LFO        = lag(chnget:k("OP1_Output_LFO"),        i_Declick_ms)
+            gk_OP1_Feedback_Level    = lag(chnget:k("OP1_Feedback_Level"),    i_Declick_ms)
+            gk_OP1_Feedback_LFO      = lag(chnget:k("OP1_Feedback_LFO"),      i_Declick_ms)
+            gk_OP1_Attack_Level      = lag(chnget:k("OP1_Attack_Level"),      i_Declick_ms)
+            gk_OP1_Attack_Time       = lag(chnget:k("OP1_Attack_Time"),       i_Declick_ms)
+            gk_OP1_Decay_Level       = lag(chnget:k("OP1_Decay_Level"),       i_Declick_ms)
+            gk_OP1_Decay_Time        = lag(chnget:k("OP1_Decay_Time"),        i_Declick_ms)
+            gk_OP1_Sustain_Level     = lag(chnget:k("OP1_Sustain_Level"),     i_Declick_ms)
+            gk_OP1_Sustain_Time      = lag(chnget:k("OP1_Sustain_Time"),      i_Declick_ms)
+            gk_OP1_Release_Level     = lag(chnget:k("OP1_Release_Level"),     i_Declick_ms)
+            gk_OP1_Release_Time      = lag(chnget:k("OP1_Release_Time"),      i_Declick_ms)
             
-            gk_OP2_Frequency_Level   = lag(      chnget:k("OP2_Frequency_Level"),   i_Declick_ms)
-            gk_OP2_Frequency_LFO     = lag(      chnget:k("OP2_Frequency_LFO"),     i_Declick_ms)
-            gk_OP2_FM_Enable         = lag(      chnget:k("OP2_FM_Enable"),         i_Declick_ms)
-            gk_OP2_FM_Level          = lag(      chnget:k("OP2_FM_Level"),          i_Declick_ms)
-            gk_OP2_FM_LFO            = lag(      chnget:k("OP2_FM_LFO"),            i_Declick_ms)
-            gk_OP2_Output_Enable     = lag(      chnget:k("OP2_Output_Enable"),     i_Declick_ms)
-            gk_OP2_Output_Level      = lag(      chnget:k("OP2_Output_Level"),      i_Declick_ms)
-            gk_OP2_Output_LFO        = lag(      chnget:k("OP2_Output_LFO"),        i_Declick_ms)
-            gk_OP2_Feedback_Level    = lag(      chnget:k("OP2_Feedback_Level"),    i_Declick_ms)
-            gk_OP2_Feedback_LFO      = lag(      chnget:k("OP2_Feedback_LFO"),      i_Declick_ms)
-            gk_OP2_Attack_Level      = lag(      chnget:k("OP2_Attack_Level"),      i_Declick_ms)
-            gk_OP2_Attack_Time       = lag(      chnget:k("OP2_Attack_Time"),       i_Declick_ms)
-            gk_OP2_Decay_Level       = lag(      chnget:k("OP2_Decay_Level"),       i_Declick_ms)
-            gk_OP2_Decay_Time        = lag(      chnget:k("OP2_Decay_Time"),        i_Declick_ms)
-            gk_OP2_Sustain_Level     = lag(      chnget:k("OP2_Sustain_Level"),     i_Declick_ms)
-            gk_OP2_Sustain_Time      = lag(      chnget:k("OP2_Sustain_Time"),      i_Declick_ms)
-            gk_OP2_Release_Level     = lag(      chnget:k("OP2_Release_Level"),     i_Declick_ms)
-            gk_OP2_Release_Time      = lag(      chnget:k("OP2_Release_Time"),      i_Declick_ms)
+            gk_OP2_Frequency_Level   = lag(chnget:k("OP2_Frequency_Level"),   i_Declick_ms)
+            gk_OP2_Frequency_LFO     = lag(chnget:k("OP2_Frequency_LFO"),     i_Declick_ms)
+            gk_OP2_FM_Enable         = lag(chnget:k("OP2_FM_Enable"),         i_Declick_ms)
+            gk_OP2_FM_Level          = lag(chnget:k("OP2_FM_Level"),          i_Declick_ms)
+            gk_OP2_FM_LFO            = lag(chnget:k("OP2_FM_LFO"),            i_Declick_ms)
+            gk_OP2_Output_Enable     = lag(chnget:k("OP2_Output_Enable"),     i_Declick_ms)
+            gk_OP2_Output_Level      = lag(chnget:k("OP2_Output_Level"),      i_Declick_ms)
+            gk_OP2_Output_LFO        = lag(chnget:k("OP2_Output_LFO"),        i_Declick_ms)
+            gk_OP2_Feedback_Level    = lag(chnget:k("OP2_Feedback_Level"),    i_Declick_ms)
+            gk_OP2_Feedback_LFO      = lag(chnget:k("OP2_Feedback_LFO"),      i_Declick_ms)
+            gk_OP2_Attack_Level      = lag(chnget:k("OP2_Attack_Level"),      i_Declick_ms)
+            gk_OP2_Attack_Time       = lag(chnget:k("OP2_Attack_Time"),       i_Declick_ms)
+            gk_OP2_Decay_Level       = lag(chnget:k("OP2_Decay_Level"),       i_Declick_ms)
+            gk_OP2_Decay_Time        = lag(chnget:k("OP2_Decay_Time"),        i_Declick_ms)
+            gk_OP2_Sustain_Level     = lag(chnget:k("OP2_Sustain_Level"),     i_Declick_ms)
+            gk_OP2_Sustain_Time      = lag(chnget:k("OP2_Sustain_Time"),      i_Declick_ms)
+            gk_OP2_Release_Level     = lag(chnget:k("OP2_Release_Level"),     i_Declick_ms)
+            gk_OP2_Release_Time      = lag(chnget:k("OP2_Release_Time"),      i_Declick_ms)
             
-            gk_OP3_Frequency_Level   = lag(      chnget:k("OP3_Frequency_Level"),   i_Declick_ms)
-            gk_OP3_Frequency_LFO     = lag(      chnget:k("OP3_Frequency_LFO"),     i_Declick_ms)
-            gk_OP3_FM_Enable         = lag(      chnget:k("OP3_FM_Enable"),         i_Declick_ms)
-            gk_OP3_FM_Level          = lag(      chnget:k("OP3_FM_Level"),          i_Declick_ms)
-            gk_OP3_FM_LFO            = lag(      chnget:k("OP3_FM_LFO"),            i_Declick_ms)
-            gk_OP3_Output_Enable     = lag(      chnget:k("OP3_Output_Enable"),     i_Declick_ms)
-            gk_OP3_Output_Level      = lag(      chnget:k("OP3_Output_Level"),      i_Declick_ms)
-            gk_OP3_Output_LFO        = lag(      chnget:k("OP3_Output_LFO"),        i_Declick_ms)
-            gk_OP3_Feedback_Level    = lag(      chnget:k("OP3_Feedback_Level"),    i_Declick_ms)
-            gk_OP3_Feedback_LFO      = lag(      chnget:k("OP3_Feedback_LFO"),      i_Declick_ms)
-            gk_OP3_Attack_Level      = lag(      chnget:k("OP3_Attack_Level"),      i_Declick_ms)
-            gk_OP3_Attack_Time       = lag(      chnget:k("OP3_Attack_Time"),       i_Declick_ms)
-            gk_OP3_Decay_Level       = lag(      chnget:k("OP3_Decay_Level"),       i_Declick_ms)
-            gk_OP3_Decay_Time        = lag(      chnget:k("OP3_Decay_Time"),        i_Declick_ms)
-            gk_OP3_Sustain_Level     = lag(      chnget:k("OP3_Sustain_Level"),     i_Declick_ms)
-            gk_OP3_Sustain_Time      = lag(      chnget:k("OP3_Sustain_Time"),      i_Declick_ms)
-            gk_OP3_Release_Level     = lag(      chnget:k("OP3_Release_Level"),     i_Declick_ms)
-            gk_OP3_Release_Time      = lag(      chnget:k("OP3_Release_Time"),      i_Declick_ms)
+            gk_OP3_Frequency_Level   = lag(chnget:k("OP3_Frequency_Level"),   i_Declick_ms)
+            gk_OP3_Frequency_LFO     = lag(chnget:k("OP3_Frequency_LFO"),     i_Declick_ms)
+            gk_OP3_FM_Enable         = lag(chnget:k("OP3_FM_Enable"),         i_Declick_ms)
+            gk_OP3_FM_Level          = lag(chnget:k("OP3_FM_Level"),          i_Declick_ms)
+            gk_OP3_FM_LFO            = lag(chnget:k("OP3_FM_LFO"),            i_Declick_ms)
+            gk_OP3_Output_Enable     = lag(chnget:k("OP3_Output_Enable"),     i_Declick_ms)
+            gk_OP3_Output_Level      = lag(chnget:k("OP3_Output_Level"),      i_Declick_ms)
+            gk_OP3_Output_LFO        = lag(chnget:k("OP3_Output_LFO"),        i_Declick_ms)
+            gk_OP3_Feedback_Level    = lag(chnget:k("OP3_Feedback_Level"),    i_Declick_ms)
+            gk_OP3_Feedback_LFO      = lag(chnget:k("OP3_Feedback_LFO"),      i_Declick_ms)
+            gk_OP3_Attack_Level      = lag(chnget:k("OP3_Attack_Level"),      i_Declick_ms)
+            gk_OP3_Attack_Time       = lag(chnget:k("OP3_Attack_Time"),       i_Declick_ms)
+            gk_OP3_Decay_Level       = lag(chnget:k("OP3_Decay_Level"),       i_Declick_ms)
+            gk_OP3_Decay_Time        = lag(chnget:k("OP3_Decay_Time"),        i_Declick_ms)
+            gk_OP3_Sustain_Level     = lag(chnget:k("OP3_Sustain_Level"),     i_Declick_ms)
+            gk_OP3_Sustain_Time      = lag(chnget:k("OP3_Sustain_Time"),      i_Declick_ms)
+            gk_OP3_Release_Level     = lag(chnget:k("OP3_Release_Level"),     i_Declick_ms)
+            gk_OP3_Release_Time      = lag(chnget:k("OP3_Release_Time"),      i_Declick_ms)
             
-            gk_OP4_Frequency_Level   = lag(      chnget:k("OP4_Frequency_Level"),   i_Declick_ms)
-            gk_OP4_Frequency_LFO     = lag(      chnget:k("OP4_Frequency_LFO"),     i_Declick_ms)
-            gk_OP4_Output_Enable     = lag(      chnget:k("OP4_Output_Enable"),     i_Declick_ms)
-            gk_OP4_Output_Level      = lag(      chnget:k("OP4_Output_Level"),      i_Declick_ms)
-            gk_OP4_Output_LFO        = lag(      chnget:k("OP4_Output_LFO"),        i_Declick_ms)
-            gk_OP4_Feedback_Level    = lag(      chnget:k("OP4_Feedback_Level"),    i_Declick_ms)
-            gk_OP4_Feedback_LFO      = lag(      chnget:k("OP4_Feedback_LFO"),      i_Declick_ms)
-            gk_OP4_Attack_Level      = lag(      chnget:k("OP4_Attack_Level"),      i_Declick_ms)
-            gk_OP4_Attack_Time       = lag(      chnget:k("OP4_Attack_Time"),       i_Declick_ms)
-            gk_OP4_Decay_Level       = lag(      chnget:k("OP4_Decay_Level"),       i_Declick_ms)
-            gk_OP4_Decay_Time        = lag(      chnget:k("OP4_Decay_Time"),        i_Declick_ms)
-            gk_OP4_Sustain_Level     = lag(      chnget:k("OP4_Sustain_Level"),     i_Declick_ms)
-            gk_OP4_Sustain_Time      = lag(      chnget:k("OP4_Sustain_Time"),      i_Declick_ms)
-            gk_OP4_Release_Level     = lag(      chnget:k("OP4_Release_Level"),     i_Declick_ms)
-            gk_OP4_Release_Time      = lag(      chnget:k("OP4_Release_Time"),      i_Declick_ms)
+            gk_OP4_Frequency_Level   = lag(chnget:k("OP4_Frequency_Level"),   i_Declick_ms)
+            gk_OP4_Frequency_LFO     = lag(chnget:k("OP4_Frequency_LFO"),     i_Declick_ms)
+            gk_OP4_Output_Enable     = lag(chnget:k("OP4_Output_Enable"),     i_Declick_ms)
+            gk_OP4_Output_Level      = lag(chnget:k("OP4_Output_Level"),      i_Declick_ms)
+            gk_OP4_Output_LFO        = lag(chnget:k("OP4_Output_LFO"),        i_Declick_ms)
+            gk_OP4_Feedback_Level    = lag(chnget:k("OP4_Feedback_Level"),    i_Declick_ms)
+            gk_OP4_Feedback_LFO      = lag(chnget:k("OP4_Feedback_LFO"),      i_Declick_ms)
+            gk_OP4_Attack_Level      = lag(chnget:k("OP4_Attack_Level"),      i_Declick_ms)
+            gk_OP4_Attack_Time       = lag(chnget:k("OP4_Attack_Time"),       i_Declick_ms)
+            gk_OP4_Decay_Level       = lag(chnget:k("OP4_Decay_Level"),       i_Declick_ms)
+            gk_OP4_Decay_Time        = lag(chnget:k("OP4_Decay_Time"),        i_Declick_ms)
+            gk_OP4_Sustain_Level     = lag(chnget:k("OP4_Sustain_Level"),     i_Declick_ms)
+            gk_OP4_Sustain_Time      = lag(chnget:k("OP4_Sustain_Time"),      i_Declick_ms)
+            gk_OP4_Release_Level     = lag(chnget:k("OP4_Release_Level"),     i_Declick_ms)
+            gk_OP4_Release_Time      = lag(chnget:k("OP4_Release_Time"),      i_Declick_ms)
             
-            gk_LFO_Frequency         = lag(      chnget:k("LFO_Frequency"),         i_Declick_ms)
-            gk_LFO_Mod_Wheel         = lag(      chnget:k("LFO_Mod_Wheel"),         i_Declick_ms)
+            gk_LFO_Frequency         = lag(chnget:k("LFO_Frequency"),         i_Declick_ms)
+            gk_LFO_Mod_Wheel         = lag(chnget:k("LFO_Mod_Wheel"),         i_Declick_ms)
             
-            gk_Output_Volume_Level   = lag(ampdb(chnget:k("Output_Volume_Level")),  i_Declick_ms)
-            gk_Output_Volume_LFO     = lag(      chnget:k("Output_Volume_LFO"),     i_Declick_ms)
-            gk_Output_Panorama_Level = lag(      chnget:k("Output_Panorama_Level"), i_Declick_ms)
-            gk_Output_Panorama_LFO   = lag(      chnget:k("Output_Panorama_LFO"),   i_Declick_ms)
+            gk_Output_Volume_Level   = lag(chnget:k("Output_Volume_Level"),   i_Declick_ms)
+            gk_Output_Volume_LFO     = lag(chnget:k("Output_Volume_LFO"),     i_Declick_ms)
+            gk_Output_Panorama_Level = lag(chnget:k("Output_Panorama_Level"), i_Declick_ms)
+            gk_Output_Panorama_LFO   = lag(chnget:k("Output_Panorama_LFO"),   i_Declick_ms)
             
-            gk_Chorus_DryWet         = lag(      chnget:k("Chorus_DryWet"),         i_Declick_ms)
-            gk_Chorus_Frequency      = lag(      chnget:k("Chorus_Frequency"),      i_Declick_ms)
-            gk_Chorus_Delay          = lag(      chnget:k("Chorus_Delay"),          i_Declick_ms)
-            gk_Chorus_Width          = lag(      chnget:k("Chorus_Width"),          i_Declick_ms)
-            gk_Chorus_Feedback       = lag(      chnget:k("Chorus_Feedback"),       i_Declick_ms)
+            gk_Chorus_DryWet         = lag(chnget:k("Chorus_DryWet"),         i_Declick_ms)
+            gk_Chorus_Frequency      = lag(chnget:k("Chorus_Frequency"),      i_Declick_ms)
+            gk_Chorus_Delay          = lag(chnget:k("Chorus_Delay"),          i_Declick_ms)
+            gk_Chorus_Width          = lag(chnget:k("Chorus_Width"),          i_Declick_ms)
+            gk_Chorus_Feedback       = lag(chnget:k("Chorus_Feedback"),       i_Declick_ms)
             
-            gk_Reverb_DryWet         = lag(      chnget:k("Reverb_DryWet"),         i_Declick_ms)
-            gk_Reverb_Size           = lag(      chnget:k("Reverb_Size"),           i_Declick_ms)
-            gk_Reverb_CutOff         = lag(      chnget:k("Reverb_CutOff"),         i_Declick_ms)
+            gk_Reverb_DryWet         = lag(chnget:k("Reverb_DryWet"),         i_Declick_ms)
+            gk_Reverb_Size           = lag(chnget:k("Reverb_Size"),           i_Declick_ms)
+            gk_Reverb_CutOff         = lag(chnget:k("Reverb_CutOff"),         i_Declick_ms)
         endin
 
         ;====================================================================
         ; Low Frequency Oscilator
         ;
-        ; Generates an oscilating signal between [-1 … 1] and stores it in
-        ; the global variable gk_LFO.
+        ; Generates an oscilating signal between and stores it in the global
+        ; variables gk_LFO1 and gk_LFO2.
+        ;
+        ;   gk_LFO1 = [ 0 … 1] 
+        ;   gk_LFO2 = [-1 … 1]
         ;====================================================================
         instr LFO            
-            a_LFO  = lfo(1, gk_LFO_Frequency, 0)                        
-            gk_LFO = (k(a_LFO) * 2) - 1
+            a_LFO   = lfo(1, gk_LFO_Frequency, 0)                        
+            gk_LFO2 = k(a_LFO)
+            gk_LFO1 = (gk_LFO2 / 2) + .5
         endin
         
         ;====================================================================
@@ -350,8 +355,7 @@
         ;====================================================================
         instr ToneGen, 1
             ; TODO
-            a_Out = 0
-            
+            a_Out = oscili(p5, cpsmidinn(p4))
             outleta("Out", a_Out)
         endin
                 
@@ -366,15 +370,19 @@
         ;   Out_R = Right audio output
         ;====================================================================
         instr Output
-            ; Apply volume and panorame then output sound
             a_In = inleta("In")
             
-            k_Output_Volume_Level = gk_Output_Volume_Level
+            k_Volume   = ampdb(gk_Output_Volume_Level)
+            k_Volume   = k_Volume - (k_Volume * gk_LFO1 * gk_Output_Volume_LFO)             ; Volume LFO
+
+            k_Panorama = gk_Output_Panorama_Level + (gk_LFO2 * gk_Output_Panorama_LFO)      ; Panorama LFO
+            k_Panorama = (k_Panorama / 2) + .5
+            k_Panorama = max(min(k_Panorama, 1), 0)
             
-            a_Out_L = dcblock(a_In * k_Output_Volume_Level)
-            a_Out_R = dcblock(a_In * k_Output_Volume_Level)
-            
-            outs(a_Out_L, a_Out_R)
+            a_Out_L, a_Out_R pan2 a_In * k_Volume, k_Panorama, 0
+
+            outleta("Out_L", a_Out_L)
+            outleta("Out_R", a_Out_R)
         endin
         
         ;====================================================================
@@ -437,6 +445,8 @@
         instr ToSpeakers
             a_Out_L = dcblock(inleta("In_L"))
             a_Out_R = dcblock(inleta("In_R"))
+            
+            outs(a_Out_L, a_Out_R)
             
             k_RMS_L = rms(a_Out_L, 20)
             k_RMS_R = rms(a_Out_R, 20)
