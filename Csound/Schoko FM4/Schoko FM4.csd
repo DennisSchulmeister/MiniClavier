@@ -46,17 +46,17 @@
     ; Operator 1
     groupbox $GROUPBOX, bounds(10, 10, 690, 145), text("Operator 1") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP1_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP1_Frequency_LFO"),   text("LFO"),           range(0,   1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP1_Frequency_LFO"),   text("LFO"),           range(0, 100, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  85, 120, 20), channel("OP1_FM_Enable"),       text("Modulate OP2")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP1_Output_Enable"),   text("Direct Output")
         
-        rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP1_FM_Level"),        text("Modulate OP2"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP1_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP1_FM_Level"),        text("Modulate OP2"),  range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP1_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP1_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP1_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP1_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP1_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP1_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP1_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP1_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
         nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP1_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
@@ -72,17 +72,17 @@
     ; Operator 2
     groupbox $GROUPBOX, bounds(10, 165, 690, 145), text("Operator 2") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP2_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP2_Frequency_LFO"),   text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP2_Frequency_LFO"),   text("LFO"),           range(0, 100, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  85, 120, 20), channel("OP2_FM_Enable"),       text("Modulate OP3")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP2_Output_Enable"),   text("Direct Output")
         
-        rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP2_FM_Level"),        text("Modulate OP3"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP2_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP2_FM_Level"),        text("Modulate OP3"),  range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP2_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP2_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP2_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP2_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP2_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP2_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP2_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP2_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
         nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP2_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
@@ -98,17 +98,17 @@
     ; Operator 3
     groupbox $GROUPBOX, bounds(10, 320, 690, 145), text("Operator 3") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP3_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP3_Frequency_LFO"),   text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP3_Frequency_LFO"),   text("LFO"),           range(0, 100, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  85, 120, 20), channel("OP3_FM_Enable"),       text("Modulate OP4"),  value(1)
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP3_Output_Enable"),   text("Direct Output")
         
-        rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP3_FM_Level"),        text("Modulate OP4"),  range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP3_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP3_FM_Level"),        text("Modulate OP4"),  range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP3_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP3_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP3_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP3_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP3_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP3_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP3_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP3_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
         nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP3_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
@@ -124,14 +124,14 @@
     ; Operator 4
     groupbox $GROUPBOX, bounds(10, 475, 690, 145), text("Operator 4") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP4_Frequency_Level"), text("Frequency"),     range(0, 100, 1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP4_Frequency_LFO"),   text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP4_Frequency_LFO"),   text("LFO"),           range(0, 100, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 115, 120, 20), channel("OP4_Output_Enable"),   text("Direct Output"), value(1)
         
-        rslider  $WIDGET, $RSLIDER,  bounds(220,  30,  75, 75), channel("OP4_Output_Level"),    text("Direct Output"), range(0, 1, 1, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP4_Feedback_Level"),  text("Feedback"),      range(0, 1, 0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(145,  30,  75, 75), channel("OP4_Feedback_Level"),  text("Feedback"),      range(0, 1, 0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(295,  30,  75, 75), channel("OP4_Output_Level"),    text("Direct Output"), range(0, 1, 1, 1, 0.01)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP4_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP4_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP4_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP4_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         
         nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP4_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
         nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP4_Decay_Level"),     text("Decay"),         range(0, 1, 0.8, 1, 0.01)
@@ -174,8 +174,8 @@
     
     ; Reverb
     groupbox $GROUPBOX, bounds(710, 475, 225, 145), text("Reverb") {
-        rslider $WIDGET, $RSLIDER, bounds( 10, 40, 75, 75), channel("Reverb_DryWet"), text("Dry/Wet"), range(0,     1,   .3,  1, .01)
-        rslider $WIDGET, $RSLIDER, bounds( 75, 40, 75, 75), channel("Reverb_Size"),   text("Size"),    range(0,     1,   .6,  1, .01)
+        rslider $WIDGET, $RSLIDER, bounds( 10, 40, 75, 75), channel("Reverb_DryWet"), text("Dry/Wet"), range(0,     1,  .15,  1, .01)
+        rslider $WIDGET, $RSLIDER, bounds( 75, 40, 75, 75), channel("Reverb_Size"),   text("Size"),    range(0,     1,  .40,  1, .01)
         rslider $WIDGET, $RSLIDER, bounds(140, 40, 75, 75), channel("Reverb_CutOff"), text("Cut-Off"), range(0, 20000, 7000, .5, 100), valuePostfix(" Hz")
     }
     
@@ -395,14 +395,10 @@
         ;====================================================================
         ; FM Operator
         ;====================================================================
-        opcode Operator, a, kkakkkkiiiiiiii
-            k_Frequency,
-            k_Amplitude,
+        opcode Operator, a, akkiiiiiiii
             a_Modulator,
-            k_Frequency_Level,
-            k_Frequency_LFO,
-            k_Feedback_Level,
-            k_Feedback_LFO,
+            k_Frequency,
+            k_Feedback,
             i_Attack_Level,
             i_Attack_Time,
             i_Decay_Level,
@@ -412,9 +408,11 @@
             i_Release_Level,
             i_Release_Time xin
             
-            ; TODO
-            a_Out = 0
-             
+            ;k_OP1_Frequency = max(gk_OP1_Frequency_Level + (gk_LFO2 * gk_OP1_Frequency_LFO), 0)     ; Frequency LFO
+            ;k_OP1_Frequency = k_Frequency * k_Base_Frequency
+            ;k_OP1_Feedback  = gk_OP1_Feedback_Level
+            
+            a_Out = oscili(1, k_Frequency)
             xout(a_Out)
         endop
         
@@ -429,9 +427,87 @@
         ;   Out = Audio output
         ;====================================================================
         instr Tone_Generator, 1
-            ; TODO
-            k_Pitch_Bend = gk_MIDI_Pitch_Bend * gk_Pitch_Bend_Range
-            a_Out = oscili(p5, cpsmidinn(p4 + k_Pitch_Bend))
+            ; Calculate values before LFO
+            k_Pitch_Bend     = gk_MIDI_Pitch_Bend * gk_Pitch_Bend_Range
+            k_Base_Frequency = cpsmidinn(p4 + k_Pitch_Bend)
+            
+            k_OP1_Frequency    = gk_OP1_Frequency_Level
+            k_OP1_Feedback     = gk_OP1_Feedback_Level
+            k_OP1_FM_Level     = gk_OP1_FM_Enable     * gk_OP1_FM_Level
+            k_OP1_Output_Level = gk_OP1_Output_Enable * gk_OP1_Output_Level
+            
+            k_OP2_Frequency    = gk_OP2_Frequency_Level
+            k_OP2_Feedback     = gk_OP2_Feedback_Level
+            k_OP2_FM_Level     = gk_OP2_FM_Enable     * gk_OP2_FM_Level
+            k_OP2_Output_Level = gk_OP2_Output_Enable * gk_OP2_Output_Level
+            
+            k_OP3_Frequency    = gk_OP3_Frequency_Level
+            k_OP3_Feedback     = gk_OP3_Feedback_Level
+            k_OP3_FM_Level     = gk_OP3_FM_Enable     * gk_OP3_FM_Level
+            k_OP3_Output_Level = gk_OP3_Output_Enable * gk_OP3_Output_Level
+            
+            k_OP4_Frequency    = gk_OP4_Frequency_Level
+            k_OP4_Feedback     = gk_OP4_Feedback_Level
+            k_OP4_Output_Level = gk_OP4_Output_Enable * gk_OP4_Output_Level
+            
+            ; Apply LFO
+            k_OP1_Frequency    =     max(k_OP1_Frequency    + (gk_LFO2 * gk_OP1_Frequency_LFO), 0)
+            k_OP1_Feedback     = min(max(k_OP1_Feedback     + (gk_LFO2 * gk_OP1_Feedback_LFO ), 0), 1)
+            k_OP1_FM_Level     = min(max(k_OP1_FM_Level     + (gk_LFO2 * gk_OP1_FM_LFO       ), 0), 1)
+            k_OP1_Output_Level = min(max(k_OP1_Output_Level + (gk_LFO2 * gk_OP1_Output_LFO   ), 0), 1)
+            
+            k_OP2_Frequency    =     max(k_OP2_Frequency    + (gk_LFO2 * gk_OP2_Frequency_LFO), 0)
+            k_OP2_Feedback     = min(max(k_OP2_Feedback     + (gk_LFO2 * gk_OP2_Feedback_LFO ), 0), 1)
+            k_OP2_FM_Level     = min(max(k_OP2_FM_Level     + (gk_LFO2 * gk_OP2_FM_LFO       ), 0), 1)
+            k_OP2_Output_Level = min(max(k_OP2_Output_Level + (gk_LFO2 * gk_OP2_Output_LFO   ), 0), 1)
+            
+            k_OP3_Frequency    =     max(k_OP3_Frequency    + (gk_LFO2 * gk_OP3_Frequency_LFO), 0)
+            k_OP3_Feedback     = min(max(k_OP3_Feedback     + (gk_LFO2 * gk_OP3_Feedback_LFO ), 0), 1)
+            k_OP3_FM_Level     = min(max(k_OP3_FM_Level     + (gk_LFO2 * gk_OP3_FM_LFO       ), 0), 1)
+            k_OP3_Output_Level = min(max(k_OP3_Output_Level + (gk_LFO2 * gk_OP3_Output_LFO   ), 0), 1)
+            
+            k_OP4_Frequency    =     max(k_OP4_Frequency    + (gk_LFO2 * gk_OP4_Frequency_LFO), 0)
+            k_OP4_Feedback     = min(max(k_OP4_Feedback     + (gk_LFO2 * gk_OP4_Feedback_LFO ), 0), 1)
+            k_OP4_Output_Level = min(max(k_OP4_Output_Level + (gk_LFO2 * gk_OP4_Output_LFO   ), 0), 1)
+                       
+            ; Generate sound
+            a_OP1 Operator    a(0),                                          \
+                              k_OP1_Frequency * k_Base_Frequency,            \
+                              k_OP1_Feedback,                                \
+                           i(gk_OP1_Attack_Level),   i(gk_OP1_Attack_Time),  \
+                           i(gk_OP1_Decay_Level),    i(gk_OP1_Decay_Time),   \
+                           i(gk_OP1_Sustain_Level),  i(gk_OP1_Sustain_Time), \
+                           i(gk_OP1_Release_Level),  i(gk_OP1_Release_Time)
+
+            a_OP2 Operator    a_OP1 * k_OP1_FM_Level,                        \
+                              k_OP2_Frequency * k_Base_Frequency,            \
+                              k_OP2_Feedback,                                \
+                           i(gk_OP2_Attack_Level),   i(gk_OP2_Attack_Time),  \
+                           i(gk_OP2_Decay_Level),    i(gk_OP2_Decay_Time),   \
+                           i(gk_OP2_Sustain_Level),  i(gk_OP2_Sustain_Time), \
+                           i(gk_OP2_Release_Level),  i(gk_OP2_Release_Time)
+            
+            a_OP3 Operator    a_OP2 * k_OP2_FM_Level,                        \
+                              k_OP3_Frequency * k_Base_Frequency,            \
+                              k_OP3_Feedback,                                \
+                           i(gk_OP3_Attack_Level),   i(gk_OP3_Attack_Time),  \
+                           i(gk_OP3_Decay_Level),    i(gk_OP3_Decay_Time),   \
+                           i(gk_OP3_Sustain_Level),  i(gk_OP3_Sustain_Time), \
+                           i(gk_OP3_Release_Level),  i(gk_OP3_Release_Time)
+                           
+            a_OP4 Operator    a_OP3 * k_OP3_FM_Level,                        \
+                              k_OP4_Frequency * k_Base_Frequency,            \
+                              k_OP4_Feedback,                                \
+                           i(gk_OP4_Attack_Level),   i(gk_OP4_Attack_Time),  \
+                           i(gk_OP4_Decay_Level),    i(gk_OP4_Decay_Time),   \
+                           i(gk_OP4_Sustain_Level),  i(gk_OP4_Sustain_Time), \
+                           i(gk_OP4_Release_Level),  i(gk_OP4_Release_Time)
+
+            a_Out = (a_OP1 * .25 * k_OP1_Output_Level) \
+                  + (a_OP2 * .25 * k_OP2_Output_Level) \
+                  + (a_OP3 * .25 * k_OP3_Output_Level) \
+                  + (a_OP4 * .25 * k_OP4_Output_Level)
+                  
             outleta("Out", a_Out)
         endin
                 
@@ -449,9 +525,9 @@
             a_In = inleta("In")
             
             k_Volume   = ampdb(gk_Output_Volume_Level)
-            k_Volume   = k_Volume - (k_Volume * gk_LFO1 * gk_Output_Volume_LFO)             ; Volume LFO
+            k_Volume   = k_Volume - (k_Volume * gk_LFO1 * gk_Output_Volume_LFO)                 ; Volume LFO
 
-            k_Panorama = gk_Output_Panorama_Level + (gk_LFO2 * gk_Output_Panorama_LFO)      ; Panorama LFO
+            k_Panorama = gk_Output_Panorama_Level + (gk_LFO2 * gk_Output_Panorama_LFO)          ; Panorama LFO
             k_Panorama = (k_Panorama / 2) + .5
             k_Panorama = max(min(k_Panorama, 1), 0)
             
@@ -465,7 +541,7 @@
         ; Chorus/Flanger voice
         ;
         ; Csound - A Sound and Music Computing System; pp. 271-274
-        ; The Csound book; pp. 458-461, 586-587
+        ; The Csound book; pp. 458-461, 586-589
         ; Plus some own ideas
         ;
         ; Typical values for chorus:
