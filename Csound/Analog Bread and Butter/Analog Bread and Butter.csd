@@ -518,11 +518,11 @@
             
             a_Reverb_L, a_Reverb_R reverbsc a_In_L, a_In_R, pow(gk_Reverb_Size, 1/3), gk_Reverb_CutOff
 
-            k_Reverb_Amp = sqrt(gk_Reverb_DryWet)            ; Approximate equal-power
-            k_In_Amp     = 1 - k_Reverb_Amp
+            k_Wet_Amp = sqrt(gk_Reverb_DryWet)            ; Approximate equal-power
+            k_Dry_Amp = 1 - k_Wet_Amp
 
-            a_Out_L = (a_In_L * k_In_Amp) + (a_Reverb_L * k_Reverb_Amp)
-            a_Out_R = (a_In_R * k_In_Amp) + (a_Reverb_R * k_Reverb_Amp)
+            a_Out_L = (a_In_L * k_Dry_Amp) + (a_Reverb_L * k_Wet_Amp)
+            a_Out_R = (a_In_R * k_Dry_Amp) + (a_Reverb_R * k_Wet_Amp)
             
             outleta("Out_L", a_Out_L)
             outleta("Out_R", a_Out_R)

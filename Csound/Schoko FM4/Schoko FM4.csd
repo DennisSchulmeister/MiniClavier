@@ -162,15 +162,14 @@
         nslider $WIDGET, $NSLIDER, bounds(75, 110, 75, 25), channel("Output_Panorama_LFO"),   text("LFO"),      range(0, 1, 0, 1, 0.01)
     }
 
-    
     ; Chorus
     groupbox $GROUPBOX, bounds(710, 320, 225, 145), text("Chorus") {
         rslider $WIDGET, $RSLIDER, bounds( 10, 40, 75, 75), channel("Chorus_DryWet"),    text("Dry/Wet"),   range(0, 1, .3, 1, .01)
         
-        nslider $WIDGET, $NSLIDER, bounds( 80, 40, 75, 30), channel("Chorus_Frequency"), text("Frequency [Hz]"), range(0, 25,   1.5, 1, 0.01)
-        nslider $WIDGET, $NSLIDER, bounds(150, 40, 75, 30), channel("Chorus_Delay"),     text("Delay [ms]"),     range(0, 100, 30.0, 1, 0.1)
-        nslider $WIDGET, $NSLIDER, bounds( 80, 80, 75, 30), channel("Chorus_Width"),     text("Width [ms]"),     range(0, 100,  1.8, 1, 0.1)
-        nslider $WIDGET, $NSLIDER, bounds(150, 80, 75, 30), channel("Chorus_Feedback"),  text("Feedback"),  range(0, 1,    0,   1, 0.01)
+        nslider $WIDGET, $NSLIDER, bounds( 80, 40, 75, 30), channel("Chorus_Frequency"), text("Frequency [Hz]"), range(0, 25,    1.5, 1, 0.01)
+        nslider $WIDGET, $NSLIDER, bounds(150, 40, 75, 30), channel("Chorus_Delay"),     text("Delay [ms]"),     range(0, 50,   30.0, 1, 0.1)
+        nslider $WIDGET, $NSLIDER, bounds( 80, 80, 75, 30), channel("Chorus_Width"),     text("Width [ms]"),     range(1, 20,    1.8, 1, 0.1)
+        nslider $WIDGET, $NSLIDER, bounds(150, 80, 75, 30), channel("Chorus_Feedback"),  text("Feedback"),       range(0,  0.99, 0,   1, 0.01)
     }
     
     ; Reverb
@@ -463,26 +462,46 @@
         endin
         
         ;====================================================================
-        ; Chorus voice
+        ; Chorus/Flanger voice
+        ;
+        ; Csound - A Sound and Music Computing System; pp. 271-274
+        ; The Csound book; pp. 458-461, 586-587
+        ; Plus some own ideas
+        ;
+        ; Typical values for chorus:
+        ;   - Delay:       20…30 ms
+        ;   - Frequency:   < 30 Hz
+        ;   - Sweep Width: ~ 5 ms
+        ;   - Feedback:    None
+        ;
+        ; Typical values for flanger:
+        ;   - Delay:       < 10 ms
+        ;   - Frequency:   ~ 10 Hz
+        ;   - Sweep Width: ~ 1 ms
+        ;   - Feedback:    Yes
         ;====================================================================
-        opcode ChorusVoice, aa, aakkkkk
-            a_In_L,
-            a_In_R,
-            k_Delay_ms,
-            k_LFO_Frequency,
-            k_LFO_Width_ms,
+        opcode ChorusVoice, a, akkkki
+            a_In,
+            k_Frequency,
+            k_Delay,
+            k_Width,
             k_Feedback,
-            k_Phase_Offset xin
+            i_Phase_Offset xin
+
+            k_Frequency  = k_Frequency + birnd:i(.05)   ; Slightly randomize frequency
+            k_Delay      = k_Delay * .001               ; Miliseconds to seconds
+            k_Width      = max(k_Width, 1) * .001
             
-            ; TODO
-            a_Out_L = a_In_L
-            a_Out_R = a_In_R
+            a_Modulation = oscili(k_Width * .5, k_Frequency, -1, i_Phase_Offset) + k_Width
+            a_Dummy      = delayr:a(.1)
+            a_Chorus     = deltapi:a(k_Delay + a_Modulation)
+            delayw(a_In + (a_Chorus * k_Feedback))
             
-            xout(a_Out_L, a_Out_R)
+            xout(a_Chorus)
         endop
         
         ;====================================================================
-        ; Global chorus effect
+        ; Global chorus/flanger effect
         ;
         ; Inputs:
         ;   In_L = Left audio input
@@ -496,9 +515,18 @@
             a_In_L = inleta("In_L")
             a_In_R = inleta("In_R")
             
-            ; TODO
-            a_Out_L = a_In_L
-            a_Out_R = a_In_R
+            a_Chorus_L1 = ChorusVoice(a_In_L, gk_Chorus_Frequency, gk_Chorus_Delay, gk_Chorus_Width, gk_Chorus_Feedback, 0.00)
+            a_Chorus_L2 = ChorusVoice(a_In_L, gk_Chorus_Frequency, gk_Chorus_Delay, gk_Chorus_Width, gk_Chorus_Feedback, 0.25)
+            a_Chorus_L  = (a_Chorus_L1 + a_Chorus_L2) * .5
+            
+            a_Chorus_R1 = ChorusVoice(a_In_R, gk_Chorus_Frequency, gk_Chorus_Delay, gk_Chorus_Width, gk_Chorus_Feedback, 0.01)
+            a_Chorus_R2 = ChorusVoice(a_In_R, gk_Chorus_Frequency, gk_Chorus_Delay, gk_Chorus_Width, gk_Chorus_Feedback, 0.35)
+            a_Chorus_R  = (a_Chorus_R1 + a_Chorus_R2) * .5
+            
+            k_Wet_Amp = sqrt(gk_Chorus_DryWet)            ; Approximate equal-power
+            k_Dry_Amp = 1 - k_Wet_Amp
+            a_Out_L   = (a_In_L * k_Dry_Amp) + (a_Chorus_L * k_Wet_Amp)
+            a_Out_R   = (a_In_R * k_Dry_Amp) + (a_Chorus_R * k_Wet_Amp)
             
             outleta("Out_L", a_Out_L)
             outleta("Out_R", a_Out_R)
@@ -521,11 +549,10 @@
             
             a_Reverb_L, a_Reverb_R reverbsc a_In_L, a_In_R, pow(gk_Reverb_Size, 1/3), gk_Reverb_CutOff
 
-            k_Reverb_Amp = sqrt(gk_Reverb_DryWet)            ; Approximate equal-power
-            k_In_Amp     = 1 - k_Reverb_Amp
-
-            a_Out_L = (a_In_L * k_In_Amp) + (a_Reverb_L * k_Reverb_Amp)
-            a_Out_R = (a_In_R * k_In_Amp) + (a_Reverb_R * k_Reverb_Amp)
+            k_Wet_Amp = sqrt(gk_Reverb_DryWet)            ; Approximate equal-power
+            k_Dry_Amp = 1 - k_Wet_Amp
+            a_Out_L   = (a_In_L * k_Dry_Amp) + (a_Reverb_L * k_Wet_Amp)
+            a_Out_R   = (a_In_R * k_Dry_Amp) + (a_Reverb_R * k_Wet_Amp)
             
             outleta("Out_L", a_Out_L)
             outleta("Out_R", a_Out_R)
