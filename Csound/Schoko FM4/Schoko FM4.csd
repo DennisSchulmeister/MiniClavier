@@ -2,7 +2,7 @@
  * Facelift FM4 - 4 Operator FM Synthesizer
  * ========================================
  *
- * Dec 28 2024: Dennis Schulmeister-Zimolong
+ * Dec 28-31 2024: Dennis Schulmeister-Zimolong
  * This is the synthesizer with which Android will be tested.
  *
  * Csound Caveats
@@ -58,14 +58,15 @@
         nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP1_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP1_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP1_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP1_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(540,  40,  75, 30), channel("OP1_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP1_Initial_Level"),   text("Initial"),       range(0, 1, 0.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(440,  40,  75, 30), channel("OP1_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(500,  40,  75, 30), channel("OP1_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(560,  40,  75, 30), channel("OP1_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(620,  40,  75, 30), channel("OP1_Release_Level"),   text("Release"),       range(0, 1, 0.0, 1, 0.01), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(380,  80,  75, 30), channel("OP1_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP1_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(540,  80,  75, 30), channel("OP1_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(440,  80,  75, 30), channel("OP1_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(500,  80,  75, 30), channel("OP1_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(560,  80,  75, 30), channel("OP1_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(620,  80,  75, 30), channel("OP1_Release_Time"),    text("Seconds"),       range(0, 100, 0.2, 1, 0.01)
     }
     
@@ -83,15 +84,16 @@
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP2_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP2_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP2_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
-        
-        nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP2_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP2_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(540,  40,  75, 30), channel("OP2_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
+
+        nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP2_Initial_Level"),   text("Initial"),       range(0, 1, 0.0, 1, 0.01)        
+        nslider  $WIDGET, $NSLIDER,  bounds(440,  40,  75, 30), channel("OP2_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(500,  40,  75, 30), channel("OP2_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(560,  40,  75, 30), channel("OP2_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(620,  40,  75, 30), channel("OP2_Release_Level"),   text("Release"),       range(0, 1, 0.0, 1, 0.01), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(380,  80,  75, 30), channel("OP2_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP2_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(540,  80,  75, 30), channel("OP2_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(440,  80,  75, 30), channel("OP2_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(500,  80,  75, 30), channel("OP2_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(560,  80,  75, 30), channel("OP2_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(620,  80,  75, 30), channel("OP2_Release_Time"),    text("Seconds"),       range(0, 100, 0.2, 1, 0.01)
     }
     
@@ -110,14 +112,15 @@
         nslider  $WIDGET, $NSLIDER,  bounds(220, 110,  75, 25), channel("OP3_FM_LFO"),          text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP3_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP3_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP3_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(540,  40,  75, 30), channel("OP3_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(620,  40,  75, 30), channel("OP3_Release_Level"),   text("Release"),       range(0, 1, 1.0, 1, 0.01), active(0)
+        nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP3_Initial_Level"),   text("Initial"),       range(0, 1, 0.0, 1, 0.01)        
+        nslider  $WIDGET, $NSLIDER,  bounds(440,  40,  75, 30), channel("OP3_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(500,  40,  75, 30), channel("OP3_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(560,  40,  75, 30), channel("OP3_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(620,  40,  75, 30), channel("OP3_Release_Level"),   text("Release"),       range(0, 1, 0.0, 1, 0.01), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(380,  80,  75, 30), channel("OP3_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP3_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(540,  80,  75, 30), channel("OP3_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(440,  80,  75, 30), channel("OP3_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(500,  80,  75, 30), channel("OP3_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(560,  80,  75, 30), channel("OP3_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(620,  80,  75, 30), channel("OP3_Release_Time"),    text("Seconds"),       range(0, 100, 0.2, 1, 0.01)
     }
     
@@ -133,14 +136,15 @@
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP4_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(295, 110,  75, 25), channel("OP4_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP4_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01), active(0)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP4_Decay_Level"),     text("Decay"),         range(0, 1, 0.8, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(540,  40,  75, 30), channel("OP4_Sustain_Level"),   text("Sustain"),       range(0, 1, 0.5, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(380,  40,  75, 30), channel("OP4_Initial_Level"),   text("Initial"),       range(0, 1, 0.0, 1, 0.01)        
+        nslider  $WIDGET, $NSLIDER,  bounds(440,  40,  75, 30), channel("OP4_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(500,  40,  75, 30), channel("OP4_Decay_Level"),     text("Decay"),         range(0, 1, 0.8, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(560,  40,  75, 30), channel("OP4_Sustain_Level"),   text("Sustain"),       range(0, 1, 0.5, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(620,  40,  75, 30), channel("OP4_Release_Level"),   text("Release"),       range(0, 1, 0.0, 1, 0.01), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(380,  80,  75, 30), channel("OP4_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP4_Decay_Time"),      text("Seconds"),       range(0, 100, 0.5, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(540,  80,  75, 30), channel("OP4_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.3, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(440,  80,  75, 30), channel("OP4_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(500,  80,  75, 30), channel("OP4_Decay_Time"),      text("Seconds"),       range(0, 100, 0.5, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(560,  80,  75, 30), channel("OP4_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.3, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds(620,  80,  75, 30), channel("OP4_Release_Time"),    text("Seconds"),       range(0, 100, 0.2, 1, 0.01)
     }
     
@@ -254,6 +258,7 @@
             gk_OP1_Output_LFO        = lag(chnget:k("OP1_Output_LFO"),        i_Declick_ms)
             gk_OP1_Feedback_Level    = lag(chnget:k("OP1_Feedback_Level"),    i_Declick_ms)
             gk_OP1_Feedback_LFO      = lag(chnget:k("OP1_Feedback_LFO"),      i_Declick_ms)
+            gk_OP1_Initial_Level     = lag(chnget:k("OP1_Initial_Level"),     i_Declick_ms)
             gk_OP1_Attack_Level      = lag(chnget:k("OP1_Attack_Level"),      i_Declick_ms)
             gk_OP1_Attack_Time       = lag(chnget:k("OP1_Attack_Time"),       i_Declick_ms)
             gk_OP1_Decay_Level       = lag(chnget:k("OP1_Decay_Level"),       i_Declick_ms)
@@ -273,6 +278,7 @@
             gk_OP2_Output_LFO        = lag(chnget:k("OP2_Output_LFO"),        i_Declick_ms)
             gk_OP2_Feedback_Level    = lag(chnget:k("OP2_Feedback_Level"),    i_Declick_ms)
             gk_OP2_Feedback_LFO      = lag(chnget:k("OP2_Feedback_LFO"),      i_Declick_ms)
+            gk_OP2_Initial_Level     = lag(chnget:k("OP2_Initial_Level"),     i_Declick_ms)
             gk_OP2_Attack_Level      = lag(chnget:k("OP2_Attack_Level"),      i_Declick_ms)
             gk_OP2_Attack_Time       = lag(chnget:k("OP2_Attack_Time"),       i_Declick_ms)
             gk_OP2_Decay_Level       = lag(chnget:k("OP2_Decay_Level"),       i_Declick_ms)
@@ -292,6 +298,7 @@
             gk_OP3_Output_LFO        = lag(chnget:k("OP3_Output_LFO"),        i_Declick_ms)
             gk_OP3_Feedback_Level    = lag(chnget:k("OP3_Feedback_Level"),    i_Declick_ms)
             gk_OP3_Feedback_LFO      = lag(chnget:k("OP3_Feedback_LFO"),      i_Declick_ms)
+            gk_OP3_Initial_Level     = lag(chnget:k("OP3_Initial_Level"),     i_Declick_ms)
             gk_OP3_Attack_Level      = lag(chnget:k("OP3_Attack_Level"),      i_Declick_ms)
             gk_OP3_Attack_Time       = lag(chnget:k("OP3_Attack_Time"),       i_Declick_ms)
             gk_OP3_Decay_Level       = lag(chnget:k("OP3_Decay_Level"),       i_Declick_ms)
@@ -308,6 +315,7 @@
             gk_OP4_Output_LFO        = lag(chnget:k("OP4_Output_LFO"),        i_Declick_ms)
             gk_OP4_Feedback_Level    = lag(chnget:k("OP4_Feedback_Level"),    i_Declick_ms)
             gk_OP4_Feedback_LFO      = lag(chnget:k("OP4_Feedback_LFO"),      i_Declick_ms)
+            gk_OP4_Initial_Level     = lag(chnget:k("OP4_Initial_Level"),     i_Declick_ms)
             gk_OP4_Attack_Level      = lag(chnget:k("OP4_Attack_Level"),      i_Declick_ms)
             gk_OP4_Attack_Time       = lag(chnget:k("OP4_Attack_Time"),       i_Declick_ms)
             gk_OP4_Decay_Level       = lag(chnget:k("OP4_Decay_Level"),       i_Declick_ms)
@@ -393,12 +401,16 @@
         endin
         
         ;====================================================================
-        ; FM Operator
+        ; FM Operator (phase modulation actually)
+        ;
+        ; The Csound book; pp. 197-207, 249-253, 261-279
+        ; Csound - A Sound and Music Computing System; pp. 234-238
         ;====================================================================
-        opcode Operator, a, akkiiiiiiii
+        opcode FMOperator, a, akkiiiiiiiii
             a_Modulator,
             k_Frequency,
             k_Feedback,
+            i_Initial_Level,
             i_Attack_Level,
             i_Attack_Time,
             i_Decay_Level,
@@ -408,12 +420,19 @@
             i_Release_Level,
             i_Release_Time xin
             
-            ;k_OP1_Frequency = max(gk_OP1_Frequency_Level + (gk_LFO2 * gk_OP1_Frequency_LFO), 0)     ; Frequency LFO
-            ;k_OP1_Frequency = k_Frequency * k_Base_Frequency
-            ;k_OP1_Feedback  = gk_OP1_Feedback_Level
+            setksmps(1)                                                             ; Needed for accurate feedback
+            a_Out   = init:a(0)                                                     ; Initialize variable at i-time and retain value afterwards
+            a_Phase = phasor:a(k_Frequency) + a_Modulator + (a_Out * k_Feedback)
+            a_Out   = tablei:a(a_Phase, -1, 1, .5, 1)                               ; andx, ifn, ixmode, ixoff, iwrap            
             
-            a_Out = oscili(1, k_Frequency)
-            xout(a_Out)
+            a_Envelope cossegr i_Initial_Level,                 \
+                               i_Attack_Time,  i_Attack_Level,  \
+                               i_Decay_Time,   i_Decay_Level,   \
+                               i_Sustain_Time, i_Sustain_Level, \
+                               i_Release_Time, i_Release_Level
+            
+            xout(a_Out * a_Envelope)
+            
         endop
         
         ;====================================================================
@@ -471,33 +490,37 @@
             k_OP4_Output_Level = min(max(k_OP4_Output_Level + (gk_LFO2 * gk_OP4_Output_LFO   ), 0), 1)
                        
             ; Generate sound
-            a_OP1 Operator    a(0),                                          \
+            a_OP1 FMOperator  a(0),                                          \
                               k_OP1_Frequency * k_Base_Frequency,            \
                               k_OP1_Feedback,                                \
+                           i(gk_OP1_Initial_Level),                          \
                            i(gk_OP1_Attack_Level),   i(gk_OP1_Attack_Time),  \
                            i(gk_OP1_Decay_Level),    i(gk_OP1_Decay_Time),   \
                            i(gk_OP1_Sustain_Level),  i(gk_OP1_Sustain_Time), \
                            i(gk_OP1_Release_Level),  i(gk_OP1_Release_Time)
 
-            a_OP2 Operator    a_OP1 * k_OP1_FM_Level,                        \
+            a_OP2 FMOperator  a_OP1 * k_OP1_FM_Level,                        \
                               k_OP2_Frequency * k_Base_Frequency,            \
                               k_OP2_Feedback,                                \
+                           i(gk_OP2_Initial_Level),                          \
                            i(gk_OP2_Attack_Level),   i(gk_OP2_Attack_Time),  \
                            i(gk_OP2_Decay_Level),    i(gk_OP2_Decay_Time),   \
                            i(gk_OP2_Sustain_Level),  i(gk_OP2_Sustain_Time), \
                            i(gk_OP2_Release_Level),  i(gk_OP2_Release_Time)
             
-            a_OP3 Operator    a_OP2 * k_OP2_FM_Level,                        \
+            a_OP3 FMOperator  a_OP2 * k_OP2_FM_Level,                        \
                               k_OP3_Frequency * k_Base_Frequency,            \
                               k_OP3_Feedback,                                \
+                           i(gk_OP3_Initial_Level),                          \
                            i(gk_OP3_Attack_Level),   i(gk_OP3_Attack_Time),  \
                            i(gk_OP3_Decay_Level),    i(gk_OP3_Decay_Time),   \
                            i(gk_OP3_Sustain_Level),  i(gk_OP3_Sustain_Time), \
                            i(gk_OP3_Release_Level),  i(gk_OP3_Release_Time)
                            
-            a_OP4 Operator    a_OP3 * k_OP3_FM_Level,                        \
+            a_OP4 FMOperator  a_OP3 * k_OP3_FM_Level,                        \
                               k_OP4_Frequency * k_Base_Frequency,            \
                               k_OP4_Feedback,                                \
+                           i(gk_OP4_Initial_Level),                          \
                            i(gk_OP4_Attack_Level),   i(gk_OP4_Attack_Time),  \
                            i(gk_OP4_Decay_Level),    i(gk_OP4_Decay_Time),   \
                            i(gk_OP4_Sustain_Level),  i(gk_OP4_Sustain_Time), \
@@ -508,7 +531,10 @@
                   + (a_OP3 * .25 * k_OP3_Output_Level) \
                   + (a_OP4 * .25 * k_OP4_Output_Level)
                   
-            outleta("Out", a_Out)
+            outleta("Out", a_Out * .7)
+            
+            ; Keep running during the release phase
+            xtratim(max(i(gk_OP1_Release_Time), i(gk_OP2_Release_Time), i(gk_OP3_Release_Time), i(gk_OP4_Release_Time)) + 0.25)
         endin
                 
         ;====================================================================
@@ -528,7 +554,7 @@
             k_Volume   = k_Volume - (k_Volume * gk_LFO1 * gk_Output_Volume_LFO)                 ; Volume LFO
 
             k_Panorama = gk_Output_Panorama_Level + (gk_LFO2 * gk_Output_Panorama_LFO)          ; Panorama LFO
-            k_Panorama = (k_Panorama / 2) + .5
+            k_Panorama = (k_Panorama * .5) + .5
             k_Panorama = max(min(k_Panorama, 1), 0)
             
             a_Out_L, a_Out_R pan2 a_In * k_Volume, k_Panorama, 0
@@ -540,9 +566,8 @@
         ;====================================================================
         ; Chorus/Flanger voice
         ;
-        ; Csound - A Sound and Music Computing System; pp. 271-274
         ; The Csound book; pp. 458-461, 586-589
-        ; Plus some own ideas
+        ; Csound - A Sound and Music Computing System; pp. 271-274
         ;
         ; Typical values for chorus:
         ;   - Delay:       20…30 ms
