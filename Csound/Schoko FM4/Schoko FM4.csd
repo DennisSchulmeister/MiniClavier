@@ -33,8 +33,8 @@
  *   to OP1. That's why higher numberes operators are always modulators. The same can be achieved here
  *   with the sliders, feeding one operator to the others below.
  *
- * - Operator levels: The levels on the DX7 are not linear as they are here. The value 80 of the DX7
- *   roughly corresponds to 50% here.
+ * - Operator levels: The levels on the DX7 are not linear. By ear they seem to be scaled ~ (x^5 * 1.3).
+ *   The same scaling is applied here so that existing DX7 patches can more easily be recreated here.
  *
  * - FM Modulation: We come lose, but when the modulator level approaches 100% (OP Level 99 on the DX7),
  *   the DX7 sounds brighter and a bit more harsh, probably due to the limited bit resolution and internal
@@ -50,25 +50,38 @@
  *
  * - EG times of the DX7 (measured by ear not gear):
  *
- *    DX7       ATTACK      DECAY/SUSTAIN/RELEASE
- *    --------  ----------  ---------------------
- *    Rate 0    ~ 30 Sec    None
- *    Rate 10               ~ 35  Sec
- *    Rate 25   ~ 2.8 Sec   ~ 7.0 Sec
- *    Rate 50   ~ 0.3 Sec   ~ 0.7 Sec
- *    Rate 75   ~ 0.1 Sec   ~ 0.05 Sec
- *    Rate 99   < 0.1 Sec   < 0.01 Sec
+ *    DX7       ATTACK       DECAY/SUSTAIN/RELEASE
+ *    --------  ----------   ---------------------
+ *    Rate 0    ~ 30.0 Sec     None
+ *    Rate 10                ~ 45.0  Sec
+ *    Rate 25   ~ 2.8  Sec   ~ 10.0  Sec
+ *    Rate 50   ~  .3  Sec   ~   .6  Sec
+ *    Rate 75   ~  .01 Sec   ~   .02 Sec
+ *    Rate 99   <  .01 Sec   <   .01 Sec
  *
- *   NOTE: For this the operator level was set to 99 on the DX7 without velocity sensitiviy. For lower
- *   operator levels the times get shorter very quickly due to the non-linear volume mapping of the DX7.
+ *   For this test the operator level was set to 99 on the DX7 without velocity sensitiviy. Envelopes rising from 0 to 99
+ *   of falling from 99 to 0 respectively. Then simultaniously playing a C3 on the DX7 and a C4 here, listening to the result.
+ *   Graphing the values in a table in Desmos, we can find the following formulas:
+ *
+ *    - Attack Time in Seconds =  29.9997  * (0.909584 ^ Rate)
+ *    - Decay Time in Seconds  = 123.05842 * (0.904308 ^ Rate)
+ *
+ *   These formulas are then inserted in the DSP code here. Some more tests later we come up with:
+ *
+ *     i_Attack_Time  =  29 * (0.9 ^ i_Attack_Rate)
+ *     i_Decay_Time   = 123 * (0.9 ^ i_Decay_Rate)
+ *     i_Sustain_Time = 123 * (0.9 ^ i_Sustain_Rate)
+ *     i_Release_Time = 123 * (0.9 ^ i_Release_Rate)
+ *           
+ *     i_Attack_Level  = i_Attack_Level  ^ 4
+ *     i_Decay_Level   = i_Decay_Level   ^ 4
+ *     i_Sustain_Level = i_Sustain_Level ^ 4
+ *     i_Release_Level = i_Release_Level ^ 4
+ *
+ *   There are still differences. The DX7 is a bit more snappy and high modulation indexes sound sharper. This synth sounds
+ *   more "rounded" and pleasing, instead.
  *
  * - Feedback: There are only 7 levels on the DX7. Level 7 is roughly 15% here. Level 6 is about 8%.
- *
- * TODO After Listening Test
- * -------------------------
- *
- * - Envelope times must be faster than 0.01 Seconds! => Multiply by 10?
- * - Operator levels should not be linear but maybe exponential. The DX7 uses large numbers for subtle results.
  */
 <Cabbage>
     ; HERE BE DRAGONS: Don't edit with the graphical GUI editor in Cabbage! It will garble the code (at least in version 2.8.162)
@@ -88,7 +101,7 @@
     #define NSLIDER    colour(0,0,0,0)
     #define RSLIDER    valueTextBox(1)
 
-    ; Operator 1
+    ; Operator 4
     groupbox $GROUPBOX, bounds(10, 10, 710, 145), text("Operator 4") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP4_Frequency_Level"), text("Frequency"),     range(0, 20000, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP4_Frequency_LFO"),   text("LFO"),           range(0, 20000, 0, 1, 0.01)
@@ -96,31 +109,31 @@
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP4_Output_Enable"),   text("Direct Output")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 120, 120, 15), channel("OP4_FM_Enable"),       text("Modulate Others")
         
-        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP4_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP4_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
-        vslider  $WIDGET, $RSLIDER,  bounds(290,  32,  50, 90), channel("OP4_FM3_Level"),       text("OP3"),           range(0, 1, 0.5, 1, 0.01)
-        vslider  $WIDGET, $RSLIDER,  bounds(320,  32,  50, 90), channel("OP4_FM2_Level"),       text("OP2"),           range(0, 1, 0.0, 1, 0.01)
-        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP4_FM1_Level"),       text("OP1"),           range(0, 1, 0.0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP4_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)
+        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP4_Output_Level"),    text("Direct Output"), range(0, 99, 75, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(290,  32,  50, 90), channel("OP4_FM3_Level"),       text("OP3"),           range(0, 99, 75, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(320,  32,  50, 90), channel("OP4_FM2_Level"),       text("OP2"),           range(0, 99,  0, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP4_FM1_Level"),       text("OP1"),           range(0, 99,  0, 1, 1)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP4_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP4_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP4_Feedback_LFO"),    text("LFO"),           range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP4_Output_LFO"),      text("LFO"),           range(0, 99,  0, 1, 1)
         checkbox $WIDGET, $CHECKBOX, bounds(310, 125,  10, 10), channel("OP4_FM3_Mod_Wheel")
         checkbox $WIDGET, $CHECKBOX, bounds(340, 125,  10, 10), channel("OP4_FM2_Mod_Wheel")
         checkbox $WIDGET, $CHECKBOX, bounds(370, 125, 120, 10), channel("OP4_FM1_Mod_Wheel"),   text("Mod. Wheel")
         
-        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP4_Initial_Level"),   text("Initial"),       range(0, 1, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP4_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP4_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP4_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP4_Release_Level"),   text("Release"),       range(0, 1, 0.0, 1, 0.01), active(0)
+        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP4_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP4_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP4_Decay_Level"),     text("Decay"),         range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP4_Sustain_Level"),   text("Sustain"),       range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP4_Release_Level"),   text("Release"),       range(0, 99,  0, 1, 1), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP4_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP4_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP4_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP4_Release_Time"),    text("Seconds"),       range(0, 100, 0.2, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP4_Attack_Rate"),     text("Rate"),          range(0, 99, 60, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP4_Decay_Rate"),      text("Rate"),          range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP4_Sustain_Rate"),    text("Rate"),          range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP4_Release_Rate"),    text("Rate"),          range(0, 99, 50, 1, 1)
     }
     
-    ; Operator 2
+    ; Operator 3
     groupbox $GROUPBOX, bounds(10, 165, 710, 145), text("Operator 3") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP3_Frequency_Level"), text("Frequency"),     range(0, 20000, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP3_Frequency_LFO"),   text("LFO"),           range(0, 20000, 0, 1, 0.01)
@@ -128,29 +141,29 @@
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP3_Output_Enable"),   text("Direct Output")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 120, 120, 15), channel("OP3_FM_Enable"),       text("Modulate Others")
         
-        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP3_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
-        vslider  $WIDGET, $RSLIDER,  bounds(320,  32,  50, 90), channel("OP3_FM2_Level"),       text("OP2"),           range(0, 1, 0.5, 1, 0.01)
-        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP3_FM1_Level"),       text("OP1"),           range(0, 1, 0.0, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)
+        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP3_Output_Level"),    text("Direct Output"), range(0, 99, 75, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(320,  32,  50, 90), channel("OP3_FM2_Level"),       text("OP2"),           range(0, 99, 75, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP3_FM1_Level"),       text("OP1"),           range(0, 99,  0, 1, 1)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP3_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP3_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP3_Feedback_LFO"),    text("LFO"),           range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP3_Output_LFO"),      text("LFO"),           range(0, 99,  0, 1, 1)
         checkbox $WIDGET, $CHECKBOX, bounds(340, 125,  10, 10), channel("OP3_FM2_Mod_Wheel")
         checkbox $WIDGET, $CHECKBOX, bounds(370, 125, 120, 10), channel("OP3_FM1_Mod_Wheel"),   text("Mod. Wheel")
 
-        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP3_Initial_Level"),   text("Initial"),       range(0, 1, 0.0, 1, 0.01)        
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP3_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP3_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP3_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP3_Release_Level"),   text("Release"),       range(0, 1, 0.0, 1, 0.01), active(0)
+        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP3_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)        
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP3_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP3_Decay_Level"),     text("Decay"),         range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP3_Sustain_Level"),   text("Sustain"),       range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP3_Release_Level"),   text("Release"),       range(0, 99,  0, 1, 1), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP3_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP3_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP3_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP3_Release_Time"),    text("Seconds"),       range(0, 100, 0.2, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP3_Attack_Rate"),     text("Rate"),          range(0, 99, 60, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP3_Decay_Rate"),      text("Rate"),          range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP3_Sustain_Rate"),    text("Rate"),          range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP3_Release_Rate"),    text("Rate"),          range(0, 99, 50, 1, 1)
     }
     
-    ; Operator 3
+    ; Operator 2
     groupbox $GROUPBOX, bounds(10, 320, 710, 145), text("Operator 2") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP2_Frequency_Level"), text("Frequency"),     range(0, 20000, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP2_Frequency_LFO"),   text("LFO"),           range(0, 20000, 0, 1, 0.01)
@@ -158,49 +171,49 @@
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP2_Output_Enable"),   text("Direct Output")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 120, 120, 15), channel("OP2_FM_Enable"),       text("Modulate Others"), value(1)
         
-        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 1, 0.0, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP2_Output_Level"),    text("Direct Output"), range(0, 1, 0.5, 1, 0.01)
-        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP2_FM1_Level"),       text("OP1"),           range(0, 1, 0.5, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)
+        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP2_Output_Level"),    text("Direct Output"), range(0, 99, 75, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP2_FM1_Level"),       text("OP1"),           range(0, 99, 75, 1, 1)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP2_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(215, 110,  75, 25), channel("OP2_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP2_Feedback_LFO"),    text("LFO"),           range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(215, 110,  75, 25), channel("OP2_Output_LFO"),      text("LFO"),           range(0, 99,  0, 1, 1)
         checkbox $WIDGET, $CHECKBOX, bounds(370, 125, 120, 10), channel("OP2_FM1_Mod_Wheel"),   text("Mod. Wheel")
         
-        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP2_Initial_Level"),   text("Initial"),       range(0, 1, 0.0, 1, 0.01)        
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP2_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP2_Decay_Level"),     text("Decay"),         range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP2_Sustain_Level"),   text("Sustain"),       range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP2_Release_Level"),   text("Release"),       range(0, 1, 0.0, 1, 0.01), active(0)
+        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP2_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)        
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP2_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP2_Decay_Level"),     text("Decay"),         range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP2_Sustain_Level"),   text("Sustain"),       range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP2_Release_Level"),   text("Release"),       range(0, 99,  0, 1, 1), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP2_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP2_Decay_Time"),      text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP2_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP2_Release_Time"),    text("Seconds"),       range(0, 100, 0.2, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP2_Attack_Rate"),     text("Rate"),          range(0, 99, 60, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP2_Decay_Rate"),      text("Rate"),          range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP2_Sustain_Rate"),    text("Rate"),          range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP2_Release_Rate"),    text("Rate"),          range(0, 99, 50, 1, 1)
     }
     
-    ; Operator 4
+    ; Operator 1
     groupbox $GROUPBOX, bounds(10, 475, 710, 145), text("Operator 1") {
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP1_Frequency_Level"), text("Frequency"),     range(0, 20000, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP1_Frequency_LFO"),   text("LFO"),           range(0, 20000, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  80, 120, 15), channel("OP1_Frequency_Fixed"), text("Fixed Frequency")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP1_Output_Enable"),   text("Direct Output"), value(1)
         
-        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 1, 0, 1, 0.01)
-        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP1_Output_Level"),    text("Direct Output"), range(0, 1, 1, 1, 0.01)
+        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)
+        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP1_Output_Level"),    text("Direct Output"), range(0, 99, 99, 1, 1)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP1_Feedback_LFO"),    text("LFO"),           range(0, 1, 0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP1_Output_LFO"),      text("LFO"),           range(0, 1, 0, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP1_Feedback_LFO"),    text("LFO"),           range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP1_Output_LFO"),      text("LFO"),           range(0, 99,  0, 1, 1)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP1_Initial_Level"),   text("Initial"),       range(0, 1, 0.0, 1, 0.01)        
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP1_Attack_Level"),    text("Attack"),        range(0, 1, 1.0, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP1_Decay_Level"),     text("Decay"),         range(0, 1, 0.8, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP1_Sustain_Level"),   text("Sustain"),       range(0, 1, 0.5, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP1_Release_Level"),   text("Release"),       range(0, 1, 0.0, 1, 0.01), active(0)
+        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP1_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)        
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP1_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP1_Decay_Level"),     text("Decay"),         range(0, 99, 80, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP1_Sustain_Level"),   text("Sustain"),       range(0, 99, 50, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP1_Release_Level"),   text("Release"),       range(0, 99,  0, 1, 1), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP1_Attack_Time"),     text("Seconds"),       range(0, 100, 0.1, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP1_Decay_Time"),      text("Seconds"),       range(0, 100, 0.5, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP1_Sustain_Time"),    text("Seconds"),       range(0, 100, 0.3, 1, 0.01)
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP1_Release_Time"),    text("Seconds"),       range(0, 100, 0.2, 1, 0.01)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP1_Attack_Rate"),     text("Rate"),          range(0, 99, 60, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP1_Decay_Rate"),      text("Rate"),          range(0, 99, 55, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP1_Sustain_Rate"),    text("Rate"),          range(0, 99, 45, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP1_Release_Rate"),    text("Rate"),          range(0, 99, 50, 1, 1)
     }
     
 
@@ -223,7 +236,7 @@
 
     ; Chorus
     groupbox $GROUPBOX, bounds(730, 320, 225, 145), text("Chorus") {
-        rslider $WIDGET, $RSLIDER, bounds( 10, 40, 75, 75), channel("Chorus_DryWet"),    text("Dry/Wet"),   range(0, 1, .3, 1, .01)
+        rslider $WIDGET, $RSLIDER, bounds( 10, 40, 75, 75), channel("Chorus_DryWet"),    text("Dry/Wet"),        range(0, 1, .3, 1, .01)
         
         nslider $WIDGET, $NSLIDER, bounds( 80, 40, 75, 30), channel("Chorus_Frequency"), text("Frequency [Hz]"), range(0, 25,    1.5, 1, 0.01)
         nslider $WIDGET, $NSLIDER, bounds(150, 40, 75, 30), channel("Chorus_Delay"),     text("Delay [ms]"),     range(0, 50,   30.0, 1, 0.1)
@@ -298,97 +311,101 @@
                        
         ;====================================================================
         ; Read channels into global variables (as this should be cheaper
-        ; than repeatedly calling chnget for each played note)
+        ; than repeatedly calling chnget for each played note).
+        ;
+        ; NOTE: Levels are scaled to [0…1] here to simplify the DSP math.
+        ; The rate levels are scaled below.
         ;====================================================================
         instr Read_Channels
+            ; Read all values
             i_Declick_ms             = 0.15
         
             gk_OP4_Frequency_Level   = lag(chnget:k("OP4_Frequency_Level"),   i_Declick_ms)
             gk_OP4_Frequency_LFO     = lag(chnget:k("OP4_Frequency_LFO"),     i_Declick_ms)
             gk_OP4_Frequency_Fixed   = lag(chnget:k("OP4_Frequency_Fixed"),   i_Declick_ms)
             gk_OP4_Output_Enable     = lag(chnget:k("OP4_Output_Enable"),     i_Declick_ms)
-            gk_OP4_Output_Level      = lag(chnget:k("OP4_Output_Level"),      i_Declick_ms)
-            gk_OP4_Output_LFO        = lag(chnget:k("OP4_Output_LFO"),        i_Declick_ms)
+            gk_OP4_Output_Level      = lag(chnget:k("OP4_Output_Level"),      i_Declick_ms) * .01
+            gk_OP4_Output_LFO        = lag(chnget:k("OP4_Output_LFO"),        i_Declick_ms) * .01
             gk_OP4_FM_Enable         = lag(chnget:k("OP4_FM_Enable"),         i_Declick_ms)
-            gk_OP4_FM3_Level         = lag(chnget:k("OP4_FM3_Level"),         i_Declick_ms)
-            gk_OP4_FM2_Level         = lag(chnget:k("OP4_FM2_Level"),         i_Declick_ms)
-            gk_OP4_FM1_Level         = lag(chnget:k("OP4_FM1_Level"),         i_Declick_ms)
+            gk_OP4_FM3_Level         = lag(chnget:k("OP4_FM3_Level"),         i_Declick_ms) * .01
+            gk_OP4_FM2_Level         = lag(chnget:k("OP4_FM2_Level"),         i_Declick_ms) * .01
+            gk_OP4_FM1_Level         = lag(chnget:k("OP4_FM1_Level"),         i_Declick_ms) * .01
             gk_OP4_FM3_Mod_Wheel     = lag(chnget:k("OP4_FM3_Mod_Wheel"),     i_Declick_ms)
             gk_OP4_FM2_Mod_Wheel     = lag(chnget:k("OP4_FM2_Mod_Wheel"),     i_Declick_ms)
             gk_OP4_FM1_Mod_Wheel     = lag(chnget:k("OP4_FM1_Mod_Wheel"),     i_Declick_ms)
-            gk_OP4_Feedback_Level    = lag(chnget:k("OP4_Feedback_Level"),    i_Declick_ms)
-            gk_OP4_Feedback_LFO      = lag(chnget:k("OP4_Feedback_LFO"),      i_Declick_ms)
-            gk_OP4_Initial_Level     = lag(chnget:k("OP4_Initial_Level"),     i_Declick_ms)
-            gk_OP4_Attack_Level      = lag(chnget:k("OP4_Attack_Level"),      i_Declick_ms)
-            gk_OP4_Attack_Time       = lag(chnget:k("OP4_Attack_Time"),       i_Declick_ms)
-            gk_OP4_Decay_Level       = lag(chnget:k("OP4_Decay_Level"),       i_Declick_ms)
-            gk_OP4_Decay_Time        = lag(chnget:k("OP4_Decay_Time"),        i_Declick_ms)
-            gk_OP4_Sustain_Level     = lag(chnget:k("OP4_Sustain_Level"),     i_Declick_ms)
-            gk_OP4_Sustain_Time      = lag(chnget:k("OP4_Sustain_Time"),      i_Declick_ms)
-            gk_OP4_Release_Level     = lag(chnget:k("OP4_Release_Level"),     i_Declick_ms)
-            gk_OP4_Release_Time      = lag(chnget:k("OP4_Release_Time"),      i_Declick_ms)
+            gk_OP4_Feedback_Level    = lag(chnget:k("OP4_Feedback_Level"),    i_Declick_ms) * .01
+            gk_OP4_Feedback_LFO      = lag(chnget:k("OP4_Feedback_LFO"),      i_Declick_ms) * .01
+            gk_OP4_Initial_Level     = lag(chnget:k("OP4_Initial_Level"),     i_Declick_ms) * .01
+            gk_OP4_Attack_Level      = lag(chnget:k("OP4_Attack_Level"),      i_Declick_ms) * .01
+            gk_OP4_Attack_Rate       = lag(chnget:k("OP4_Attack_Rate"),       i_Declick_ms)
+            gk_OP4_Decay_Level       = lag(chnget:k("OP4_Decay_Level"),       i_Declick_ms) * .01
+            gk_OP4_Decay_Rate        = lag(chnget:k("OP4_Decay_Rate"),        i_Declick_ms)
+            gk_OP4_Sustain_Level     = lag(chnget:k("OP4_Sustain_Level"),     i_Declick_ms) * .01
+            gk_OP4_Sustain_Rate      = lag(chnget:k("OP4_Sustain_Rate"),      i_Declick_ms)
+            gk_OP4_Release_Level     = lag(chnget:k("OP4_Release_Level"),     i_Declick_ms) * .01
+            gk_OP4_Release_Rate      = lag(chnget:k("OP4_Release_Rate"),      i_Declick_ms)
             
             gk_OP3_Frequency_Level   = lag(chnget:k("OP3_Frequency_Level"),   i_Declick_ms)
             gk_OP3_Frequency_LFO     = lag(chnget:k("OP3_Frequency_LFO"),     i_Declick_ms)
             gk_OP3_Frequency_Fixed   = lag(chnget:k("OP3_Frequency_Fixed"),   i_Declick_ms)
             gk_OP3_Output_Enable     = lag(chnget:k("OP3_Output_Enable"),     i_Declick_ms)
-            gk_OP3_Output_Level      = lag(chnget:k("OP3_Output_Level"),      i_Declick_ms)
-            gk_OP3_Output_LFO        = lag(chnget:k("OP3_Output_LFO"),        i_Declick_ms)
+            gk_OP3_Output_Level      = lag(chnget:k("OP3_Output_Level"),      i_Declick_ms) * .01
+            gk_OP3_Output_LFO        = lag(chnget:k("OP3_Output_LFO"),        i_Declick_ms) * .01
             gk_OP3_FM_Enable         = lag(chnget:k("OP3_FM_Enable"),         i_Declick_ms)
-            gk_OP3_FM2_Level         = lag(chnget:k("OP3_FM2_Level"),         i_Declick_ms)
-            gk_OP3_FM1_Level         = lag(chnget:k("OP3_FM1_Level"),         i_Declick_ms)
+            gk_OP3_FM2_Level         = lag(chnget:k("OP3_FM2_Level"),         i_Declick_ms) * .01
+            gk_OP3_FM1_Level         = lag(chnget:k("OP3_FM1_Level"),         i_Declick_ms) * .01
             gk_OP3_FM2_Mod_Wheel     = lag(chnget:k("OP3_FM2_Mod_Wheel"),     i_Declick_ms)
             gk_OP3_FM1_Mod_Wheel     = lag(chnget:k("OP3_FM1_Mod_Wheel"),     i_Declick_ms)
-            gk_OP3_Feedback_Level    = lag(chnget:k("OP3_Feedback_Level"),    i_Declick_ms)
-            gk_OP3_Feedback_LFO      = lag(chnget:k("OP3_Feedback_LFO"),      i_Declick_ms)
-            gk_OP3_Initial_Level     = lag(chnget:k("OP3_Initial_Level"),     i_Declick_ms)
-            gk_OP3_Attack_Level      = lag(chnget:k("OP3_Attack_Level"),      i_Declick_ms)
-            gk_OP3_Attack_Time       = lag(chnget:k("OP3_Attack_Time"),       i_Declick_ms)
-            gk_OP3_Decay_Level       = lag(chnget:k("OP3_Decay_Level"),       i_Declick_ms)
-            gk_OP3_Decay_Time        = lag(chnget:k("OP3_Decay_Time"),        i_Declick_ms)
-            gk_OP3_Sustain_Level     = lag(chnget:k("OP3_Sustain_Level"),     i_Declick_ms)
-            gk_OP3_Sustain_Time      = lag(chnget:k("OP3_Sustain_Time"),      i_Declick_ms)
-            gk_OP3_Release_Level     = lag(chnget:k("OP3_Release_Level"),     i_Declick_ms)
-            gk_OP3_Release_Time      = lag(chnget:k("OP3_Release_Time"),      i_Declick_ms)
+            gk_OP3_Feedback_Level    = lag(chnget:k("OP3_Feedback_Level"),    i_Declick_ms) * .01
+            gk_OP3_Feedback_LFO      = lag(chnget:k("OP3_Feedback_LFO"),      i_Declick_ms) * .01
+            gk_OP3_Initial_Level     = lag(chnget:k("OP3_Initial_Level"),     i_Declick_ms) * .01
+            gk_OP3_Attack_Level      = lag(chnget:k("OP3_Attack_Level"),      i_Declick_ms) * .01
+            gk_OP3_Attack_Rate       = lag(chnget:k("OP3_Attack_Rate"),       i_Declick_ms)
+            gk_OP3_Decay_Level       = lag(chnget:k("OP3_Decay_Level"),       i_Declick_ms) * .01
+            gk_OP3_Decay_Rate        = lag(chnget:k("OP3_Decay_Rate"),        i_Declick_ms)
+            gk_OP3_Sustain_Level     = lag(chnget:k("OP3_Sustain_Level"),     i_Declick_ms) * .01
+            gk_OP3_Sustain_Rate      = lag(chnget:k("OP3_Sustain_Rate"),      i_Declick_ms)
+            gk_OP3_Release_Level     = lag(chnget:k("OP3_Release_Level"),     i_Declick_ms) * .01
+            gk_OP3_Release_Rate      = lag(chnget:k("OP3_Release_Rate"),      i_Declick_ms)
             
             gk_OP2_Frequency_Level   = lag(chnget:k("OP2_Frequency_Level"),   i_Declick_ms)
             gk_OP2_Frequency_LFO     = lag(chnget:k("OP2_Frequency_LFO"),     i_Declick_ms)
             gk_OP2_Frequency_Fixed   = lag(chnget:k("OP2_Frequency_Fixed"),   i_Declick_ms)
             gk_OP2_Output_Enable     = lag(chnget:k("OP2_Output_Enable"),     i_Declick_ms)
-            gk_OP2_Output_Level      = lag(chnget:k("OP2_Output_Level"),      i_Declick_ms)
-            gk_OP2_Output_LFO        = lag(chnget:k("OP2_Output_LFO"),        i_Declick_ms)
+            gk_OP2_Output_Level      = lag(chnget:k("OP2_Output_Level"),      i_Declick_ms) * .01
+            gk_OP2_Output_LFO        = lag(chnget:k("OP2_Output_LFO"),        i_Declick_ms) * .01
             gk_OP2_FM_Enable         = lag(chnget:k("OP2_FM_Enable"),         i_Declick_ms)
-            gk_OP2_FM1_Level         = lag(chnget:k("OP2_FM1_Level"),         i_Declick_ms)
+            gk_OP2_FM1_Level         = lag(chnget:k("OP2_FM1_Level"),         i_Declick_ms) * .01
             gk_OP2_FM1_Mod_Wheel     = lag(chnget:k("OP2_FM1_Mod_Wheel"),     i_Declick_ms)
-            gk_OP2_Feedback_Level    = lag(chnget:k("OP2_Feedback_Level"),    i_Declick_ms)
-            gk_OP2_Feedback_LFO      = lag(chnget:k("OP2_Feedback_LFO"),      i_Declick_ms)
-            gk_OP2_Initial_Level     = lag(chnget:k("OP2_Initial_Level"),     i_Declick_ms)
-            gk_OP2_Attack_Level      = lag(chnget:k("OP2_Attack_Level"),      i_Declick_ms)
-            gk_OP2_Attack_Time       = lag(chnget:k("OP2_Attack_Time"),       i_Declick_ms)
-            gk_OP2_Decay_Level       = lag(chnget:k("OP2_Decay_Level"),       i_Declick_ms)
-            gk_OP2_Decay_Time        = lag(chnget:k("OP2_Decay_Time"),        i_Declick_ms)
-            gk_OP2_Sustain_Level     = lag(chnget:k("OP2_Sustain_Level"),     i_Declick_ms)
-            gk_OP2_Sustain_Time      = lag(chnget:k("OP2_Sustain_Time"),      i_Declick_ms)
-            gk_OP2_Release_Level     = lag(chnget:k("OP2_Release_Level"),     i_Declick_ms)
-            gk_OP2_Release_Time      = lag(chnget:k("OP2_Release_Time"),      i_Declick_ms)
+            gk_OP2_Feedback_Level    = lag(chnget:k("OP2_Feedback_Level"),    i_Declick_ms) * .01
+            gk_OP2_Feedback_LFO      = lag(chnget:k("OP2_Feedback_LFO"),      i_Declick_ms) * .01
+            gk_OP2_Initial_Level     = lag(chnget:k("OP2_Initial_Level"),     i_Declick_ms) * .01
+            gk_OP2_Attack_Level      = lag(chnget:k("OP2_Attack_Level"),      i_Declick_ms) * .01
+            gk_OP2_Attack_Rate       = lag(chnget:k("OP2_Attack_Rate"),       i_Declick_ms)
+            gk_OP2_Decay_Level       = lag(chnget:k("OP2_Decay_Level"),       i_Declick_ms) * .01
+            gk_OP2_Decay_Rate        = lag(chnget:k("OP2_Decay_Rate"),        i_Declick_ms)
+            gk_OP2_Sustain_Level     = lag(chnget:k("OP2_Sustain_Level"),     i_Declick_ms) * .01
+            gk_OP2_Sustain_Rate      = lag(chnget:k("OP2_Sustain_Rate"),      i_Declick_ms)
+            gk_OP2_Release_Level     = lag(chnget:k("OP2_Release_Level"),     i_Declick_ms) * .01
+            gk_OP2_Release_Rate      = lag(chnget:k("OP2_Release_Rate"),      i_Declick_ms)
             
             gk_OP1_Frequency_Level   = lag(chnget:k("OP1_Frequency_Level"),   i_Declick_ms)
             gk_OP1_Frequency_LFO     = lag(chnget:k("OP1_Frequency_LFO"),     i_Declick_ms)
             gk_OP1_Frequency_Fixed   = lag(chnget:k("OP1_Frequency_Fixed"),   i_Declick_ms)
             gk_OP1_Output_Enable     = lag(chnget:k("OP1_Output_Enable"),     i_Declick_ms)
-            gk_OP1_Output_Level      = lag(chnget:k("OP1_Output_Level"),      i_Declick_ms)
-            gk_OP1_Output_LFO        = lag(chnget:k("OP1_Output_LFO"),        i_Declick_ms)
-            gk_OP1_Feedback_Level    = lag(chnget:k("OP1_Feedback_Level"),    i_Declick_ms)
-            gk_OP1_Feedback_LFO      = lag(chnget:k("OP1_Feedback_LFO"),      i_Declick_ms)
-            gk_OP1_Initial_Level     = lag(chnget:k("OP1_Initial_Level"),     i_Declick_ms)
-            gk_OP1_Attack_Level      = lag(chnget:k("OP1_Attack_Level"),      i_Declick_ms)
-            gk_OP1_Attack_Time       = lag(chnget:k("OP1_Attack_Time"),       i_Declick_ms)
-            gk_OP1_Decay_Level       = lag(chnget:k("OP1_Decay_Level"),       i_Declick_ms)
-            gk_OP1_Decay_Time        = lag(chnget:k("OP1_Decay_Time"),        i_Declick_ms)
-            gk_OP1_Sustain_Level     = lag(chnget:k("OP1_Sustain_Level"),     i_Declick_ms)
-            gk_OP1_Sustain_Time      = lag(chnget:k("OP1_Sustain_Time"),      i_Declick_ms)
-            gk_OP1_Release_Level     = lag(chnget:k("OP_Release_Level"),     i_Declick_ms)
-            gk_OP1_Release_Time      = lag(chnget:k("OP1_Release_Time"),      i_Declick_ms)
+            gk_OP1_Output_Level      = lag(chnget:k("OP1_Output_Level"),      i_Declick_ms) * .01
+            gk_OP1_Output_LFO        = lag(chnget:k("OP1_Output_LFO"),        i_Declick_ms) * .01
+            gk_OP1_Feedback_Level    = lag(chnget:k("OP1_Feedback_Level"),    i_Declick_ms) * .01
+            gk_OP1_Feedback_LFO      = lag(chnget:k("OP1_Feedback_LFO"),      i_Declick_ms) * .01
+            gk_OP1_Initial_Level     = lag(chnget:k("OP1_Initial_Level"),     i_Declick_ms) * .01
+            gk_OP1_Attack_Level      = lag(chnget:k("OP1_Attack_Level"),      i_Declick_ms) * .01
+            gk_OP1_Attack_Rate       = lag(chnget:k("OP1_Attack_Rate"),       i_Declick_ms)
+            gk_OP1_Decay_Level       = lag(chnget:k("OP1_Decay_Level"),       i_Declick_ms) * .01
+            gk_OP1_Decay_Rate        = lag(chnget:k("OP1_Decay_Rate"),        i_Declick_ms)
+            gk_OP1_Sustain_Level     = lag(chnget:k("OP1_Sustain_Level"),     i_Declick_ms) * .01
+            gk_OP1_Sustain_Rate      = lag(chnget:k("OP1_Sustain_Rate"),      i_Declick_ms)
+            gk_OP1_Release_Level     = lag(chnget:k("OP_Release_Level"),      i_Declick_ms) * .01
+            gk_OP1_Release_Rate      = lag(chnget:k("OP1_Release_Rate"),      i_Declick_ms)
             
             gk_LFO_Frequency         = lag(chnget:k("LFO_Frequency"),         i_Declick_ms)
             gk_LFO_Mod_Wheel         = lag(chnget:k("LFO_Mod_Wheel"),         i_Declick_ms)
@@ -409,6 +426,44 @@
             gk_Reverb_DryWet         = lag(chnget:k("Reverb_DryWet"),         i_Declick_ms)
             gk_Reverb_Size           = lag(chnget:k("Reverb_Size"),           i_Declick_ms)
             gk_Reverb_CutOff         = lag(chnget:k("Reverb_CutOff"),         i_Declick_ms)
+            
+            ; Envelope fixes to come a bit closer to the DX7
+            ; TODO: Replace with LUT
+            gk_OP4_Attack_Time   =  29 * (0.9 ^ gk_OP4_Attack_Rate)  + 0.001
+            gk_OP4_Decay_Time    = 123 * (0.9 ^ gk_OP4_Decay_Rate)   + 0.001
+            gk_OP4_Sustain_Time  = 123 * (0.9 ^ gk_OP4_Sustain_Rate) + 0.001
+            gk_OP4_Release_Time  = 123 * (0.9 ^ gk_OP4_Release_Rate) + 0.001
+            gk_OP4_Attack_Level  = gk_OP4_Attack_Level  ^ 4
+            gk_OP4_Decay_Level   = gk_OP4_Decay_Level   ^ 4
+            gk_OP4_Sustain_Level = gk_OP4_Sustain_Level ^ 4
+            gk_OP4_Release_Level = gk_OP4_Release_Level ^ 4
+            
+            gk_OP3_Attack_Time   =  29 * (0.9 ^ gk_OP3_Attack_Rate)  + 0.001
+            gk_OP3_Decay_Time    = 123 * (0.9 ^ gk_OP3_Decay_Rate)   + 0.001
+            gk_OP3_Sustain_Time  = 123 * (0.9 ^ gk_OP3_Sustain_Rate) + 0.001
+            gk_OP3_Release_Time  = 123 * (0.9 ^ gk_OP3_Release_Rate) + 0.001
+            gk_OP3_Attack_Level  = gk_OP3_Attack_Level  ^ 4
+            gk_OP3_Decay_Level   = gk_OP3_Decay_Level   ^ 4
+            gk_OP3_Sustain_Level = gk_OP3_Sustain_Level ^ 4
+            gk_OP3_Release_Level = gk_OP3_Release_Level ^ 4
+            
+            gk_OP2_Attack_Time   =  29 * (0.9 ^ gk_OP2_Attack_Rate)  + 0.001
+            gk_OP2_Decay_Time    = 123 * (0.9 ^ gk_OP2_Decay_Rate)   + 0.001
+            gk_OP2_Sustain_Time  = 123 * (0.9 ^ gk_OP2_Sustain_Rate) + 0.001
+            gk_OP2_Release_Time  = 123 * (0.9 ^ gk_OP2_Release_Rate) + 0.001
+            gk_OP2_Attack_Level  = gk_OP2_Attack_Level  ^ 4
+            gk_OP2_Decay_Level   = gk_OP2_Decay_Level   ^ 4
+            gk_OP2_Sustain_Level = gk_OP2_Sustain_Level ^ 4
+            gk_OP2_Release_Level = gk_OP2_Release_Level ^ 4
+            
+            gk_OP1_Attack_Time   =  29 * (0.9 ^ gk_OP1_Attack_Rate)  + 0.001
+            gk_OP1_Decay_Time    = 123 * (0.9 ^ gk_OP1_Decay_Rate)   + 0.001
+            gk_OP1_Sustain_Time  = 123 * (0.9 ^ gk_OP1_Sustain_Rate) + 0.001
+            gk_OP1_Release_Time  = 123 * (0.9 ^ gk_OP1_Release_Rate) + 0.001
+            gk_OP1_Attack_Level  = gk_OP1_Attack_Level  ^ 4
+            gk_OP1_Decay_Level   = gk_OP1_Decay_Level   ^ 4
+            gk_OP1_Sustain_Level = gk_OP1_Sustain_Level ^ 4
+            gk_OP1_Release_Level = gk_OP1_Release_Level ^ 4
         endin
         
         ;====================================================================
@@ -490,16 +545,14 @@
             a_Phase = phasor:a(k_Frequency) + a_Modulator + (a_Out * k_Feedback)
             a_Out   = tablei:a(a_Phase, -1, 1, .5, 1)                               ; andx, ifn, ixmode, ixoff, iwrap            
             
-            i_Attack_Time  = i_Attack_Time  + .001
-            i_Decay_Time   = i_Decay_Time   + .001
-            i_Sustain_Time = i_Sustain_Time + .001
-            i_Release_Time = i_Release_Time + .001
-            
             a_Envelope cossegr i_Initial_Level,                 \
                                i_Attack_Time,  i_Attack_Level,  \
                                i_Decay_Time,   i_Decay_Level,   \
                                i_Sustain_Time, i_Sustain_Level, \
                                i_Release_Time, i_Release_Level
+            
+            denorm a_Out
+            denorm a_Envelope
             
             xout(a_Out * a_Envelope)
             
@@ -517,30 +570,32 @@
         ;====================================================================
         instr Tone_Generator, 1
             ; Calculate values before LFO
+            ; NOTE: Amplitudes are scaled with (x^5 * 1.3) to rouglhy emulate the DX7 Mk1 behaviour.
+            ; The values have been found experimentaly by ear while siting next to a real DX7.
             k_Pitch_Bend     = gk_MIDI_Pitch_Bend * gk_Pitch_Bend_Range
             k_Base_Frequency = cpsmidinn(p4 + k_Pitch_Bend)
             
             k_OP4_Frequency    = gk_OP4_Frequency_Level
             k_OP4_Feedback     = gk_OP4_Feedback_Level
-            k_OP4_FM3_Level    = gk_OP4_FM_Enable     * gk_OP4_FM3_Level    ; TODO: Mod.Wheel
-            k_OP4_FM2_Level    = gk_OP4_FM_Enable     * gk_OP4_FM2_Level
-            k_OP4_FM1_Level    = gk_OP4_FM_Enable     * gk_OP4_FM1_Level
-            k_OP4_Output_Level = gk_OP4_Output_Enable * gk_OP4_Output_Level
+            k_OP4_FM3_Level    = ((gk_OP4_FM_Enable     * gk_OP4_FM3_Level * (gk_OP4_FM3_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
+            k_OP4_FM2_Level    = ((gk_OP4_FM_Enable     * gk_OP4_FM2_Level * (gk_OP4_FM2_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
+            k_OP4_FM1_Level    = ((gk_OP4_FM_Enable     * gk_OP4_FM1_Level * (gk_OP4_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
+            k_OP4_Output_Level = ((gk_OP4_Output_Enable * gk_OP4_Output_Level) ^ 5) * 1.3
             
             k_OP3_Frequency    = gk_OP3_Frequency_Level
             k_OP3_Feedback     = gk_OP3_Feedback_Level
-            k_OP3_FM2_Level    = gk_OP3_FM_Enable     * gk_OP3_FM2_Level    ; TODO: Mod.Wheel
-            k_OP3_FM1_Level    = gk_OP3_FM_Enable     * gk_OP3_FM1_Level
-            k_OP3_Output_Level = gk_OP3_Output_Enable * gk_OP3_Output_Level
+            k_OP3_FM2_Level    = ((gk_OP3_FM_Enable     * gk_OP3_FM2_Level * (gk_OP3_FM2_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
+            k_OP3_FM1_Level    = ((gk_OP3_FM_Enable     * gk_OP3_FM1_Level * (gk_OP3_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
+            k_OP3_Output_Level = ((gk_OP3_Output_Enable * gk_OP3_Output_Level) ^ 5) * 1.3
             
             k_OP2_Frequency    = gk_OP2_Frequency_Level
             k_OP2_Feedback     = gk_OP2_Feedback_Level
-            k_OP2_FM1_Level    = gk_OP2_FM_Enable     * gk_OP2_FM1_Level    ; TODO: Mod.Wheel
-            k_OP2_Output_Level = gk_OP2_Output_Enable * gk_OP2_Output_Level
+            k_OP2_FM1_Level    = ((gk_OP2_FM_Enable     * gk_OP2_FM1_Level * (gk_OP2_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
+            k_OP2_Output_Level = ((gk_OP2_Output_Enable * gk_OP2_Output_Level) ^ 5) * 1.3
             
             k_OP1_Frequency    = gk_OP1_Frequency_Level
             k_OP1_Feedback     = gk_OP1_Feedback_Level
-            k_OP1_Output_Level = gk_OP1_Output_Enable * gk_OP1_Output_Level
+            k_OP1_Output_Level = ((gk_OP1_Output_Enable * gk_OP1_Output_Level) ^ 5) * 1.3
             
             ; Apply LFO
             k_OP4_Frequency    =     max(k_OP4_Frequency    + (gk_LFO2 * gk_OP4_Frequency_LFO), 0)
@@ -604,7 +659,6 @@
                            i(gk_OP2_Sustain_Level),  i(gk_OP2_Sustain_Time), \
                            i(gk_OP2_Release_Level),  i(gk_OP2_Release_Time)
                            
-                              ; TODO: Optimize performance
             a_OP1 FMOperator  (a_OP4 * k_OP4_FM1_Level) + (a_OP3 * k_OP3_FM1_Level) + (a_OP2 * k_OP2_FM1_Level), \
                               k_OP1_Frequency,                               \
                               k_OP1_Feedback,                                \
@@ -622,7 +676,7 @@
             outleta("Out", a_Out * .7)
             
             ; Keep running during the release phase
-            xtratim(max(i(gk_OP4_Release_Time), i(gk_OP3_Release_Time), i(gk_OP2_Release_Time), i(gk_OP1_Release_Time)) + 0.25)
+            xtratim(max(i(gk_OP4_Release_Rate), i(gk_OP3_Release_Rate), i(gk_OP2_Release_Rate), i(gk_OP1_Release_Rate)) + 0.25)
         endin
                 
         ;====================================================================
