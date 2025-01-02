@@ -68,7 +68,7 @@
  *
  *   These formulas are then inserted in the DSP code here. Some more tests later we come up with:
  *
- *     i_Attack_Time  =  29 * (0.9 ^ i_Attack_Rate)
+ *     i_Attack_Time  =  30 * (0.9 ^ i_Attack_Rate)
  *     i_Decay_Time   = 123 * (0.9 ^ i_Decay_Rate)
  *     i_Sustain_Time = 123 * (0.9 ^ i_Sustain_Rate)
  *     i_Release_Time = 123 * (0.9 ^ i_Release_Rate)
@@ -289,6 +289,31 @@
         gk_MIDI_Volume      = 1.0
         gk_MIDI_Expression  = 1.0
         
+        ; Lookup tables to convert levels and rates (somewhat similar to the DX7)
+        gi_LUT_Size = 128
+        
+        gi_LUT_Operator_Level       = ftgen(0, 0, gi_LUT_Size, -2, 0)
+        gi_LUT_Envelope_Level       = ftgen(0, 0, gi_LUT_Size, -2, 0)
+        gi_LUT_Envelope_Attack_Time = ftgen(0, 0, gi_LUT_Size, -2, 0)
+        gi_LUT_Envelope_Decay_Time  = ftgen(0, 0, gi_LUT_Size, -2, 0)
+        
+        gi_N = 0
+        while gi_N < gi_LUT_Size do
+            gi_Operator_Level       = ((gi_N * .01) ^ 5) * 2.0      ; Amplitude level scaled and mapped from [0…99] to [0…1]
+            gi_Envelope_Level       = ((gi_N * .01) ^ 4)            ; Amplitude scaling for envelopes
+            gi_Envelope_Attack_Time =  30 * (0.9 ^ gi_N) + 0.001    ; Attack time in seconds
+            gi_Envelope_Decay_Time  = 123 * (0.9 ^ gi_N) + 0.001    ; Decay time in seconds
+            
+            tablew(gi_Operator_Level,       gi_N, gi_LUT_Operator_Level)
+            tablew(gi_Envelope_Level,       gi_N, gi_LUT_Envelope_Level)
+            tablew(gi_Envelope_Attack_Time, gi_N, gi_LUT_Envelope_Attack_Time)
+            tablew(gi_Envelope_Decay_Time,  gi_N, gi_LUT_Envelope_Decay_Time)
+
+            gi_N = gi_N + 1
+        od
+        
+        ;ftprint gi_LUT_Operator_Level
+        
         ; Connect instruments
         connect "Tone_Generator", "Out",    "Output", "In"
         
@@ -324,87 +349,87 @@
             gk_OP4_Frequency_LFO     = lag(chnget:k("OP4_Frequency_LFO"),     i_Declick_ms)
             gk_OP4_Frequency_Fixed   = lag(chnget:k("OP4_Frequency_Fixed"),   i_Declick_ms)
             gk_OP4_Output_Enable     = lag(chnget:k("OP4_Output_Enable"),     i_Declick_ms)
-            gk_OP4_Output_Level      = lag(chnget:k("OP4_Output_Level"),      i_Declick_ms) * .01
-            gk_OP4_Output_LFO        = lag(chnget:k("OP4_Output_LFO"),        i_Declick_ms) * .01
+            gk_OP4_Output_Level      = lag(chnget:k("OP4_Output_Level"),      i_Declick_ms)
+            gk_OP4_Output_LFO        = lag(chnget:k("OP4_Output_LFO"),        i_Declick_ms)
             gk_OP4_FM_Enable         = lag(chnget:k("OP4_FM_Enable"),         i_Declick_ms)
-            gk_OP4_FM3_Level         = lag(chnget:k("OP4_FM3_Level"),         i_Declick_ms) * .01
-            gk_OP4_FM2_Level         = lag(chnget:k("OP4_FM2_Level"),         i_Declick_ms) * .01
-            gk_OP4_FM1_Level         = lag(chnget:k("OP4_FM1_Level"),         i_Declick_ms) * .01
+            gk_OP4_FM3_Level         = lag(chnget:k("OP4_FM3_Level"),         i_Declick_ms)
+            gk_OP4_FM2_Level         = lag(chnget:k("OP4_FM2_Level"),         i_Declick_ms)
+            gk_OP4_FM1_Level         = lag(chnget:k("OP4_FM1_Level"),         i_Declick_ms)
             gk_OP4_FM3_Mod_Wheel     = lag(chnget:k("OP4_FM3_Mod_Wheel"),     i_Declick_ms)
             gk_OP4_FM2_Mod_Wheel     = lag(chnget:k("OP4_FM2_Mod_Wheel"),     i_Declick_ms)
             gk_OP4_FM1_Mod_Wheel     = lag(chnget:k("OP4_FM1_Mod_Wheel"),     i_Declick_ms)
-            gk_OP4_Feedback_Level    = lag(chnget:k("OP4_Feedback_Level"),    i_Declick_ms) * .01
-            gk_OP4_Feedback_LFO      = lag(chnget:k("OP4_Feedback_LFO"),      i_Declick_ms) * .01
-            gk_OP4_Initial_Level     = lag(chnget:k("OP4_Initial_Level"),     i_Declick_ms) * .01
-            gk_OP4_Attack_Level      = lag(chnget:k("OP4_Attack_Level"),      i_Declick_ms) * .01
+            gk_OP4_Feedback_Level    = lag(chnget:k("OP4_Feedback_Level"),    i_Declick_ms)
+            gk_OP4_Feedback_LFO      = lag(chnget:k("OP4_Feedback_LFO"),      i_Declick_ms)
+            gk_OP4_Initial_Level     = lag(chnget:k("OP4_Initial_Level"),     i_Declick_ms)
+            gk_OP4_Attack_Level      = lag(chnget:k("OP4_Attack_Level"),      i_Declick_ms)
             gk_OP4_Attack_Rate       = lag(chnget:k("OP4_Attack_Rate"),       i_Declick_ms)
-            gk_OP4_Decay_Level       = lag(chnget:k("OP4_Decay_Level"),       i_Declick_ms) * .01
+            gk_OP4_Decay_Level       = lag(chnget:k("OP4_Decay_Level"),       i_Declick_ms)
             gk_OP4_Decay_Rate        = lag(chnget:k("OP4_Decay_Rate"),        i_Declick_ms)
-            gk_OP4_Sustain_Level     = lag(chnget:k("OP4_Sustain_Level"),     i_Declick_ms) * .01
+            gk_OP4_Sustain_Level     = lag(chnget:k("OP4_Sustain_Level"),     i_Declick_ms)
             gk_OP4_Sustain_Rate      = lag(chnget:k("OP4_Sustain_Rate"),      i_Declick_ms)
-            gk_OP4_Release_Level     = lag(chnget:k("OP4_Release_Level"),     i_Declick_ms) * .01
+            gk_OP4_Release_Level     = lag(chnget:k("OP4_Release_Level"),     i_Declick_ms)
             gk_OP4_Release_Rate      = lag(chnget:k("OP4_Release_Rate"),      i_Declick_ms)
             
             gk_OP3_Frequency_Level   = lag(chnget:k("OP3_Frequency_Level"),   i_Declick_ms)
             gk_OP3_Frequency_LFO     = lag(chnget:k("OP3_Frequency_LFO"),     i_Declick_ms)
             gk_OP3_Frequency_Fixed   = lag(chnget:k("OP3_Frequency_Fixed"),   i_Declick_ms)
             gk_OP3_Output_Enable     = lag(chnget:k("OP3_Output_Enable"),     i_Declick_ms)
-            gk_OP3_Output_Level      = lag(chnget:k("OP3_Output_Level"),      i_Declick_ms) * .01
-            gk_OP3_Output_LFO        = lag(chnget:k("OP3_Output_LFO"),        i_Declick_ms) * .01
+            gk_OP3_Output_Level      = lag(chnget:k("OP3_Output_Level"),      i_Declick_ms)
+            gk_OP3_Output_LFO        = lag(chnget:k("OP3_Output_LFO"),        i_Declick_ms)
             gk_OP3_FM_Enable         = lag(chnget:k("OP3_FM_Enable"),         i_Declick_ms)
-            gk_OP3_FM2_Level         = lag(chnget:k("OP3_FM2_Level"),         i_Declick_ms) * .01
-            gk_OP3_FM1_Level         = lag(chnget:k("OP3_FM1_Level"),         i_Declick_ms) * .01
+            gk_OP3_FM2_Level         = lag(chnget:k("OP3_FM2_Level"),         i_Declick_ms)
+            gk_OP3_FM1_Level         = lag(chnget:k("OP3_FM1_Level"),         i_Declick_ms)
             gk_OP3_FM2_Mod_Wheel     = lag(chnget:k("OP3_FM2_Mod_Wheel"),     i_Declick_ms)
             gk_OP3_FM1_Mod_Wheel     = lag(chnget:k("OP3_FM1_Mod_Wheel"),     i_Declick_ms)
-            gk_OP3_Feedback_Level    = lag(chnget:k("OP3_Feedback_Level"),    i_Declick_ms) * .01
-            gk_OP3_Feedback_LFO      = lag(chnget:k("OP3_Feedback_LFO"),      i_Declick_ms) * .01
-            gk_OP3_Initial_Level     = lag(chnget:k("OP3_Initial_Level"),     i_Declick_ms) * .01
-            gk_OP3_Attack_Level      = lag(chnget:k("OP3_Attack_Level"),      i_Declick_ms) * .01
+            gk_OP3_Feedback_Level    = lag(chnget:k("OP3_Feedback_Level"),    i_Declick_ms)
+            gk_OP3_Feedback_LFO      = lag(chnget:k("OP3_Feedback_LFO"),      i_Declick_ms)
+            gk_OP3_Initial_Level     = lag(chnget:k("OP3_Initial_Level"),     i_Declick_ms)
+            gk_OP3_Attack_Level      = lag(chnget:k("OP3_Attack_Level"),      i_Declick_ms)
             gk_OP3_Attack_Rate       = lag(chnget:k("OP3_Attack_Rate"),       i_Declick_ms)
-            gk_OP3_Decay_Level       = lag(chnget:k("OP3_Decay_Level"),       i_Declick_ms) * .01
+            gk_OP3_Decay_Level       = lag(chnget:k("OP3_Decay_Level"),       i_Declick_ms)
             gk_OP3_Decay_Rate        = lag(chnget:k("OP3_Decay_Rate"),        i_Declick_ms)
-            gk_OP3_Sustain_Level     = lag(chnget:k("OP3_Sustain_Level"),     i_Declick_ms) * .01
+            gk_OP3_Sustain_Level     = lag(chnget:k("OP3_Sustain_Level"),     i_Declick_ms)
             gk_OP3_Sustain_Rate      = lag(chnget:k("OP3_Sustain_Rate"),      i_Declick_ms)
-            gk_OP3_Release_Level     = lag(chnget:k("OP3_Release_Level"),     i_Declick_ms) * .01
+            gk_OP3_Release_Level     = lag(chnget:k("OP3_Release_Level"),     i_Declick_ms)
             gk_OP3_Release_Rate      = lag(chnget:k("OP3_Release_Rate"),      i_Declick_ms)
             
             gk_OP2_Frequency_Level   = lag(chnget:k("OP2_Frequency_Level"),   i_Declick_ms)
             gk_OP2_Frequency_LFO     = lag(chnget:k("OP2_Frequency_LFO"),     i_Declick_ms)
             gk_OP2_Frequency_Fixed   = lag(chnget:k("OP2_Frequency_Fixed"),   i_Declick_ms)
             gk_OP2_Output_Enable     = lag(chnget:k("OP2_Output_Enable"),     i_Declick_ms)
-            gk_OP2_Output_Level      = lag(chnget:k("OP2_Output_Level"),      i_Declick_ms) * .01
-            gk_OP2_Output_LFO        = lag(chnget:k("OP2_Output_LFO"),        i_Declick_ms) * .01
+            gk_OP2_Output_Level      = lag(chnget:k("OP2_Output_Level"),      i_Declick_ms)
+            gk_OP2_Output_LFO        = lag(chnget:k("OP2_Output_LFO"),        i_Declick_ms)
             gk_OP2_FM_Enable         = lag(chnget:k("OP2_FM_Enable"),         i_Declick_ms)
-            gk_OP2_FM1_Level         = lag(chnget:k("OP2_FM1_Level"),         i_Declick_ms) * .01
+            gk_OP2_FM1_Level         = lag(chnget:k("OP2_FM1_Level"),         i_Declick_ms)
             gk_OP2_FM1_Mod_Wheel     = lag(chnget:k("OP2_FM1_Mod_Wheel"),     i_Declick_ms)
-            gk_OP2_Feedback_Level    = lag(chnget:k("OP2_Feedback_Level"),    i_Declick_ms) * .01
-            gk_OP2_Feedback_LFO      = lag(chnget:k("OP2_Feedback_LFO"),      i_Declick_ms) * .01
-            gk_OP2_Initial_Level     = lag(chnget:k("OP2_Initial_Level"),     i_Declick_ms) * .01
-            gk_OP2_Attack_Level      = lag(chnget:k("OP2_Attack_Level"),      i_Declick_ms) * .01
+            gk_OP2_Feedback_Level    = lag(chnget:k("OP2_Feedback_Level"),    i_Declick_ms)
+            gk_OP2_Feedback_LFO      = lag(chnget:k("OP2_Feedback_LFO"),      i_Declick_ms)
+            gk_OP2_Initial_Level     = lag(chnget:k("OP2_Initial_Level"),     i_Declick_ms)
+            gk_OP2_Attack_Level      = lag(chnget:k("OP2_Attack_Level"),      i_Declick_ms)
             gk_OP2_Attack_Rate       = lag(chnget:k("OP2_Attack_Rate"),       i_Declick_ms)
-            gk_OP2_Decay_Level       = lag(chnget:k("OP2_Decay_Level"),       i_Declick_ms) * .01
+            gk_OP2_Decay_Level       = lag(chnget:k("OP2_Decay_Level"),       i_Declick_ms)
             gk_OP2_Decay_Rate        = lag(chnget:k("OP2_Decay_Rate"),        i_Declick_ms)
-            gk_OP2_Sustain_Level     = lag(chnget:k("OP2_Sustain_Level"),     i_Declick_ms) * .01
+            gk_OP2_Sustain_Level     = lag(chnget:k("OP2_Sustain_Level"),     i_Declick_ms)
             gk_OP2_Sustain_Rate      = lag(chnget:k("OP2_Sustain_Rate"),      i_Declick_ms)
-            gk_OP2_Release_Level     = lag(chnget:k("OP2_Release_Level"),     i_Declick_ms) * .01
+            gk_OP2_Release_Level     = lag(chnget:k("OP2_Release_Level"),     i_Declick_ms)
             gk_OP2_Release_Rate      = lag(chnget:k("OP2_Release_Rate"),      i_Declick_ms)
             
             gk_OP1_Frequency_Level   = lag(chnget:k("OP1_Frequency_Level"),   i_Declick_ms)
             gk_OP1_Frequency_LFO     = lag(chnget:k("OP1_Frequency_LFO"),     i_Declick_ms)
             gk_OP1_Frequency_Fixed   = lag(chnget:k("OP1_Frequency_Fixed"),   i_Declick_ms)
             gk_OP1_Output_Enable     = lag(chnget:k("OP1_Output_Enable"),     i_Declick_ms)
-            gk_OP1_Output_Level      = lag(chnget:k("OP1_Output_Level"),      i_Declick_ms) * .01
-            gk_OP1_Output_LFO        = lag(chnget:k("OP1_Output_LFO"),        i_Declick_ms) * .01
-            gk_OP1_Feedback_Level    = lag(chnget:k("OP1_Feedback_Level"),    i_Declick_ms) * .01
-            gk_OP1_Feedback_LFO      = lag(chnget:k("OP1_Feedback_LFO"),      i_Declick_ms) * .01
-            gk_OP1_Initial_Level     = lag(chnget:k("OP1_Initial_Level"),     i_Declick_ms) * .01
-            gk_OP1_Attack_Level      = lag(chnget:k("OP1_Attack_Level"),      i_Declick_ms) * .01
+            gk_OP1_Output_Level      = lag(chnget:k("OP1_Output_Level"),      i_Declick_ms)
+            gk_OP1_Output_LFO        = lag(chnget:k("OP1_Output_LFO"),        i_Declick_ms)
+            gk_OP1_Feedback_Level    = lag(chnget:k("OP1_Feedback_Level"),    i_Declick_ms)
+            gk_OP1_Feedback_LFO      = lag(chnget:k("OP1_Feedback_LFO"),      i_Declick_ms)
+            gk_OP1_Initial_Level     = lag(chnget:k("OP1_Initial_Level"),     i_Declick_ms)
+            gk_OP1_Attack_Level      = lag(chnget:k("OP1_Attack_Level"),      i_Declick_ms)
             gk_OP1_Attack_Rate       = lag(chnget:k("OP1_Attack_Rate"),       i_Declick_ms)
-            gk_OP1_Decay_Level       = lag(chnget:k("OP1_Decay_Level"),       i_Declick_ms) * .01
+            gk_OP1_Decay_Level       = lag(chnget:k("OP1_Decay_Level"),       i_Declick_ms)
             gk_OP1_Decay_Rate        = lag(chnget:k("OP1_Decay_Rate"),        i_Declick_ms)
-            gk_OP1_Sustain_Level     = lag(chnget:k("OP1_Sustain_Level"),     i_Declick_ms) * .01
+            gk_OP1_Sustain_Level     = lag(chnget:k("OP1_Sustain_Level"),     i_Declick_ms)
             gk_OP1_Sustain_Rate      = lag(chnget:k("OP1_Sustain_Rate"),      i_Declick_ms)
-            gk_OP1_Release_Level     = lag(chnget:k("OP_Release_Level"),      i_Declick_ms) * .01
+            gk_OP1_Release_Level     = lag(chnget:k("OP_Release_Level"),      i_Declick_ms)
             gk_OP1_Release_Rate      = lag(chnget:k("OP1_Release_Rate"),      i_Declick_ms)
             
             gk_LFO_Frequency         = lag(chnget:k("LFO_Frequency"),         i_Declick_ms)
@@ -427,43 +452,68 @@
             gk_Reverb_Size           = lag(chnget:k("Reverb_Size"),           i_Declick_ms)
             gk_Reverb_CutOff         = lag(chnget:k("Reverb_CutOff"),         i_Declick_ms)
             
-            ; Envelope fixes to come a bit closer to the DX7
-            ; TODO: Replace with LUT
-            gk_OP4_Attack_Time   =  29 * (0.9 ^ gk_OP4_Attack_Rate)  + 0.001
-            gk_OP4_Decay_Time    = 123 * (0.9 ^ gk_OP4_Decay_Rate)   + 0.001
-            gk_OP4_Sustain_Time  = 123 * (0.9 ^ gk_OP4_Sustain_Rate) + 0.001
-            gk_OP4_Release_Time  = 123 * (0.9 ^ gk_OP4_Release_Rate) + 0.001
-            gk_OP4_Attack_Level  = gk_OP4_Attack_Level  ^ 4
-            gk_OP4_Decay_Level   = gk_OP4_Decay_Level   ^ 4
-            gk_OP4_Sustain_Level = gk_OP4_Sustain_Level ^ 4
-            gk_OP4_Release_Level = gk_OP4_Release_Level ^ 4
+            ; Table lookups for value conversions
+            gk_OP4_Output_Level      = table(gk_OP4_Output_Level,   gi_LUT_Operator_Level)
+            gk_OP4_Output_LFO        = table(gk_OP4_Output_LFO,     gi_LUT_Operator_Level)
+            gk_OP4_FM3_Level         = table(gk_OP4_FM3_Level,      gi_LUT_Operator_Level)
+            gk_OP4_FM2_Level         = table(gk_OP4_FM2_Level,      gi_LUT_Operator_Level)
+            gk_OP4_FM1_Level         = table(gk_OP4_FM1_Level,      gi_LUT_Operator_Level)
+            gk_OP4_Feedback_Level    = table(gk_OP4_Feedback_Level, gi_LUT_Operator_Level)
+            gk_OP4_Feedback_LFO      = table(gk_OP4_Feedback_LFO,   gi_LUT_Operator_Level)
+            gk_OP4_Initial_Level     = table(gk_OP4_Initial_Level,  gi_LUT_Envelope_Level)
+            gk_OP4_Attack_Level      = table(gk_OP4_Attack_Level,   gi_LUT_Envelope_Level)
+            gk_OP4_Attack_Time       = table(gk_OP4_Attack_Rate,    gi_LUT_Envelope_Attack_Time)
+            gk_OP4_Decay_Level       = table(gk_OP4_Decay_Level,    gi_LUT_Envelope_Level)
+            gk_OP4_Decay_Time        = table(gk_OP4_Decay_Rate,     gi_LUT_Envelope_Decay_Time)
+            gk_OP4_Sustain_Level     = table(gk_OP4_Sustain_Level,  gi_LUT_Envelope_Level)
+            gk_OP4_Sustain_Time      = table(gk_OP4_Sustain_Rate,   gi_LUT_Envelope_Decay_Time)
+            gk_OP4_Release_Level     = table(gk_OP4_Release_Level,  gi_LUT_Envelope_Level)
+            gk_OP4_Release_Time      = table(gk_OP4_Release_Rate,   gi_LUT_Envelope_Decay_Time)
+
+            gk_OP3_Output_Level      = table(gk_OP3_Output_Level,   gi_LUT_Operator_Level)
+            gk_OP3_Output_LFO        = table(gk_OP3_Output_LFO,     gi_LUT_Operator_Level)
+            gk_OP3_FM2_Level         = table(gk_OP3_FM2_Level,      gi_LUT_Operator_Level)
+            gk_OP3_FM1_Level         = table(gk_OP3_FM1_Level,      gi_LUT_Operator_Level)
+            gk_OP3_Feedback_Level    = table(gk_OP3_Feedback_Level, gi_LUT_Operator_Level)
+            gk_OP3_Feedback_LFO      = table(gk_OP3_Feedback_LFO,   gi_LUT_Operator_Level)
+            gk_OP3_Initial_Level     = table(gk_OP3_Initial_Level,  gi_LUT_Envelope_Level)
+            gk_OP3_Attack_Level      = table(gk_OP3_Attack_Level,   gi_LUT_Envelope_Level)
+            gk_OP3_Attack_Time       = table(gk_OP3_Attack_Rate,    gi_LUT_Envelope_Attack_Time)
+            gk_OP3_Decay_Level       = table(gk_OP3_Decay_Level,    gi_LUT_Envelope_Level)
+            gk_OP3_Decay_Time        = table(gk_OP3_Decay_Rate,     gi_LUT_Envelope_Decay_Time)
+            gk_OP3_Sustain_Level     = table(gk_OP3_Sustain_Level,  gi_LUT_Envelope_Level)
+            gk_OP3_Sustain_Time      = table(gk_OP3_Sustain_Rate,   gi_LUT_Envelope_Decay_Time)
+            gk_OP3_Release_Level     = table(gk_OP3_Release_Level,  gi_LUT_Envelope_Level)
+            gk_OP3_Release_Time      = table(gk_OP3_Release_Rate,   gi_LUT_Envelope_Decay_Time)
             
-            gk_OP3_Attack_Time   =  29 * (0.9 ^ gk_OP3_Attack_Rate)  + 0.001
-            gk_OP3_Decay_Time    = 123 * (0.9 ^ gk_OP3_Decay_Rate)   + 0.001
-            gk_OP3_Sustain_Time  = 123 * (0.9 ^ gk_OP3_Sustain_Rate) + 0.001
-            gk_OP3_Release_Time  = 123 * (0.9 ^ gk_OP3_Release_Rate) + 0.001
-            gk_OP3_Attack_Level  = gk_OP3_Attack_Level  ^ 4
-            gk_OP3_Decay_Level   = gk_OP3_Decay_Level   ^ 4
-            gk_OP3_Sustain_Level = gk_OP3_Sustain_Level ^ 4
-            gk_OP3_Release_Level = gk_OP3_Release_Level ^ 4
+            gk_OP2_Output_Level      = table(gk_OP2_Output_Level,   gi_LUT_Operator_Level)
+            gk_OP2_Output_LFO        = table(gk_OP2_Output_LFO,     gi_LUT_Operator_Level)
+            gk_OP2_FM1_Level         = table(gk_OP2_FM1_Level,      gi_LUT_Operator_Level)
+            gk_OP2_Feedback_Level    = table(gk_OP2_Feedback_Level, gi_LUT_Operator_Level)
+            gk_OP2_Feedback_LFO      = table(gk_OP2_Feedback_LFO,   gi_LUT_Operator_Level)
+            gk_OP2_Initial_Level     = table(gk_OP2_Initial_Level,  gi_LUT_Envelope_Level)
+            gk_OP2_Attack_Level      = table(gk_OP2_Attack_Level,   gi_LUT_Envelope_Level)
+            gk_OP2_Attack_Time       = table(gk_OP2_Attack_Rate,    gi_LUT_Envelope_Attack_Time)
+            gk_OP2_Decay_Level       = table(gk_OP2_Decay_Level,    gi_LUT_Envelope_Level)
+            gk_OP2_Decay_Time        = table(gk_OP2_Decay_Rate,     gi_LUT_Envelope_Decay_Time)
+            gk_OP2_Sustain_Level     = table(gk_OP2_Sustain_Level,  gi_LUT_Envelope_Level)
+            gk_OP2_Sustain_Time      = table(gk_OP2_Sustain_Rate,   gi_LUT_Envelope_Decay_Time)
+            gk_OP2_Release_Level     = table(gk_OP2_Release_Level,  gi_LUT_Envelope_Level)
+            gk_OP2_Release_Time      = table(gk_OP2_Release_Rate,   gi_LUT_Envelope_Decay_Time)
             
-            gk_OP2_Attack_Time   =  29 * (0.9 ^ gk_OP2_Attack_Rate)  + 0.001
-            gk_OP2_Decay_Time    = 123 * (0.9 ^ gk_OP2_Decay_Rate)   + 0.001
-            gk_OP2_Sustain_Time  = 123 * (0.9 ^ gk_OP2_Sustain_Rate) + 0.001
-            gk_OP2_Release_Time  = 123 * (0.9 ^ gk_OP2_Release_Rate) + 0.001
-            gk_OP2_Attack_Level  = gk_OP2_Attack_Level  ^ 4
-            gk_OP2_Decay_Level   = gk_OP2_Decay_Level   ^ 4
-            gk_OP2_Sustain_Level = gk_OP2_Sustain_Level ^ 4
-            gk_OP2_Release_Level = gk_OP2_Release_Level ^ 4
-            
-            gk_OP1_Attack_Time   =  29 * (0.9 ^ gk_OP1_Attack_Rate)  + 0.001
-            gk_OP1_Decay_Time    = 123 * (0.9 ^ gk_OP1_Decay_Rate)   + 0.001
-            gk_OP1_Sustain_Time  = 123 * (0.9 ^ gk_OP1_Sustain_Rate) + 0.001
-            gk_OP1_Release_Time  = 123 * (0.9 ^ gk_OP1_Release_Rate) + 0.001
-            gk_OP1_Attack_Level  = gk_OP1_Attack_Level  ^ 4
-            gk_OP1_Decay_Level   = gk_OP1_Decay_Level   ^ 4
-            gk_OP1_Sustain_Level = gk_OP1_Sustain_Level ^ 4
-            gk_OP1_Release_Level = gk_OP1_Release_Level ^ 4
+            gk_OP1_Output_Level      = table(gk_OP1_Output_Level,   gi_LUT_Operator_Level)
+            gk_OP1_Output_LFO        = table(gk_OP1_Output_LFO,     gi_LUT_Operator_Level)
+            gk_OP1_Feedback_Level    = table(gk_OP1_Feedback_Level, gi_LUT_Operator_Level)
+            gk_OP1_Feedback_LFO      = table(gk_OP1_Feedback_LFO,   gi_LUT_Operator_Level)
+            gk_OP1_Initial_Level     = table(gk_OP1_Initial_Level,  gi_LUT_Envelope_Level)
+            gk_OP1_Attack_Level      = table(gk_OP1_Attack_Level,   gi_LUT_Envelope_Level)
+            gk_OP1_Attack_Time       = table(gk_OP1_Attack_Rate,    gi_LUT_Envelope_Attack_Time)
+            gk_OP1_Decay_Level       = table(gk_OP1_Decay_Level,    gi_LUT_Envelope_Level)
+            gk_OP1_Decay_Time        = table(gk_OP1_Decay_Rate,     gi_LUT_Envelope_Decay_Time)
+            gk_OP1_Sustain_Level     = table(gk_OP1_Sustain_Level,  gi_LUT_Envelope_Level)
+            gk_OP1_Sustain_Time      = table(gk_OP1_Sustain_Rate,   gi_LUT_Envelope_Decay_Time)
+            gk_OP1_Release_Level     = table(gk_OP1_Release_Level,  gi_LUT_Envelope_Level)
+            gk_OP1_Release_Time      = table(gk_OP1_Release_Rate,   gi_LUT_Envelope_Decay_Time)
         endin
         
         ;====================================================================
@@ -544,18 +594,14 @@
             a_Out   = init:a(0)                                                     ; Initialize variable at i-time and retain value afterwards
             a_Phase = phasor:a(k_Frequency) + a_Modulator + (a_Out * k_Feedback)
             a_Out   = tablei:a(a_Phase, -1, 1, .5, 1)                               ; andx, ifn, ixmode, ixoff, iwrap            
-            
+
             a_Envelope cossegr i_Initial_Level,                 \
                                i_Attack_Time,  i_Attack_Level,  \
                                i_Decay_Time,   i_Decay_Level,   \
                                i_Sustain_Time, i_Sustain_Level, \
                                i_Release_Time, i_Release_Level
-            
-            denorm a_Out
-            denorm a_Envelope
-            
+
             xout(a_Out * a_Envelope)
-            
         endop
         
         ;====================================================================
@@ -570,32 +616,30 @@
         ;====================================================================
         instr Tone_Generator, 1
             ; Calculate values before LFO
-            ; NOTE: Amplitudes are scaled with (x^5 * 1.3) to rouglhy emulate the DX7 Mk1 behaviour.
-            ; The values have been found experimentaly by ear while siting next to a real DX7.
             k_Pitch_Bend     = gk_MIDI_Pitch_Bend * gk_Pitch_Bend_Range
             k_Base_Frequency = cpsmidinn(p4 + k_Pitch_Bend)
             
             k_OP4_Frequency    = gk_OP4_Frequency_Level
             k_OP4_Feedback     = gk_OP4_Feedback_Level
-            k_OP4_FM3_Level    = ((gk_OP4_FM_Enable     * gk_OP4_FM3_Level * (gk_OP4_FM3_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
-            k_OP4_FM2_Level    = ((gk_OP4_FM_Enable     * gk_OP4_FM2_Level * (gk_OP4_FM2_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
-            k_OP4_FM1_Level    = ((gk_OP4_FM_Enable     * gk_OP4_FM1_Level * (gk_OP4_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
-            k_OP4_Output_Level = ((gk_OP4_Output_Enable * gk_OP4_Output_Level) ^ 5) * 1.3
+            k_OP4_FM3_Level    = gk_OP4_FM_Enable     * gk_OP4_FM3_Level * (gk_OP4_FM3_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)
+            k_OP4_FM2_Level    = gk_OP4_FM_Enable     * gk_OP4_FM2_Level * (gk_OP4_FM2_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)
+            k_OP4_FM1_Level    = gk_OP4_FM_Enable     * gk_OP4_FM1_Level * (gk_OP4_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)
+            k_OP4_Output_Level = gk_OP4_Output_Enable * gk_OP4_Output_Level
             
             k_OP3_Frequency    = gk_OP3_Frequency_Level
             k_OP3_Feedback     = gk_OP3_Feedback_Level
-            k_OP3_FM2_Level    = ((gk_OP3_FM_Enable     * gk_OP3_FM2_Level * (gk_OP3_FM2_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
-            k_OP3_FM1_Level    = ((gk_OP3_FM_Enable     * gk_OP3_FM1_Level * (gk_OP3_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
-            k_OP3_Output_Level = ((gk_OP3_Output_Enable * gk_OP3_Output_Level) ^ 5) * 1.3
+            k_OP3_FM2_Level    = gk_OP3_FM_Enable     * gk_OP3_FM2_Level * (gk_OP3_FM2_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)
+            k_OP3_FM1_Level    = gk_OP3_FM_Enable     * gk_OP3_FM1_Level * (gk_OP3_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)
+            k_OP3_Output_Level = gk_OP3_Output_Enable * gk_OP3_Output_Level
             
             k_OP2_Frequency    = gk_OP2_Frequency_Level
             k_OP2_Feedback     = gk_OP2_Feedback_Level
-            k_OP2_FM1_Level    = ((gk_OP2_FM_Enable     * gk_OP2_FM1_Level * (gk_OP2_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)) ^ 5) * 1.3
-            k_OP2_Output_Level = ((gk_OP2_Output_Enable * gk_OP2_Output_Level) ^ 5) * 1.3
+            k_OP2_FM1_Level    = gk_OP2_FM_Enable     * gk_OP2_FM1_Level * (gk_OP2_FM1_Mod_Wheel > 0.001 ? gk_MIDI_Mod_Wheel : 1)
+            k_OP2_Output_Level = gk_OP2_Output_Enable * gk_OP2_Output_Level
             
             k_OP1_Frequency    = gk_OP1_Frequency_Level
             k_OP1_Feedback     = gk_OP1_Feedback_Level
-            k_OP1_Output_Level = ((gk_OP1_Output_Enable * gk_OP1_Output_Level) ^ 5) * 1.3
+            k_OP1_Output_Level = gk_OP1_Output_Enable * gk_OP1_Output_Level
             
             ; Apply LFO
             k_OP4_Frequency    =     max(k_OP4_Frequency    + (gk_LFO2 * gk_OP4_Frequency_LFO), 0)
@@ -673,10 +717,7 @@
                   + (a_OP2 * .25 * k_OP2_Output_Level) \
                   + (a_OP1 * .25 * k_OP1_Output_Level)
                   
-            outleta("Out", a_Out * .7)
-            
-            ; Keep running during the release phase
-            xtratim(max(i(gk_OP4_Release_Rate), i(gk_OP3_Release_Rate), i(gk_OP2_Release_Rate), i(gk_OP1_Release_Rate)) + 0.25)
+            outleta("Out", a_Out)
         endin
                 
         ;====================================================================
