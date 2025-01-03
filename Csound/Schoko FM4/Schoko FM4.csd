@@ -2,7 +2,7 @@
  * Facelift FM4 - 4 Operator FM Synthesizer
  * ========================================
  *
- * Dec 28-31 2024: Dennis Schulmeister-Zimolong
+ * Dec 28 2024 - Jan 03 2025: Dennis Schulmeister-Zimolong
  * This is the synthesizer with which Android will be tested.
  *
  * Csound Caveats
@@ -98,13 +98,13 @@
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP4_Frequency_LFO"),   text("LFO"),           range(0, 20000, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  80, 120, 15), channel("OP4_Frequency_Fixed"), text("Fixed Frequency")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP4_Output_Enable"),   text("Direct Output")
-        checkbox $WIDGET, $CHECKBOX, bounds( 10, 120, 120, 15), channel("OP4_FM_Enable"),       text("Modulate Others"), value(1)   ; 0
+        checkbox $WIDGET, $CHECKBOX, bounds( 10, 120, 120, 15), channel("OP4_FM_Enable"),       text("Modulate Others"), value(1)
         
-        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP4_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)   ; 0
-        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP4_Output_Level"),    text("Direct Output"), range(0, 99,  0, 1, 1)   ; 75
-        vslider  $WIDGET, $RSLIDER,  bounds(290,  32,  50, 90), channel("OP4_FM3_Level"),       text("OP3"),           range(0, 99, 96, 1, 1)   ; 75
-        vslider  $WIDGET, $RSLIDER,  bounds(320,  32,  50, 90), channel("OP4_FM2_Level"),       text("OP2"),           range(0, 99,  0, 1, 1)   ; 0
-        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP4_FM1_Level"),       text("OP1"),           range(0, 99,  0, 1, 1)   ; 0
+        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP4_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)
+        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP4_Output_Level"),    text("Direct Output"), range(0, 99,  0, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(290,  32,  50, 90), channel("OP4_FM3_Level"),       text("OP3"),           range(0, 99, 96, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(320,  32,  50, 90), channel("OP4_FM2_Level"),       text("OP2"),           range(0, 99,  0, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP4_FM1_Level"),       text("OP1"),           range(0, 99,  0, 1, 1)
         
         nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP4_Feedback_LFO"),    text("LFO"),           range(0, 99,  0, 1, 1)
         nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP4_Output_LFO"),      text("LFO"),           range(0, 99,  0, 1, 1)
@@ -112,16 +112,16 @@
         checkbox $WIDGET, $CHECKBOX, bounds(340, 125,  10, 10), channel("OP4_FM2_Mod_Wheel")
         checkbox $WIDGET, $CHECKBOX, bounds(370, 125, 120, 10), channel("OP4_FM1_Mod_Wheel"),   text("Mod. Wheel")
         
-        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP4_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)   ; 0
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP4_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP4_Decay_Level"),     text("Decay"),         range(0, 99, 95, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP4_Sustain_Level"),   text("Sustain"),       range(0, 99,  0, 1, 1)   ; 99
+        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP4_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP4_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP4_Decay_Level"),     text("Decay"),         range(0, 99, 95, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP4_Sustain_Level"),   text("Sustain"),       range(0, 99,  0, 1, 1)
         nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP4_Release_Level"),   text("Release"),       range(0, 99,  0, 1, 1), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP4_Attack_Rate"),     text("Rate"),          range(0, 99, 95, 1, 1)   ; 60
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP4_Decay_Rate"),      text("Rate"),          range(0, 99, 29, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP4_Sustain_Rate"),    text("Rate"),          range(0, 99, 20, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP4_Release_Rate"),    text("Rate"),          range(0, 99, 50, 1, 1)   ; 50
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP4_Attack_Rate"),     text("Rate"),          range(0, 99, 95, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP4_Decay_Rate"),      text("Rate"),          range(0, 99, 29, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP4_Sustain_Rate"),    text("Rate"),          range(0, 99, 20, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP4_Release_Rate"),    text("Rate"),          range(0, 99, 50, 1, 1)
     }
     
     ; Operator 3
@@ -129,57 +129,57 @@
         nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP3_Frequency_Level"), text("Frequency"),     range(0, 20000, 1, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP3_Frequency_LFO"),   text("LFO"),           range(0, 20000, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  80, 120, 15), channel("OP3_Frequency_Fixed"), text("Fixed Frequency")
-        checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP3_Output_Enable"),   text("Direct Output"), value(1);    0
+        checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP3_Output_Enable"),   text("Direct Output"), value(1) 
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 120, 120, 15), channel("OP3_FM_Enable"),       text("Modulate Others")
         
-        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)   ; 0
-        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP3_Output_Level"),    text("Direct Output"), range(0, 99, 99, 1, 1)   ; 75
-        vslider  $WIDGET, $RSLIDER,  bounds(320,  32,  50, 90), channel("OP3_FM2_Level"),       text("OP2"),           range(0, 99,  0, 1, 1)   ; 75
-        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP3_FM1_Level"),       text("OP1"),           range(0, 99,  0, 1, 1)   ; 0
+        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP3_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)
+        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP3_Output_Level"),    text("Direct Output"), range(0, 99, 99, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(320,  32,  50, 90), channel("OP3_FM2_Level"),       text("OP2"),           range(0, 99,  0, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP3_FM1_Level"),       text("OP1"),           range(0, 99,  0, 1, 1)
         
         nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP3_Feedback_LFO"),    text("LFO"),           range(0, 99,  0, 1, 1)
         nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP3_Output_LFO"),      text("LFO"),           range(0, 99,  0, 1, 1)
         checkbox $WIDGET, $CHECKBOX, bounds(340, 125,  10, 10), channel("OP3_FM2_Mod_Wheel")
         checkbox $WIDGET, $CHECKBOX, bounds(370, 125, 120, 10), channel("OP3_FM1_Mod_Wheel"),   text("Mod. Wheel")
 
-        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP3_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)   ; 0
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP3_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP3_Decay_Level"),     text("Decay"),         range(0, 99, 95, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP3_Sustain_Level"),   text("Sustain"),       range(0, 99,  0, 1, 1)   ; 99
+        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP3_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP3_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP3_Decay_Level"),     text("Decay"),         range(0, 99, 95, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP3_Sustain_Level"),   text("Sustain"),       range(0, 99,  0, 1, 1)
         nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP3_Release_Level"),   text("Release"),       range(0, 99,  0, 1, 1), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP3_Attack_Rate"),     text("Rate"),          range(0, 99, 95, 1, 1)   ; 60
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP3_Decay_Rate"),      text("Rate"),          range(0, 99, 20, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP3_Sustain_Rate"),    text("Rate"),          range(0, 99, 20, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP3_Release_Rate"),    text("Rate"),          range(0, 99, 50, 1, 1)   ; 50
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP3_Attack_Rate"),     text("Rate"),          range(0, 99, 95, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP3_Decay_Rate"),      text("Rate"),          range(0, 99, 20, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP3_Sustain_Rate"),    text("Rate"),          range(0, 99, 20, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP3_Release_Rate"),    text("Rate"),          range(0, 99, 50, 1, 1)
     }
     
     ; Operator 2
     groupbox $GROUPBOX, bounds(10, 320, 710, 145), text("Operator 2") {
-        nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP2_Frequency_Level"), text("Frequency"),     range(0, 20000, 14, 1, 0.01) ; 1
+        nslider  $WIDGET, $NSLIDER,  bounds(  5,  30,  75, 35), channel("OP2_Frequency_Level"), text("Frequency"),     range(0, 20000, 14, 1, 0.01)
         nslider  $WIDGET, $NSLIDER,  bounds( 60,  35,  75, 25), channel("OP2_Frequency_LFO"),   text("LFO"),           range(0, 20000, 0, 1, 0.01)
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  80, 120, 15), channel("OP2_Frequency_Fixed"), text("Fixed Frequency")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP2_Output_Enable"),   text("Direct Output")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 120, 120, 15), channel("OP2_FM_Enable"),       text("Modulate Others"), value(1)
         
-        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)   ; 0
-        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP2_Output_Level"),    text("Direct Output"), range(0, 99,  0, 1, 1)   ; 75
-        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP2_FM1_Level"),       text("OP1"),           range(0, 99, 70, 1, 1)   ; 75
+        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP2_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)
+        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP2_Output_Level"),    text("Direct Output"), range(0, 99,  0, 1, 1)
+        vslider  $WIDGET, $RSLIDER,  bounds(350,  32,  50, 90), channel("OP2_FM1_Level"),       text("OP1"),           range(0, 99, 70, 1, 1)
         
         nslider  $WIDGET, $NSLIDER,  bounds(145, 110,  75, 25), channel("OP2_Feedback_LFO"),    text("LFO"),           range(0, 99,  0, 1, 1)
         nslider  $WIDGET, $NSLIDER,  bounds(215, 110,  75, 25), channel("OP2_Output_LFO"),      text("LFO"),           range(0, 99,  0, 1, 1)
         checkbox $WIDGET, $CHECKBOX, bounds(370, 125, 120, 10), channel("OP2_FM1_Mod_Wheel"),   text("Mod. Wheel")
         
-        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP2_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)   ; 0
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP2_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP2_Decay_Level"),     text("Decay"),         range(0, 99, 75, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP2_Sustain_Level"),   text("Sustain"),       range(0, 99,  0, 1, 1)   ; 99
+        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP2_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP2_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP2_Decay_Level"),     text("Decay"),         range(0, 99, 75, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP2_Sustain_Level"),   text("Sustain"),       range(0, 99,  0, 1, 1)
         nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP2_Release_Level"),   text("Release"),       range(0, 99,  0, 1, 1), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP2_Attack_Rate"),     text("Rate"),          range(0, 99, 95, 1, 1)   ; 60
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP2_Decay_Rate"),      text("Rate"),          range(0, 99, 50, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP2_Sustain_Rate"),    text("Rate"),          range(0, 99, 35, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP2_Release_Rate"),    text("Rate"),          range(0, 99, 78, 1, 1)   ; 50
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP2_Attack_Rate"),     text("Rate"),          range(0, 99, 95, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP2_Decay_Rate"),      text("Rate"),          range(0, 99, 50, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP2_Sustain_Rate"),    text("Rate"),          range(0, 99, 35, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP2_Release_Rate"),    text("Rate"),          range(0, 99, 78, 1, 1)
     }
     
     ; Operator 1
@@ -189,22 +189,22 @@
         checkbox $WIDGET, $CHECKBOX, bounds( 10,  80, 120, 15), channel("OP1_Frequency_Fixed"), text("Fixed Frequency")
         checkbox $WIDGET, $CHECKBOX, bounds( 10, 100, 120, 15), channel("OP1_Output_Enable"),   text("Direct Output"), value(1)
         
-        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)   ; 0
-        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP1_Output_Level"),    text("Direct Output"), range(0, 99, 99, 1, 1)   ; 99
+        rslider  $WIDGET, $RSLIDER,  bounds(140,  30,  75, 75), channel("OP1_Feedback_Level"),  text("Feedback"),      range(0, 99,  0, 1, 1)
+        rslider  $WIDGET, $RSLIDER,  bounds(210,  30,  75, 75), channel("OP1_Output_Level"),    text("Direct Output"), range(0, 99, 99, 1, 1)
         
         nslider  $WIDGET, $NSLIDER,  bounds(140, 110,  75, 25), channel("OP1_Feedback_LFO"),    text("LFO"),           range(0, 99,  0, 1, 1)
         nslider  $WIDGET, $NSLIDER,  bounds(210, 110,  75, 25), channel("OP1_Output_LFO"),      text("LFO"),           range(0, 99,  0, 1, 1)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP1_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)   ; 0
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP1_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)   ; 99
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP1_Decay_Level"),     text("Decay"),         range(0, 99, 75, 1, 1)   ; 80
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP1_Sustain_Level"),   text("Sustain"),       range(0, 99,  0, 1, 1)   ; 50
+        nslider  $WIDGET, $NSLIDER,  bounds(400,  40,  75, 30), channel("OP1_Initial_Level"),   text("Initial"),       range(0, 99,  0, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  40,  75, 30), channel("OP1_Attack_Level"),    text("Attack"),        range(0, 99, 99, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  40,  75, 30), channel("OP1_Decay_Level"),     text("Decay"),         range(0, 99, 75, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  40,  75, 30), channel("OP1_Sustain_Level"),   text("Sustain"),       range(0, 99,  0, 1, 1)
         nslider  $WIDGET, $NSLIDER,  bounds(640,  40,  75, 30), channel("OP1_Release_Level"),   text("Release"),       range(0, 99,  0, 1, 1), active(0)
         
-        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP1_Attack_Rate"),     text("Rate"),          range(0, 99, 96, 1, 1)   ; 60
-        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP1_Decay_Rate"),      text("Rate"),          range(0, 99, 25, 1, 1)   ; 55
-        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP1_Sustain_Rate"),    text("Rate"),          range(0, 99, 25, 1, 1)   ; 45
-        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP1_Release_Rate"),    text("Rate"),          range(0, 99, 67, 1, 1)   ; 50
+        nslider  $WIDGET, $NSLIDER,  bounds(460,  80,  75, 30), channel("OP1_Attack_Rate"),     text("Rate"),          range(0, 99, 96, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(520,  80,  75, 30), channel("OP1_Decay_Rate"),      text("Rate"),          range(0, 99, 25, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(580,  80,  75, 30), channel("OP1_Sustain_Rate"),    text("Rate"),          range(0, 99, 25, 1, 1)
+        nslider  $WIDGET, $NSLIDER,  bounds(640,  80,  75, 30), channel("OP1_Release_Rate"),    text("Rate"),          range(0, 99, 67, 1, 1)
     }
     
 
@@ -256,9 +256,10 @@
         ; --midi-key-cps=4          Set p4 to the frequency from the MIDI input
         ; --midi-key=4              Set p4 to the note number from the MIDI input
         ; --midi-velocity-amp=5     Set p5 to the amplitude from the MIDI input
-        ; --asciidisplay            Suppress graphics, use ASCII displays instead => Cabbage!
+        ; --displays                Run display opcodes (but doesn't seem to work in Cabbage)
+        ; --asciidisplay            Suppress graphics, use ASCII displays instead
         ; --postscriptdisplay       Suppress graphics, use PostScript displays instead
-        -n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5 --asciidisplay
+        -n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5 --displays --asciidisplay
     </CsOptions>
 
     <CsInstruments>
@@ -270,8 +271,8 @@
         gk_LFO1 = 0.5
         gk_LFO2 = 0.0
         
-        prealloc "Tone_Generator", 32
-        maxalloc "Tone_Generator", 32
+        ;prealloc "Tone_Generator", 32
+        ;maxalloc "Tone_Generator", 32
 
         ; MIDI Controlers mapped to [0 … 1], except pitch bend [-1 … 1]
         gi_MIDI_Channel = 1
@@ -283,17 +284,19 @@
         gk_MIDI_Volume      = 1.0
         gk_MIDI_Expression  = 1.0
         
-        ; Lookup tables to convert levels and rates (somewhat similar to the DX7)
-        gi_LUT_Size = 128
+        ; Lookup tables to convert levels and rates from [0…99] to [0…1] (somewhat similar to the DX7)
+        gi_LUT_Size1 = 128
+        gi_LUT_Size2 = 16348
         
-        gi_LUT_Operator_Level       = ftgen(0, 0, gi_LUT_Size, -2, 0)
-        gi_LUT_Envelope_Level       = ftgen(0, 0, gi_LUT_Size, -2, 0)
-        gi_LUT_Envelope_Attack_Time = ftgen(0, 0, gi_LUT_Size, -2, 0)
-        gi_LUT_Envelope_Decay_Time  = ftgen(0, 0, gi_LUT_Size, -2, 0)
-        
+        gi_LUT_Operator_Level        = ftgen(0, 0, gi_LUT_Size1, -2, 0)
+        gi_LUT_Envelope_Level        = ftgen(0, 0, gi_LUT_Size1, -2, 0)
+        gi_LUT_Envelope_Attack_Time  = ftgen(0, 0, gi_LUT_Size1, -2, 0)
+        gi_LUT_Envelope_Decay_Time   = ftgen(0, 0, gi_LUT_Size1, -2, 0)
+        gi_LUT_Envelope_Output_Scale = ftgen(0, 0, gi_LUT_Size2, -3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1) ; x^12 for x in [0…1]
+         
         gi_N = 0
-        while gi_N < gi_LUT_Size do
-            gi_Operator_Level       = ((gi_N * .01) ^ 12) * 1.0                 ; Amplitude level scaled and mapped from [0…99] to [0…1]
+        while gi_N < gi_LUT_Size1 do
+            gi_Operator_Level       = ((gi_N * .01) ^ 12) * 1.3                 ; Amplitude level scaled and mapped from [0…99] to [0…1]
             gi_Envelope_Level       = (gi_N * .01) ^ 16                         ; Amplitude scaling for envelopes
             gi_Envelope_Attack_Time =  39.2843  * (.895363 ^ gi_N) + 0.001      ; Attack time in seconds
             gi_Envelope_Decay_Time  = 136.09509 * (.900336 ^ gi_N) + 0.001      ; Decay time in seconds
@@ -306,7 +309,11 @@
             gi_N = gi_N + 1
         od
         
-        ftprint gi_LUT_Operator_Level
+        tablegpw gi_LUT_Operator_Level
+        tablegpw gi_LUT_Envelope_Level
+        tablegpw gi_LUT_Envelope_Attack_Time
+        tablegpw gi_LUT_Envelope_Decay_Time
+        tablegpw gi_LUT_Envelope_Output_Scale
         
         ; Connect instruments
         connect "Tone_Generator", "Out",    "Output", "In"
@@ -338,7 +345,7 @@
         instr Read_Channels
             ; Read all values
             i_Declick_ms             = 0.15
-        
+            
             gk_OP4_Frequency_Level   = lag(chnget:k("OP4_Frequency_Level"),   i_Declick_ms)
             gk_OP4_Frequency_LFO     = lag(chnget:k("OP4_Frequency_LFO"),     i_Declick_ms)
             gk_OP4_Frequency_Fixed   = lag(chnget:k("OP4_Frequency_Fixed"),   i_Declick_ms)
@@ -584,7 +591,14 @@
             i_Release_Level,
             i_Release_Time xin
             
-            setksmps(1)                                                             ; Needed for accurate feedback
+            if i(k_Feedback) > 0 then
+                ; Accurate feedback needs ksmps=1, but this is very CPU intensive.
+                ; As a drity hack we check at i-Time if feedback is enabled, though
+                ; it might lead to unpredicted behaviour according to the Csound manual.
+                ; Feedback will still work when enabled during a note but will be less accurate.
+                setksmps(1)
+            endif
+            
             a_Out   = init:a(0)                                                     ; Initialize variable at i-time and retain value afterwards
             a_Phase = phasor:a(k_Frequency) + a_Modulator + (a_Out * k_Feedback)
             a_Out   = tablei:a(a_Phase, -1, 1, .5, 1)                               ; andx, ifn, ixmode, ixoff, iwrap            
@@ -595,7 +609,8 @@
                                i_Sustain_Time, i_Sustain_Level, \
                                i_Release_Time, i_Release_Level
 
-            xout(a_Out * (a_Envelope ^ 12))     ; DIRTY HACK
+            a_Envelope tablei a_Envelope, gi_LUT_Envelope_Output_Scale, 1           ; LUT with x^12 to immitiate the DX7 envelope shape. Otherwise the decay sounds much too long.
+            xout(a_Out * a_Envelope)
         endop
         
         ;====================================================================
@@ -706,11 +721,11 @@
                            i(gk_OP1_Sustain_Level),  i(gk_OP1_Sustain_Time), \
                            i(gk_OP1_Release_Level),  i(gk_OP1_Release_Time)
 
-            a_Out = (a_OP4 * .25 * k_OP4_Output_Level) \
-                  + (a_OP3 * .25 * k_OP3_Output_Level) \
-                  + (a_OP2 * .25 * k_OP2_Output_Level) \
-                  + (a_OP1 * .25 * k_OP1_Output_Level)
-                  
+            a_Out = (a_OP4 * k_OP4_Output_Level) \
+                  + (a_OP3 * k_OP3_Output_Level) \
+                  + (a_OP2 * k_OP2_Output_Level) \
+                  + (a_OP1 * k_OP1_Output_Level)
+            
             outleta("Out", a_Out)
         endin
                 
